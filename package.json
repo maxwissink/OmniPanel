@@ -1,0 +1,17 @@
+{
+  "name": "omnipanel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "start": "electron .",
+    "startx11": "electron . --ozone-platform=x11"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^39.2.6"
+  }
+}
