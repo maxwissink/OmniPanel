@@ -1,13 +1,26 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const path = require('path');
 
 const { exec } = require('child_process');
 
 function createWindow() {
+
+    const displays = screen.getAllDisplays();
+
+    //console.log(displays);
+
+    const targetDisplay = displays.find((d) => {return d.id == 35});
+
+    console.log(targetDisplay);
+
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        x: targetDisplay.bounds.x,
+        y: targetDisplay.bounds.y,
+        width: targetDisplay.bounds.width,
+        height: targetDisplay.bounds.height,
         focusable: false,
+        frame: false,
+        alwaysOnTop: true,
         webPreferences: {
             preload: path.join(__dirname, 'renderer', 'combined-preload.js'),
             contextIsolation: true,
@@ -16,8 +29,10 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadFile(path.join(__dirname, '..', 'user', 'html', 'index.html'));
-    mainWindow.webContents.openDevTools();
+    var theme = "default";
+
+    mainWindow.loadFile(path.join(__dirname, '..', 'user', theme, 'html', 'index.html'));
+    //mainWindow.webContents.openDevTools(); // debugger
 }
 
 app.whenReady().then(createWindow);
