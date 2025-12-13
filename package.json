@@ -5,7 +5,7 @@
   "main": "app/main.js",
   "scripts": {
     "start": "electron .",
-    "startx11": "electron . --ozone-platform=x11"
+    "x11": "electron . --ozone-platform=x11"
   },
   "keywords": [],
   "author": "",
