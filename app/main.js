@@ -1,6 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 
+const { exec } = require('child_process');
+
 function createWindow() {
     const mainWindow = new BrowserWindow({
         width: 800,
@@ -21,28 +23,23 @@ function createWindow() {
 app.whenReady().then(createWindow);
 
 // Handle single or multiple keys
-ipcMain.on('simulate-key', async (event, keys) => {
-    try {
-        if (!Array.isArray(keys)) keys = [keys];
+ipcMain.on('simulate-key', (event, keyCombination) => {
+    const safeKey = keyCombination.replace(/([\\$`"|])/g, '\\$1');
 
-        // Press all keys in order
-        for (const keyName of keys) {
-            // if (!(keyName in Key)) {
-            //     console.warn(`Unknown key: ${keyName}`);
-            //     continue;
-            // }
-            //await keyboard.pressKey(Key[keyName]);
+    const command = `xdotool key "${safeKey}"`;
+
+    console.log(`Executing: ${command}`);
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`Error executing xdotool: ${error.message}`);
+            return;
         }
-
-        // Release in reverse order
-        for (const keyName of keys.slice().reverse()) {
-            //if (keyName in Key) await keyboard.releaseKey(Key[keyName]);
+        if (stderr) {
+            console.error(`xdotool warning/info: ${stderr}`);
+            return;
         }
-
-        console.log(`Keys pressed: ${keys.join('+')}`);
-    } catch (err) {
-        console.error('Failed to simulate keys:', err);
-    }
+    });
 });
 
 // Optional renderer logging

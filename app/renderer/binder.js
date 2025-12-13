@@ -10,12 +10,16 @@ module.exports = (api) => {
 
     buttons.forEach(button => {
         // Ensure we split the keys properly (e.g. "Ctrl+C" -> ['Ctrl', 'C'])
-        const rawAttr = button.getAttribute('emulate-key');
-        const keys = rawAttr.includes('+') ? rawAttr.split('+') : [rawAttr];
+        
+        var rawkey = button.getAttribute('emulate-key');
+
+        rawkey = rawkey.replace(/ /g,'');
+
+        const key = rawkey
         
         button.addEventListener('click', () => {
-            console.log("Button clicked, sending:", keys);
-            api.simulateKey(keys); 
+            console.log("Button clicked, sending:", key);
+            api.simulateKey(key); 
         });
     });
 };
