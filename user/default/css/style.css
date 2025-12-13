@@ -1,4 +1,29 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url(../image/aopao_background.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.container{
+    display: flex ;
+    flex-direction: row;
+    width: 100vw;
+    height: 42.86vw;
+    background-color: rgba(99, 246, 96, 0.3);
+}
+
 .control-button {
+    display: inline-flex;
+    width: max-content;
+    height: max-content;
     padding: 2rem;
-    background-color: rgb(13, 200, 252);
+    margin: 1rem;
+    background-color: rgba(13, 200, 252, 0.6);
 }
