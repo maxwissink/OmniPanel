@@ -2,12 +2,13 @@ const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const path = require('path');
 const eventLoader = require('./program/events/index');
 const { exec } = require('child_process');
+const filter = require('./program/filter');
 
 function createWindow() {
 
     const displays = screen.getAllDisplays();
 
-    const targetDisplay = displays.find((d) => {return d.id == 35});
+    const targetDisplay = displays.find((d) => { return d.id == 35 });
 
     //console.log(targetDisplay);
 
@@ -18,7 +19,7 @@ function createWindow() {
         height: targetDisplay.bounds.height,
         focusable: false,
         frame: false,
-        alwaysOnTop: true,
+        alwaysOnTop: (true, 'floating'), // should make it so popups can still be shown (but not on most linux systems unfortunatly)
         webPreferences: {
             preload: path.join(__dirname, 'preload', 'combined-preload.js'),
             contextIsolation: true,
@@ -29,11 +30,17 @@ function createWindow() {
 
     var theme = "default"; // need to be user configurable from a config file
 
-    mainWindow.loadFile(path.join(__dirname, '..', 'user', theme, 'html', 'index.html'))
-        .catch(err => {
-            console.warn(`Primary theme failed to load (${err.message}). Attempting fallback.`);
-            return mainWindow.loadFile(path.join(__dirname, 'resources', 'fallback.html'));
-        });
+    const themePath = path.join(__dirname, '..', 'user', theme, 'html', 'index.html')
+
+    if (!filter(themePath)) {
+        mainWindow.loadFile(themePath)
+            .catch(err => {
+                console.warn(`Primary theme failed to load (${err.message}). Attempting fallback.`);
+                return mainWindow.loadFile(path.join(__dirname, 'resources', 'fallback.html'));
+            });
+    } else {
+        mainWindow.loadFile(path.join(__dirname, 'resources', 'scriptDetected.html'));
+    }
 
     //mainWindow.webContents.openDevTools(); // debugger
 }
