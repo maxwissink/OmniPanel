@@ -9,8 +9,7 @@ module.exports = (api) => {
     console.log(`Binder found ${buttons.length} buttons`);
 
     buttons.forEach(button => {
-        // Ensure we split the keys properly (e.g. "Ctrl+C" -> ['Ctrl', 'C'])
-        
+                
         var rawkey = button.getAttribute('emulate-key');
 
         rawkey = rawkey.replace(/ /g,'');
