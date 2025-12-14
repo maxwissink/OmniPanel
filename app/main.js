@@ -28,11 +28,20 @@ function createWindow() {
         }
     });
 
+    mainWindow.webContents.on('will-navigate', (event, url) => {
+        const currentURL = mainWindow.webContents.getURL();
+        
+        if (url !== currentURL) {
+            console.warn(`[Navigation Blocked] Prevented navigation from ${currentURL} to: ${url}`);
+            event.preventDefault(); // Stop the navigation attempt
+        }
+    });
+
     var theme = "default"; // need to be user configurable from a config file
 
     const themePath = path.join(__dirname, '..', 'user', theme, 'html', 'index.html')
 
-    if (!filter(themePath)) {
+    if (!filter(themePath)) { // check for code injection in theme
         mainWindow.loadFile(themePath)
             .catch(err => {
                 console.warn(`Primary theme failed to load (${err.message}). Attempting fallback.`);
