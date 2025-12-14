@@ -27,9 +27,14 @@ function createWindow() {
         }
     });
 
-    var theme = "default";
+    var theme = "default"; // need to be user configurable from a config file
 
-    mainWindow.loadFile(path.join(__dirname, '..', 'user', theme, 'html', 'index.html'));
+    mainWindow.loadFile(path.join(__dirname, '..', 'user', theme, 'html', 'index.html'))
+        .catch(err => {
+            console.warn(`Primary theme failed to load (${err.message}). Attempting fallback.`);
+            return mainWindow.loadFile(path.join(__dirname, 'resources', 'fallback.html'));
+        });
+
     //mainWindow.webContents.openDevTools(); // debugger
 }
 
