@@ -1,0 +1,18 @@
+TODO:
+
+ - initial popup with settings/config 
+    settings include:
+    - button to start/stop the main panel
+    - display selection
+    - theme selection
+    - debugger option?
+    - updater(or link to github)
+ - make an actually good looking and usefull default theme
+ - implement key simulator for windows
+ - multiple panels at once?
+ - multiple layers/pages in one theme without enabling code injection
+ - star citizen API intergration
+ - options to call other api's? (if it can be done without enabling code injection in themes)
+ - allow system notifications to be displayed on top of OmniPanel
+ - 
+ - and more...
