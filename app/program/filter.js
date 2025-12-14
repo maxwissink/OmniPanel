@@ -5,21 +5,24 @@ module.exports = (filePath) => {
             // If the file doesn't exist, we can't check it, so let the main loader handle the 'not found' error.
             return false; 
         }
-        
-        // Read the first chunk (e.g., 1MB) of the file to check for script tags.
-        // Reading the whole file is safest, but we'll stick to a simple read for speed.
-        const htmlContent = fs.readFileSync(filePath, 'utf8');
+        const htmlContent = fs.readFileSync(filePath, 'utf8').toLowerCase();
 
-        // Check for the opening <script tag. We ignore closing tags and comments 
-        // because the goal is to be highly conservative.
-        // Using a simple case-insensitive string check is fast and strict.
-        if (htmlContent.toLowerCase().includes('<script')) {
+        // 1. Check for the opening <script tag and high-risk tags
+        if (htmlContent.includes('<script') || 
+            htmlContent.includes('<svg') || 
+            htmlContent.includes('<iframe')) {
+            return true;
+        }
+        
+        // 2. Check for the JavaScript pseudo-protocol (a common attack vector in <a> tags)
+        if (htmlContent.includes('javascript:')) {
             return true;
         }
 
-        // Optional: Check for 'on...' attributes like 'onclick' 
-        // This is highly recommended as a secondary check.
-        const dangerousAttrRegex = /\s(on[a-z]+)=["']/i;
+        // 3. Check for any 'on' event handlers (e.g., onclick, onerror)
+        // We use a regex here to be more precise: ' on' followed by one or more letters
+        // Using a regex on the whole string is generally safe for this one-time check.
+        const dangerousAttrRegex = /\son[a-z]+=/i; 
         if (dangerousAttrRegex.test(htmlContent)) {
              return true;
         }
