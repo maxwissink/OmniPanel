@@ -1,7 +1,6 @@
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const path = require('path');
 const eventLoader = require('./program/events/index');
-const { exec } = require('child_process');
 const filter = require('./program/filter');
 
 function createWindow() {
