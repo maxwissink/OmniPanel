@@ -13,5 +13,9 @@
   "type": "commonjs",
   "devDependencies": {
     "electron": "^39.2.6"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "ws": "^8.18.3"
   }
 }

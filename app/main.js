@@ -1,67 +1,51 @@
-const { app, BrowserWindow, screen } = require('electron');
+const { app, BrowserWindow } = require('electron');
+const express = require('express');
+const http = require('http');
+const { WebSocketServer } = require('ws');
 const path = require('path');
-const eventLoader = require('./program/events/index');
-const filter = require('./program/filter');
+const fs = require('fs');
 
-function createWindow() {
+// Load logic modules
+const handleSocket = require('./program/websocket-main');
+const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json'), 'utf8'));
 
-    const displays = screen.getAllDisplays();
-    //console.log(displays);
-    const targetDisplay = displays.find((d) => { return d.id == 33 });
-    //console.log(targetDisplay);
+const expressApp = express();
+const server = http.createServer(expressApp);
+const wss = new WebSocketServer({ server });
 
-    const mainWindow = new BrowserWindow({
-        x: targetDisplay.bounds.x,
-        y: targetDisplay.bounds.y,
-        width: targetDisplay.bounds.width,
-        height: targetDisplay.bounds.height,
-        focusable: false,
-        frame: false,
-        alwaysOnTop: (true, 'floating'), // should make it so popups can still be shown (but not on most linux systems unfortunatly)
-        // tests
-        transparent: true,
-        skiptaskbar: true,
-        type: 'toolbar',
-
-        webPreferences: {
-            preload: path.join(__dirname, 'preload', 'combined-preload.js'),
-            contextIsolation: true,
-            nodeIntegration: false,
-            sandbox: false
-        }
-    });
-
-    mainWindow.webContents.on('will-navigate', (event, url) => {
-        const currentURL = mainWindow.webContents.getURL();
-        
-        if (url !== currentURL) {
-            console.warn(`[Navigation Blocked] Prevented navigation from ${currentURL} to: ${url}`);
-            event.preventDefault(); // Stop the navigation attempt
-        }
-    });
-
-    var theme = "default"; // need to be user configurable from a config file
-
-    const themePath = path.join(__dirname, '..', 'user', theme, 'html', 'index.html')
-
-    if (!filter(themePath)) { // check for code injection in theme
-        mainWindow.loadFile(themePath)
-            .catch(err => {
-                console.warn(`Primary theme failed to load (${err.message}). Attempting fallback.`);
-                return mainWindow.loadFile(path.join(__dirname, 'resources', 'fallback.html'));
-            });
+// 1. Serve Injected HTML
+expressApp.get('/', (req, res) => {
+    const themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
+    if (fs.existsSync(themePath)) {
+        let html = fs.readFileSync(themePath, 'utf8');
+        const scriptTag = `<script src="/internal/websocket-injection.js"></script>`;
+        res.send(html.replace('</body>', `${scriptTag}</body>`));
     } else {
-        mainWindow.loadFile(path.join(__dirname, 'resources', 'scriptDetected.html'));
+        res.status(404).send("Theme not found");
     }
+});
 
-    mainWindow.webContents.openDevTools(); // debugger
-    mainWindow.setIgnoreMouseEvents(false, { forward: true });
+const assetsPath = path.join(__dirname, '..', 'user', config.theme);
+expressApp.use(express.static(assetsPath));
 
-}
+// 2. Serve Injection Script
+expressApp.get('/internal/websocket-injection.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'program', 'websocket-injection.js'));
+});
+
+// 3. Static Assets (CSS/Images)
+expressApp.use(express.static(path.join(__dirname, '..', 'user', config.theme, 'html')));
+
+// 4. WebSocket Connection
+wss.on('connection', (ws) => {
+    console.log("Phone linked.");
+    handleSocket(ws); // Delegate to our modular manager
+});
 
 app.whenReady().then(() => {
-    createWindow();
-
-    eventLoader.loadEventHandlers();
-    
+    server.listen(config.port, '0.0.0.0', () => {
+        console.log(`Server: http://localhost:${config.port}`);
+    });
+    // Assuming your electron UI is in app/index.html
+    new BrowserWindow({ width: 400, height: 250 }).loadFile(path.join(__dirname, 'index.html'));
 });
