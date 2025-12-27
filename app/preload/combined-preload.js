@@ -5,7 +5,7 @@ console.log("Preload running");
 
 const omniAPI = {
     simulateKey: (keys) => ipcRenderer.send('simulate-key', keys),
-    log: (msg) => ipcRenderer.send('renderer-log', msg)
+    log: (msg) => ipcRenderer.send('renderer-log', msg),
 };
 
 contextBridge.exposeInMainWorld('omniAPI', omniAPI);

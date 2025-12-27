@@ -9,16 +9,16 @@ module.exports = (api) => {
     console.log(`Binder found ${buttons.length} buttons`);
 
     buttons.forEach(button => {
-                
+
         var rawkey = button.getAttribute('emulate-key');
 
-        rawkey = rawkey.replace(/ /g,'');
+        rawkey = rawkey.replace(/ /g, '');
 
         const key = rawkey
-        
+
         button.addEventListener('click', () => {
             console.log("Button clicked, sending:", key);
-            api.simulateKey(key); 
+            api.simulateKey(key);
         });
     });
 };

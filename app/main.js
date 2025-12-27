@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const { app, BrowserWindow, screen } = require('electron');
 const path = require('path');
 const eventLoader = require('./program/events/index');
 const filter = require('./program/filter');
@@ -6,9 +6,8 @@ const filter = require('./program/filter');
 function createWindow() {
 
     const displays = screen.getAllDisplays();
-
-    const targetDisplay = displays.find((d) => { return d.id == 35 });
-
+    //console.log(displays);
+    const targetDisplay = displays.find((d) => { return d.id == 33 });
     //console.log(targetDisplay);
 
     const mainWindow = new BrowserWindow({
@@ -19,6 +18,11 @@ function createWindow() {
         focusable: false,
         frame: false,
         alwaysOnTop: (true, 'floating'), // should make it so popups can still be shown (but not on most linux systems unfortunatly)
+        // tests
+        transparent: true,
+        skiptaskbar: true,
+        type: 'toolbar',
+
         webPreferences: {
             preload: path.join(__dirname, 'preload', 'combined-preload.js'),
             contextIsolation: true,
@@ -50,11 +54,14 @@ function createWindow() {
         mainWindow.loadFile(path.join(__dirname, 'resources', 'scriptDetected.html'));
     }
 
-    //mainWindow.webContents.openDevTools(); // debugger
+    mainWindow.webContents.openDevTools(); // debugger
+    mainWindow.setIgnoreMouseEvents(false, { forward: true });
+
 }
 
 app.whenReady().then(() => {
     createWindow();
 
     eventLoader.loadEventHandlers();
+    
 });

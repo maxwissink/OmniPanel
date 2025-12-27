@@ -1,5 +1,5 @@
 TODO:
-
+ - filter out the meta/windows key
  - initial popup with settings/config 
     settings include:
     - button to start/stop the main panel
@@ -14,5 +14,6 @@ TODO:
  - star citizen API intergration
  - options to call other api's? (if it can be done without enabling code injection in themes)
  - allow system notifications to be displayed on top of OmniPanel
- - 
+ - make a framework so its easier for people to make a theme
+ -
  - and more...

@@ -5,6 +5,7 @@ ipcMain.on('simulate-key', (event, keyCombination) => {
     const safeKey = keyCombination.replace(/([\\$`"|])/g, '\\$1');
 
     const command = `xdotool key "${safeKey}"`;
+    //const command = `xdotool windowactivate $(xdotool search 'star citizen' | tail -n 1) && xdotool key "${safeKey}"`;
 
     console.log(`Executing: ${command}`);
 
