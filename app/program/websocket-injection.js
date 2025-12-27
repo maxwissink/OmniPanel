@@ -1,7 +1,32 @@
 // This file lives in app/program/ and is injected into the theme
 const socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
 
-socket.onopen = () => console.log("Connected to Host");
+// Function to keep the screen awake
+async function keepScreenAlive() {
+    if ('wakeLock' in navigator) {
+        try {
+            const wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Wake Lock is active! Screen will stay on.');
+
+            // If the user switches tabs and comes back, we need to re-request it
+            document.addEventListener('visibilitychange', async () => {
+                if (document.visibilityState === 'visible') {
+                    await navigator.wakeLock.request('screen');
+                }
+            });
+        } catch (err) {
+            console.error(`Wake Lock failed: ${err.name}, ${err.message}`);
+        }
+    } else {
+        console.warn('Wake Lock API not supported in this browser.');
+    }
+}
+
+// Call it when the socket opens
+socket.onopen = () => {
+    console.log("Connected to Host");
+    keepScreenAlive();
+};
 
 window.addEventListener('DOMContentLoaded', () => {
     // Select any element with the emulate-key attribute
@@ -30,3 +55,4 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
