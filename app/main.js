@@ -1,7 +1,6 @@
 const { app, BrowserWindow } = require('electron');
 const express = require('express');
 const http = require('http');
-const { WebSocketServer } = require('ws');
 const path = require('path');
 const fs = require('fs');
 const setupThemeManager = require('./program/themes');
@@ -9,7 +8,6 @@ const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
 
 // Load logic modules
-const handleSocket = require('./program/websocket-main');
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json'), 'utf8'));
 
 const expressApp = express();
