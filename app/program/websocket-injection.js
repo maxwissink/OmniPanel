@@ -1,5 +1,6 @@
 // This file lives in app/program/ and is injected into the theme
-const socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
+let socket;// = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
+let reconnectInterval;
 
 // Function to keep the screen awake
 async function keepScreenAlive() {
@@ -22,11 +23,35 @@ async function keepScreenAlive() {
     }
 }
 
-// Call it when the socket opens
-socket.onopen = () => {
-    console.log("Connected to Host");
-    keepScreenAlive();
-};
+function connect() {
+    // Prevent multiple simultaneous connection attempts
+    if (socket && (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN)) {
+        return; 
+    }
+
+    console.log("Attempting to connect...");
+    socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
+
+    socket.onopen = () => {
+        console.log("Connected to OmniPanel Host");
+    };
+
+    socket.onmessage = (event) => {
+        // Handle incoming messages from PC if needed
+    };
+}
+
+// THE WATCHDOG: Check every 3 seconds if we are still connected
+function startWatchdog() {
+    if (reconnectInterval) clearInterval(reconnectInterval);
+
+    reconnectInterval = setInterval(() => {
+        if (!socket || socket.readyState === WebSocket.CLOSED || socket.readyState === WebSocket.CLOSING) {
+            console.warn("Watchdog detected closed connection. Reconnecting...");
+            connect();
+        }
+    }, 3000); 
+}
 
 window.addEventListener('DOMContentLoaded', () => {
     // Select any element with the emulate-key attribute
@@ -54,5 +79,8 @@ window.addEventListener('DOMContentLoaded', () => {
             socket.send(JSON.stringify(payload));
         });
     });
+    connect();
+    startWatchdog();
+    keepScreenAlive();
 });
 

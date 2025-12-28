@@ -16,6 +16,14 @@ if (fs.existsSync(eventsFolder)) {
 }
 
 module.exports = function handleSocket(ws) {
+    ws.isAlive = true;
+
+    // When the phone responds to our ping, set isAlive to true
+    ws.on('pong', () => {
+        ws.isAlive = true;
+        console.log("ping pong")
+    });
+
     ws.on('message', (rawMessage) => {
         try {
             // Parse the JSON we sent from the phone

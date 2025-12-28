@@ -40,7 +40,7 @@ expressApp.use(express.static(path.join(__dirname, '..', 'user', config.theme)))
 
 // 4. WebSocket Connection
 wss.on('connection', (ws) => {
-    console.log("Phone linked.");
+    console.log("Device connected.");
     handleSocket(ws); // Delegate to our modular manager
 });
 
@@ -49,5 +49,19 @@ app.whenReady().then(() => {
         console.log(`Server: http://localhost:${config.port}`);
     });
     // Assuming your electron UI is in app/index.html
-    new BrowserWindow({ width: 400, height: 250 }).loadFile(path.join(__dirname, 'index.html'));
+    new BrowserWindow({ width: 600, height: 400 }).loadFile(path.join(__dirname, 'index.html'));
+});
+
+//keepalive
+const interval = setInterval(() => {
+    wss.clients.forEach((ws) => {
+        if (ws.isAlive === false) return ws.terminate();
+
+        ws.isAlive = false;
+        ws.ping(); // Send a ping to the phone
+    });
+}, 10000); // Check every 30 seconds
+
+wss.on('close', () => {
+    clearInterval(interval);
 });
