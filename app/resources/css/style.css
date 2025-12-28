@@ -1,3 +1,16 @@
+body {
+    background-color: #e6e6e6;
+}
+
+body > * {
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+input, select{
+    border-radius: 5px;
+}
+
 #log-container {
     background: #000;
     border: 1px solid #444;
