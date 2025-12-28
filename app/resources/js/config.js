@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 2. Clear and populate
     select.innerHTML = '';
-    themes.forEach(theme => {
+    themes.allThemes.forEach(theme => {
         const opt = document.createElement('option');
         opt.value = theme;
         opt.textContent = theme;
