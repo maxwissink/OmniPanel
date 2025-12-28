@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const setupThemeManager = require('./program/themes');
 const securityFilter = require('./program/filter');
+const initSocketManager = require('./program/socket-manager');
 
 // Load logic modules
 const handleSocket = require('./program/websocket-main');
@@ -13,7 +14,7 @@ const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.jso
 
 const expressApp = express();
 const server = http.createServer(expressApp);
-const wss = new WebSocketServer({ server });
+const wss = initSocketManager(server);
 
 // 1. Serve Injected HTML
 expressApp.get('/', (req, res) => {
@@ -45,11 +46,6 @@ expressApp.use((req, res, next) => {
     express.static(themeFolder)(req, res, next);
 });
 
-// 4. WebSocket Connection
-wss.on('connection', (ws) => {
-    console.log("Device connected.");
-    handleSocket(ws); // Delegate to our modular manager
-});
 
 app.whenReady().then(() => {
     setupThemeManager(config, wss);
@@ -58,32 +54,17 @@ app.whenReady().then(() => {
     });
 
     const win = new BrowserWindow({
-        width: 600,
-        height: 400,
+        width: config.width || 600, 
+        height: config.height || 400,
         webPreferences: {
-            nodeIntegration: true,    // Allows require('electron') in HTML
-            contextIsolation: false   // Needed for simple nodeIntegration usage
+            nodeIntegration: true,
+            contextIsolation: false
         }
     });
 
     win.loadFile(path.join(__dirname, 'resources', 'index.html'));
 
-    // Add this: Send the config to the UI once it's ready
     win.webContents.on('did-finish-load', () => {
         win.webContents.send('init-config', config);
     });
-});
-
-//keepalive
-const interval = setInterval(() => {
-    wss.clients.forEach((ws) => {
-        if (ws.isAlive === false) return ws.terminate();
-
-        ws.isAlive = false;
-        ws.ping(); // Send a ping to the phone
-    });
-}, 15000); // Check every 30 seconds
-
-wss.on('close', () => {
-    clearInterval(interval);
 });
