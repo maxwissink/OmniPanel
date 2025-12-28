@@ -26,7 +26,7 @@ async function keepScreenAlive() {
 function connect() {
     // Prevent multiple simultaneous connection attempts
     if (socket && (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN)) {
-        return; 
+        return;
     }
 
     console.log("Attempting to connect...");
@@ -38,6 +38,12 @@ function connect() {
 
     socket.onmessage = (event) => {
         // Handle incoming messages from PC if needed
+        const msg = JSON.parse(event.data);
+
+        if (msg.type === 'force-reload') {
+            console.log("Host changed theme. Reloading...");
+            location.reload(); // This refreshes the phone browser instantly
+        }
     };
 }
 
@@ -50,7 +56,7 @@ function startWatchdog() {
             console.warn("Watchdog detected closed connection. Reconnecting...");
             connect();
         }
-    }, 3000); 
+    }, 3000);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -60,13 +66,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
     buttons.forEach(button => {
         let rawkey = button.getAttribute('emulate-key');
-        
+
         // Cleanup: Remove spaces just like your original version
         const key = rawkey.replace(/ /g, '');
 
         button.addEventListener('click', () => {
-            
-            
+
+
             // Construct the JSON payload
             const payload = {
                 type: 'simulate-key',
@@ -74,7 +80,7 @@ window.addEventListener('DOMContentLoaded', () => {
             };
 
             console.log("Button clicked, sending:", payload);
-            
+
             // Send as a string
             socket.send(JSON.stringify(payload));
         });

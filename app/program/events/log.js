@@ -6,7 +6,6 @@ module.exports = function(type, data) {
 
     if (mainWindow) {
         // 2. Send the data to the Host's index.html
-        console.log("logging event")
         mainWindow.webContents.send('log-event', {
             timestamp: new Date().toLocaleTimeString(),
             type: type,

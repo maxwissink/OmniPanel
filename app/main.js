@@ -4,6 +4,7 @@ const http = require('http');
 const { WebSocketServer } = require('ws');
 const path = require('path');
 const fs = require('fs');
+const setupThemeManager = require('./program/themes');
 const securityFilter = require('./program/filter');
 
 // Load logic modules
@@ -36,7 +37,13 @@ expressApp.get('/internal/websocket-injection.js', (req, res) => {
 });
 
 // 3. Static Assets (CSS/Images)
-expressApp.use(express.static(path.join(__dirname, '..', 'user', config.theme)));
+expressApp.use((req, res, next) => {
+    // Dynamically build the path based on the CURRENT config.theme
+    const themeFolder = path.join(__dirname, '..', 'user', config.theme);
+
+    // Use express.static's internal logic manually
+    express.static(themeFolder)(req, res, next);
+});
 
 // 4. WebSocket Connection
 wss.on('connection', (ws) => {
@@ -45,12 +52,13 @@ wss.on('connection', (ws) => {
 });
 
 app.whenReady().then(() => {
+    setupThemeManager(config, wss);
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server: http://localhost:${config.port}`);
     });
 
-    const win = new BrowserWindow({ 
-        width: 600, 
+    const win = new BrowserWindow({
+        width: 600,
         height: 400,
         webPreferences: {
             nodeIntegration: true,    // Allows require('electron') in HTML
@@ -59,6 +67,11 @@ app.whenReady().then(() => {
     });
 
     win.loadFile(path.join(__dirname, 'resources', 'index.html'));
+
+    // Add this: Send the config to the UI once it's ready
+    win.webContents.on('did-finish-load', () => {
+        win.webContents.send('init-config', config);
+    });
 });
 
 //keepalive
@@ -69,7 +82,7 @@ const interval = setInterval(() => {
         ws.isAlive = false;
         ws.ping(); // Send a ping to the phone
     });
-}, 10000); // Check every 30 seconds
+}, 15000); // Check every 30 seconds
 
 wss.on('close', () => {
     clearInterval(interval);

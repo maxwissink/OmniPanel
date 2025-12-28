@@ -1,0 +1,47 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-image: url(../image/aopao_background.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+.absolute{
+    position: absolute;
+}
+.top {
+    top:0;
+}
+
+.container{
+    display: flex ;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding: 1rem;
+    gap: 1rem;
+    width: 100vw;
+    height: 42.86vw;
+    background-color: rgba(34, 42, 134, 0.5);
+    background-size: 80px 80px;
+    background-image:
+    linear-gradient(to right, rgb(2, 50, 0) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(2, 50, 0) 1px, transparent 1px);
+}
+
+.control-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 10rem;
+    background-color: rgba(13, 200, 252, 0.75);
+    border-radius: 0.4rem;
+    font-weight: bold;
+    font-size: large;
+    color: white;
+}

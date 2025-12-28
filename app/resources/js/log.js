@@ -1,7 +1,6 @@
-// Use Electron's IPC to listen for the log
-const { ipcRenderer } = require('electron');
-
 document.addEventListener("DOMContentLoaded", function () {
+    // Use Electron's IPC to listen for the log
+    const { ipcRenderer } = require('electron');
     const container = document.getElementById('log-container');
 
     ipcRenderer.on('log-event', (event, log) => {
