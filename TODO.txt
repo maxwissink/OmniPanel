@@ -1,9 +1,7 @@
 TODO:
- - filter out the meta/windows key
+ * filter out the meta/windows key (linux done)
  - initial popup with settings/config 
     settings include:
-    - button to start/stop the main panel
-    - display selection
     - theme selection
     - debugger option?
     - updater(or link to github)
@@ -12,8 +10,9 @@ TODO:
  - multiple panels at once?
  - multiple layers/pages in one theme without enabling code injection
  - star citizen API intergration
- - options to call other api's? (if it can be done without enabling code injection in themes)
- - allow system notifications to be displayed on top of OmniPanel
+ - options to call other api's? (if it can be done without enabling code injection in toohemes)
+ - allow system notifications to be displayed on top of OmniPanel -- not needed cus hosted
  - make a framework so its easier for people to make a theme
+ - fullscreen on client
  -
  - and more...

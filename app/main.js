@@ -48,8 +48,17 @@ app.whenReady().then(() => {
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server: http://localhost:${config.port}`);
     });
-    // Assuming your electron UI is in app/index.html
-    new BrowserWindow({ width: 600, height: 400 }).loadFile(path.join(__dirname, 'index.html'));
+
+    const win = new BrowserWindow({ 
+        width: 600, 
+        height: 400,
+        webPreferences: {
+            nodeIntegration: true,    // Allows require('electron') in HTML
+            contextIsolation: false   // Needed for simple nodeIntegration usage
+        }
+    });
+
+    win.loadFile(path.join(__dirname, 'resources', 'index.html'));
 });
 
 //keepalive
