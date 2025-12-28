@@ -4,7 +4,8 @@ const { exec } = require('child_process');
 // You can use a library like 'robotjs' here for the actual OS-level typing
 module.exports = function (type, data, ws) {
     if (type === 'simulate-key') {
-        const safeKey = data.replace(/([\\$`"|])/g, '\\$1');
+        let safeKey = data.replace(/([\\$`"|])/g, '\\$1');
+        safeKey = safeKey.replace("Super", "not_allowed");
 
         const command = `xdotool key "${safeKey}"`;
         //const command = `xdotool windowactivate $(xdotool search 'star citizen' | tail -n 1) && xdotool key "${safeKey}"`;
