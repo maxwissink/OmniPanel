@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(log);
         if (container) {
             container.prepend(entry); // Newest logs at the top
+            while (container.children.length > 500) {
+                container.lastElementChild.remove();
+            }
         }
     });
 });
