@@ -85,6 +85,30 @@ window.addEventListener('DOMContentLoaded', () => {
             socket.send(JSON.stringify(payload));
         });
     });
+
+    // Select any element with the emulate-slider attribute
+    const sliders = document.querySelectorAll('[emulate-slider]');
+    console.log(`Binder found ${sliders.length} sliders`);
+
+    sliders.forEach(slider => {
+        // Get the Axis ID (e.g., "1" from your HTML)
+        const axisId = parseInt(slider.getAttribute('emulate-slider'));
+
+        slider.addEventListener('input', (event) => {
+            // Construct the payload with both ID and Value
+            const payload = {
+                type: 'simulate-slider',
+                data: {
+                    id: axisId,
+                    value: parseInt(event.target.value)
+                }
+            };
+
+            // Send to your Node.js server
+            socket.send(JSON.stringify(payload));
+        });
+    });
+
     connect();
     startWatchdog();
     keepScreenAlive();
