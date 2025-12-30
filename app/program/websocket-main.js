@@ -30,7 +30,13 @@ module.exports = function handleSocket(ws) {
             const message = JSON.parse(rawMessage.toString());
             const { type, data } = message;
 
-            console.log(`[WS] Event Received: ${type} -> ${data}`);
+            let displayData = data;
+            if (typeof data === 'object' && data !== null) {
+                displayData = Object.entries(data)
+                    .map(([key, val]) => `${key}: ${val}`)
+                    .join(', ');
+            }
+            console.log(`[WS] Event Received: ${type} -> ${displayData}`);
 
             // Loop through all loaded event files and execute them
             eventHandlers.forEach(handler => {
