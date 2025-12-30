@@ -38,10 +38,10 @@
 <ul>
     <li><strong>Dynamic Theming:</strong> All visual assets live in the <code>user/</code> directory. Swap themes by simply changing the configuration in <code>config.json</code>.</li>
     <li><strong>JS-Free Themes:</strong> For security, themes consist <em>strictly</em> of HTML and CSS. OmniPanel automatically injects the necessary WebSocket logic to handle communication.</li>
-    <li><strong>Custom Keybinds:</strong> Use the <code>emulate-key</code> attribute in your HTML to map any button to a PC keystroke:</li>
+    <li><strong>Custom Keybinds:</strong> Use the <code>emulate-button</code> attribute in your HTML to map any button to a PC keystroke:</li>
 </ul>
 
-<pre><code>&lt;button emulate-key="F5"&gt;Quick Save&lt;/button&gt;</code></pre>
+<pre><code>&lt;button emulate-button="F5"&gt;Quick Save&lt;/button&gt;</code></pre>
 
 <hr>
 

@@ -8,7 +8,7 @@ function startJoystickProcess() {
     // Start the python script and keep it open
     pyProcess = spawn('python3', [scriptPath]);
 
-// This captures your print("...") statements from Python
+    // This captures your print("...") statements from Python
     pyProcess.stdout.on('data', (data) => {
         console.log(`[Python Joystick]: ${data.toString().trim()}`);
     });
@@ -28,9 +28,12 @@ function startJoystickProcess() {
 startJoystickProcess();
 
 module.exports = function (type, payload) {
-    if (type === 'simulate-slider' && pyProcess) {
+    // Inside your message listener
+    if (type === 'simulate-button') {
+        const { id, state } = payload;
+        pyProcess.stdin.write(`btn,${id},${state}\n`);
+    } else if (type === 'simulate-slider') {
         const { id, value } = payload;
-        // Send the data to the python script via "stdin"
-        pyProcess.stdin.write(`${id},${value}\n`);
+        pyProcess.stdin.write(`ax,${id},${value}\n`);
     }
 };
