@@ -16,6 +16,9 @@
         <div class="deck-wrapper">
 
             <section id="page1" class="main-panel button-background">
+                <div class="sticky-title-container">
+                    <span class="status-value">FLIGHT SYSTEMS</span>
+                </div>
                 <div class="button-row">
                     <button emulate-button="0" class="control-button">Power</button>
                     <button emulate-button="1" class="control-button">Engines</button>
@@ -40,6 +43,9 @@
             </section>
 
             <section id="page2" class="main-panel button-background">
+                <div class="sticky-title-container">
+                    <span class="status-value">UTILITY & SAFETY</span>
+                </div>
                 <div class="button-row">
                     <button emulate-button="11" class="control-button">Shield Fwd</button>
                     <button emulate-button="12" class="control-button">Shield Back</button>
@@ -68,7 +74,12 @@
 
     <nav class="mfd-nav">
         <a href="#page1" class="nav-item">FLIGHT</a>
-        <div class="nav-spacer"></div>
+
+        <div class="nav-status-display">
+            <span class="status-label">CURRENT DECK</span>
+            <div class="title-window"></div>
+        </div>
+
         <a href="#page2" class="nav-item">UTILITY</a>
     </nav>
 

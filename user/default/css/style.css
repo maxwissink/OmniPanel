@@ -1,87 +1,56 @@
-/* --- RESET & BASE --- */
+/* --- 1. RESET & BASE --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    /* Remove the blue box on tap */
+    user-select: none; /* Prevents text selection during gaming */
 }
 
 html {
     scroll-behavior: smooth;
+    background: #000;
 }
 
 body {
-    background-color: #000;
     background-image: url(../image/aopao_background.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    height: 100vh;
+    height: 100dvh;
     width: 100vw;
     overflow: hidden;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.fullscreen-toggle {
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    z-index: 9999;
-    /* Higher than everything else */
-
-    background: rgba(0, 40, 60, 0.7);
-    color: #0dc8fc;
-    border: 1px solid #0dc8fc;
-    padding: 8px 12px;
-    font-size: 0.7rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    border-radius: 4px;
-    cursor: pointer;
-    backdrop-filter: blur(5px);
-    transition: all 0.2s ease;
-}
-
-.fullscreen-toggle:active {
-    background: #0dc8fc;
-    color: #000;
-}
-
-/* --- VIEWPORT & SCROLLING --- */
+/* --- 2. VIEWPORT & PAGING --- */
 .deck-viewport {
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    /* This allows the browser to handle swiping while ignoring button taps */
-    touch-action: pan-x;
+    touch-action: pan-x; /* Essential for swiping while allowing button taps */
 }
 
 .deck-viewport::-webkit-scrollbar {
     display: none;
-    /* Hide scrollbar */
 }
 
 .deck-wrapper {
     display: flex;
-    width: 200vw;
-    /* Total width for 2 pages */
+    width: 200vw; /* Adjust based on number of pages */
     height: 100%;
 }
 
-/* --- PAGE PANELS --- */
 .main-panel {
+    position: relative; /* Crucial for sticky title positioning */
     flex: 0 0 100vw;
-    height: 100%;
+    height: 100dvh;
     scroll-snap-align: start;
     display: grid;
-    grid-template-rows: repeat(3, 1fr) auto;
-    /* 3 rows of buttons + title space */
-    padding-bottom: 80px;
-    /* Leave room for Nav Bar */
+    grid-template-rows: repeat(3, 1fr) 100px; /* 3 button rows + room for Nav Bar */
 }
 
 .button-background {
@@ -92,74 +61,82 @@ body {
         linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);
 }
 
-/* --- BUTTONS & SLIDERS --- */
+/* --- 3. BUTTONS & SLIDERS --- */
 .button-row {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    padding: 15px;
+    gap: 12px;
+    padding: 20px;
     align-items: center;
 }
 
 .control-button {
     width: 100%;
     height: 80%;
-    background-color: rgba(13, 200, 252, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
+    background-color: rgba(13, 200, 252, 0.95);
+    border: none;
+    border-radius: 0.4rem;
     color: white;
     font-weight: bold;
-    font-size: 0.9rem;
-    text-transform: uppercase;
+    font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 4px 0 rgba(0, 100, 150, 1);
-    transition: all 0.05s;
+    touch-action: manipulation; /* Allows the parent to still swipe */
+    -webkit-user-drag: none;
+    user-select: none;         /* Prevents highlighting text */
+    -webkit-user-drag: none;   /* Prevents the browser from trying to 'drag' the button image */
+    touch-action: none;        /* Blocks touch-swiping on the buttons */
 }
 
-.control-button:active {
+.control-button:active, .control-button.active {
     background-color: #fff;
     color: #0dc8fc;
-    transform: translateY(3px);
-    box-shadow: 0 1px 0 rgba(0, 100, 150, 1);
+    transform: scale(0.98);
 }
 
 .slider-container {
     grid-column: span 3;
-    /* Slider takes up more space */
     padding: 0 10px;
 }
 
 .control-slider {
     width: 100%;
-    height: 30px;
-    cursor: pointer;
+    height: 40px;
+    touch-action: none; /* Sliders must block swiping to work */
 }
 
-/* --- NAVIGATION BAR --- */
+/* --- 4. NAVIGATION BAR (FIXED) --- */
 .mfd-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100vw;
-    height: 70px;
-    background: linear-gradient(to top, #001a00, rgba(0, 20, 0, 0.8));
-    border-top: 2px solid #0dc8fc;
+    height: 100px;
+    background: rgba(0, 15, 0, 0.95);
+    border-top: 3px solid #0dc8fc;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
+    align-items: stretch;
+    padding: 10px;
     z-index: 1000;
+    gap: 15px;
 }
 
 .nav-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #0dc8fc;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 1.2rem;
-    letter-spacing: 2px;
-    padding: 10px 30px;
-    border: 1px solid rgba(13, 200, 252, 0.3);
-    background: rgba(13, 200, 252, 0.05);
+    font-weight: 800;
+    font-size: 1.4rem;
+    border: 2px solid rgba(13, 200, 252, 0.4);
+    background: rgba(13, 200, 252, 0.1);
+    border-radius: 8px;
+    touch-action: none; /* Prevents swipe interference on nav click */
+    user-select: none;         /* Prevents highlighting text */
+    -webkit-user-drag: none;   /* Prevents the browser from trying to 'drag' the button image */
+    touch-action: none;        /* Blocks touch-swiping on the buttons */
 }
 
 .nav-item:active {
@@ -167,14 +144,63 @@ body {
     color: #000;
 }
 
-.nav-spacer {
-    flex-grow: 1;
+.nav-status-display {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
 }
 
-.page-indicator {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.2);
-    font-size: 0.8rem;
-    letter-spacing: 5px;
-    padding-bottom: 10px;
+.status-label {
+    font-size: 0.6rem;
+    color: rgba(13, 200, 252, 0.6);
+    letter-spacing: 3px;
+    margin-bottom: 50px;
+}
+
+/* --- 5. PURE CSS STICKY TITLES --- */
+.sticky-title-container {
+    position: absolute;
+    bottom: 0; /* Sits at the bottom of the main-panel */
+    left: 0;
+    width: 100%;
+    height: 100px; /* Matches Nav Bar height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Lets you click 'through' to the nav bar */
+    z-index: 1001; /* Sits on top of nav bar background */
+}
+
+.status-value {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(13, 200, 252, 0.8);
+    letter-spacing: 1px;
+}
+
+/* --- 6. FULLSCREEN BUTTON --- */
+.fullscreen-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 9999;
+    background: rgba(0, 40, 60, 0.7);
+    color: #0dc8fc;
+    border: 1px solid #0dc8fc;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+
+.fullscreen-toggle:active {
+    background: #0dc8fc;
+    color: #000;
 }
