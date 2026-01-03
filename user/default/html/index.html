@@ -1,35 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Default theme: star citizen</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>OmniPanel: Star Citizen</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-    <div class="button-background">
-        <div class="main-panel">
-            <div class="button-row">
-                <button emulate-button="0" class="control-button">Power</button>
-                <button emulate-button="1" class="control-button">Engines</button>
-                <button emulate-button="2" class="control-button">Shields</button>
-                <button emulate-button="3" class="control-button">Weapons</button>
-            </div>
-            <div class="button-row">
-                <button emulate-button="4" class="control-button">Decoy +</button>
-                <button emulate-button="5" class="control-button">Decoy -</button>
-                <input emulate-slider="0" class="control-slider" type="range" min="0" max="255" value="50">
-            </div>
-            <div class="button-row">
-                <button emulate-button="6" class="control-button">Open all doors</button>
-                <button emulate-button="7" class="control-button">Close all doors</button>
-                <button emulate-button="8" class="control-button">Lights</button>
-                <button emulate-button="9" class="control-button">Mining/Salvage mode</button>
-                <button emulate-button="10" class="control-button">Scan mode</button>
-            </div>
-            <h1 style="text-align: center;">pagination etc</h1>
+    <button id="fullscreen-btn" class="fullscreen-toggle">
+        ENTER FULLSCREEN
+    </button>
+    <div class="deck-viewport">
+        <div class="deck-wrapper">
+
+            <section id="page1" class="main-panel button-background">
+                <div class="button-row">
+                    <button emulate-button="0" class="control-button">Power</button>
+                    <button emulate-button="1" class="control-button">Engines</button>
+                    <button emulate-button="2" class="control-button">Shields</button>
+                    <button emulate-button="3" class="control-button">Weapons</button>
+                </div>
+                <div class="button-row">
+                    <button emulate-button="4" class="control-button">Decoy +</button>
+                    <button emulate-button="5" class="control-button">Decoy -</button>
+                    <div class="slider-container">
+                        <input emulate-slider="0" class="control-slider" type="range" min="0" max="255" value="128">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button emulate-button="6" class="control-button">Open Doors</button>
+                    <button emulate-button="7" class="control-button">Close Doors</button>
+                    <button emulate-button="8" class="control-button">Lights</button>
+                    <button emulate-button="9" class="control-button">Mining Mode</button>
+                    <button emulate-button="10" class="control-button">Scan Mode</button>
+                </div>
+                <h1 class="page-indicator">FLIGHT SYSTEMS [01]</h1>
+            </section>
+
+            <section id="page2" class="main-panel button-background">
+                <div class="button-row">
+                    <button emulate-button="11" class="control-button">Shield Fwd</button>
+                    <button emulate-button="12" class="control-button">Shield Back</button>
+                    <button emulate-button="13" class="control-button">Shield Left</button>
+                    <button emulate-button="14" class="control-button">Shield Right</button>
+                </div>
+                <div class="button-row">
+                    <button emulate-button="15" class="control-button">Quantum</button>
+                    <button emulate-button="16" class="control-button">Jettison</button>
+                    <div class="slider-container">
+                        <input emulate-slider="1" class="control-slider" type="range" min="0" max="255" value="0">
+                    </div>
+                </div>
+                <div class="button-row">
+                    <button emulate-button="17" class="control-button">Extinguish</button>
+                    <button emulate-button="18" class="control-button">Eject</button>
+                    <button emulate-button="19" class="control-button">Self Destruct</button>
+                    <button emulate-button="20" class="control-button">Wipe Visor</button>
+                    <button emulate-button="21" class="control-button">Flashlight</button>
+                </div>
+                <h1 class="page-indicator">UTILITY & SAFETY [02]</h1>
+            </section>
+
         </div>
     </div>
+
+    <nav class="mfd-nav">
+        <a href="#page1" class="nav-item">FLIGHT</a>
+        <div class="nav-spacer"></div>
+        <a href="#page2" class="nav-item">UTILITY</a>
+    </nav>
+
 </body>
 
 </html>

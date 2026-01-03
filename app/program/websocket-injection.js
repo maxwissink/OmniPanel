@@ -60,32 +60,70 @@ function startWatchdog() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    const fsBtn = document.getElementById('fullscreen-btn');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            // ENTER FULLSCREEN
+            document.documentElement.requestFullscreen().catch(err => {
+                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+            });
+        } else {
+            // EXIT FULLSCREEN
+            document.exitFullscreen();
+        }
+    });
+
+    // Update button text based on state
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.innerText = "EXIT FULLSCREEN";
+            fsBtn.style.borderColor = "#ff3333"; // Make it red when in fullscreen
+            fsBtn.style.color = "#ff3333";
+        } else {
+            fsBtn.innerText = "ENTER FULLSCREEN";
+            fsBtn.style.borderColor = "#0dc8fc";
+            fsBtn.style.color = "#0dc8fc";
+        }
+    });
+
+
     const buttons = document.querySelectorAll('[emulate-button]');
 
     buttons.forEach(button => {
         const btnId = button.getAttribute('emulate-button');
 
-        // MOUSE DOWN / TOUCH START (Press)
-        ['mousedown', 'touchstart'].forEach(type => {
-            button.addEventListener(type, (e) => {
-                e.preventDefault();
-                socket.send(JSON.stringify({
-                    type: 'simulate-button',
-                    data: { id: btnId, state: 1 }
-                }));
-                button.classList.add('active'); // CSS feedback
-            });
+        // Use pointerdown instead of touchstart/mousedown
+        button.addEventListener('pointerdown', (e) => {
+            // Do NOT use e.preventDefault() here! 
+            // That is what kills the swipe.
+
+            socket.send(JSON.stringify({
+                type: 'simulate-button',
+                data: { id: btnId, state: 1 }
+            }));
+            button.classList.add('active');
+
+            // Ensure the button keeps tracking the pointer even if the finger 
+            // moves off the button (important for fast gaming)
+            button.setPointerCapture(e.pointerId);
         });
 
-        // MOUSE UP / TOUCH END (Release)
-        ['mouseup', 'touchend', 'touchcancel'].forEach(type => {
-            button.addEventListener(type, () => {
-                socket.send(JSON.stringify({
-                    type: 'simulate-button',
-                    data: { id: btnId, state: 0 }
-                }));
-                button.classList.remove('active');
-            });
+        button.addEventListener('pointerup', () => {
+            socket.send(JSON.stringify({
+                type: 'simulate-button',
+                data: { id: btnId, state: 0 }
+            }));
+            button.classList.remove('active');
+        });
+
+        button.addEventListener('pointercancel', () => {
+            // This triggers if the browser decides the touch is actually a SWIPE
+            socket.send(JSON.stringify({
+                type: 'simulate-button',
+                data: { id: btnId, state: 0 }
+            }));
+            button.classList.remove('active');
         });
     });
 

@@ -1,75 +1,180 @@
+/* --- RESET & BASE --- */
 * {
-margin: 0;
-padding: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove the blue box on tap */
 }
 
-body{
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #000;
     background-image: url(../image/aopao_background.png);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed;
     height: 100vh;
-}
-
-.button-background{
-    background-color: rgba(36, 134, 34, 0.5);
-    background-size: 80px 80px;
-    background-image:
-    linear-gradient(to right, rgb(2, 50, 0) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(2, 50, 0) 1px, transparent 1px);
-    height: 100%;
-}
-
-.absolute{
-    position: absolute;
-}
-.top {
-    top:0;
-}
-
-.main-panel {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
-    height: 100%;
     width: 100vw;
-    box-sizing: border-box;
+    overflow: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-.button-row{
+.fullscreen-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 9999;
+    /* Higher than everything else */
+
+    background: rgba(0, 40, 60, 0.7);
+    color: #0dc8fc;
+    border: 1px solid #0dc8fc;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.2s ease;
+}
+
+.fullscreen-toggle:active {
+    background: #0dc8fc;
+    color: #000;
+}
+
+/* --- VIEWPORT & SCROLLING --- */
+.deck-viewport {
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    /* This allows the browser to handle swiping while ignoring button taps */
+    touch-action: pan-x;
+}
+
+.deck-viewport::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar */
+}
+
+.deck-wrapper {
+    display: flex;
+    width: 200vw;
+    /* Total width for 2 pages */
+    height: 100%;
+}
+
+/* --- PAGE PANELS --- */
+.main-panel {
+    flex: 0 0 100vw;
+    height: 100%;
+    scroll-snap-align: start;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr) auto;
+    /* 3 rows of buttons + title space */
+    padding-bottom: 80px;
+    /* Leave room for Nav Bar */
+}
+
+.button-background {
+    background-color: rgba(36, 134, 34, 0.15);
+    background-size: 60px 60px;
+    background-image:
+        linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);
+}
+
+/* --- BUTTONS & SLIDERS --- */
+.button-row {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 1%;
-    padding: 1%;
-    padding-bottom: 0;
-    /* margin: 0 auto; */
-    height: 100%;
-    box-sizing: border-box;
-}
-
-.button-row:last-child{
-    padding-bottom: 1%;    
+    gap: 10px;
+    padding: 15px;
+    align-items: center;
 }
 
 .control-button {
     width: 100%;
-    /* aspect-ratio: 1 / 1; */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    
-    /* border: none; */
-    background: #333;
+    height: 80%;
+    background-color: rgba(13, 200, 252, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
     color: white;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    background-color: rgba(13, 200, 252, 0.95);
-    border-radius: 0.4rem;
-    padding: 10px;
-
-    box-sizing: border-box;
     font-weight: bold;
-    font-size: large;
-    color: white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 0 rgba(0, 100, 150, 1);
+    transition: all 0.05s;
+}
+
+.control-button:active {
+    background-color: #fff;
+    color: #0dc8fc;
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 rgba(0, 100, 150, 1);
+}
+
+.slider-container {
+    grid-column: span 3;
+    /* Slider takes up more space */
+    padding: 0 10px;
+}
+
+.control-slider {
+    width: 100%;
+    height: 30px;
+    cursor: pointer;
+}
+
+/* --- NAVIGATION BAR --- */
+.mfd-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 70px;
+    background: linear-gradient(to top, #001a00, rgba(0, 20, 0, 0.8));
+    border-top: 2px solid #0dc8fc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.nav-item {
+    color: #0dc8fc;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    padding: 10px 30px;
+    border: 1px solid rgba(13, 200, 252, 0.3);
+    background: rgba(13, 200, 252, 0.05);
+}
+
+.nav-item:active {
+    background: #0dc8fc;
+    color: #000;
+}
+
+.nav-spacer {
+    flex-grow: 1;
+}
+
+.page-indicator {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+    padding-bottom: 10px;
 }
