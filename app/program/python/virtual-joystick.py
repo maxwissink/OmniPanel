@@ -81,9 +81,6 @@ def main():
                     button_id = int(target_id) + 1
                     button_state = 1 if int(val) == 1 else 0
                     
-                    # Print for debugging so you can see it in the console
-                    print(f"vJoy: Pressing Button {button_id} with state {button_state}", flush=True)
-                    
                     # Some versions of vJoy prefer this method if set_button fails
                     j.set_button(button_id, button_state)
                 else:
