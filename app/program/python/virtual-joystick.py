@@ -12,11 +12,15 @@ if IS_WINDOWS:
         print("Error: pyvjoy not found. Run 'pip install pyvjoy'", flush=True)
         sys.exit(1)
 else:
-    from evdev import UInput, ecodes as e, AbsInfo
+    try:
+        from evdev import UInput, ecodes as e, AbsInfo
+    except ImportError:
+        print("Error: evdev not found. Run 'pip install evdev'", flush=True)
+        sys.exit(1)
 
 def setup_device():
     if IS_WINDOWS:
-        print("Initializing Windows (vJoy Device 1)...", flush=True)
+        print("Initializing Windows (vJoy Generic Joystick)...", flush=True)
         # Initialize vJoy Device #1
         j = pyvjoy.VJoyDevice(1)
         
@@ -35,16 +39,25 @@ def setup_device():
         return j, win_axis_map
     else:
         print("Initializing Linux (uinput Generic Joystick)...", flush=True)
+        
+        # 8 Axes for Linux
         axis_map = [e.ABS_X, e.ABS_Y, e.ABS_Z, e.ABS_RX, e.ABS_RY, e.ABS_RZ, e.ABS_THROTTLE, e.ABS_RUDDER]
-        button_map = [code for code in range(0x100, 0x120)] # 32 buttons (BTN_0 to BTN_31)
+        
+        # 16 Buttons for Linux (BTN_0 to BTN_15)
+        button_map = [code for code in range(0x100, 0x110)] 
         
         cap = {
             e.EV_ABS: [(ax, AbsInfo(value=128, min=0, max=255, fuzz=0, flat=0, resolution=0)) for ax in axis_map],
             e.EV_KEY: button_map
         }
+        
         ui = UInput(cap, name='OmniPanel-Virtual-Controller')
-        for ax in axis_map: ui.write(e.EV_ABS, ax, 128)
+        
+        # Neutralize axes immediately
+        for ax in axis_map:
+            ui.write(e.EV_ABS, ax, 128)
         ui.syn()
+        
         return ui, axis_map, button_map
 
 def main():
@@ -55,7 +68,7 @@ def main():
     else:
         ui, axis_map, button_map = device_data
 
-    print("Joystick Ready (vJoy). Monitoring Stdin...", flush=True)
+    print("Joystick Ready. Monitoring Stdin...", flush=True)
 
     for line in sys.stdin:
         try:
@@ -67,22 +80,19 @@ def main():
             if cmd_type == 'ax':
                 if IS_WINDOWS:
                     # vJoy axes expect 0x0000 to 0x8000 (0 to 32768)
-                    # Convert your 0-255 input to vJoy range
                     vjoy_val = int((val / 255) * 32768)
                     if target_id < len(win_axis_map):
                         j.set_axis(win_axis_map[target_id], vjoy_val)
                 else:
+                    # 'e' is now available globally
                     ui.write(e.EV_ABS, axis_map[target_id], val)
                     ui.syn()
 
             elif cmd_type == 'btn':
                 if IS_WINDOWS:
-                    # Explicitly ensure we are sending integers
+                    # vJoy buttons are 1-indexed (Button 0 in code = Button 1 in vJoy)
                     button_id = int(target_id) + 1
-                    button_state = 1 if int(val) == 1 else 0
-                    
-                    # Some versions of vJoy prefer this method if set_button fails
-                    j.set_button(button_id, button_state)
+                    j.set_button(button_id, 1 if val == 1 else 0)
                 else:
                     if target_id < len(button_map):
                         ui.write(e.EV_KEY, button_map[target_id], val)
