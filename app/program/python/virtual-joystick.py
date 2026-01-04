@@ -77,9 +77,15 @@ def main():
 
             elif cmd_type == 'btn':
                 if IS_WINDOWS:
-                    # pyvjoy buttons are 1-indexed (1-128)
-                    # Your target_id 0 becomes vJoy Button 1
-                    j.set_button(target_id + 1, 1 if val == 1 else 0)
+                    # Explicitly ensure we are sending integers
+                    button_id = int(target_id) + 1
+                    button_state = 1 if int(val) == 1 else 0
+                    
+                    # Print for debugging so you can see it in the console
+                    print(f"vJoy: Pressing Button {button_id} with state {button_state}", flush=True)
+                    
+                    # Some versions of vJoy prefer this method if set_button fails
+                    j.set_button(button_id, button_state)
                 else:
                     if target_id < len(button_map):
                         ui.write(e.EV_KEY, button_map[target_id], val)
