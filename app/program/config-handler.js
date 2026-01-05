@@ -3,9 +3,12 @@ const path = require('path');
 const { ipcMain } = require('electron');
 const joystickHandler = require('./events/joystick');
 
-module.exports = function (config, wss, restartPythonCallback) {
+module.exports = function (config, wss) {
     const userPath = path.join(__dirname, '..', '..', 'user');
     const configPath = path.join(__dirname, '..', '..', 'config.json');
+
+    // Timer variable for the debounce
+    let debounceTimer = null;
 
     // 1. Get List of Folders in /user
     ipcMain.handle('get-themes', async () => {
@@ -24,7 +27,6 @@ module.exports = function (config, wss, restartPythonCallback) {
         config.theme = selectedTheme;
         saveConfig(config);
 
-        // Broadcast Refresh to mobile devices
         wss.clients.forEach((client) => {
             if (client.readyState === 1) {
                 client.send(JSON.stringify({ type: 'force-reload' }));
@@ -32,12 +34,24 @@ module.exports = function (config, wss, restartPythonCallback) {
         });
     });
 
-    // 3. NEW: Save Joystick Count
+    // 3. Save Joystick Count with Debounced Restart
     ipcMain.on('save-joystick-count', (event, count) => {
+        // Update local object and save to file immediately
         config.numJoysticks = parseInt(count) || 1;
         saveConfig(config);
-        console.log(`Joystick count updated to: ${config.numJoysticks}`);
-        joystickHandler('reload-backend', {});
+        console.log(`Joystick count saved to config: ${config.numJoysticks}`);
+
+        // DEBOUNCE LOGIC:
+        // Clear any previous timer if the user clicked again quickly
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+
+        // Wait 1 second after the LAST click before restarting Python
+        debounceTimer = setTimeout(() => {
+            console.log("[Node] Restarting virtual joysticks...");
+            joystickHandler('reload-backend', {});
+        }, 1000); 
     });
 
     // Helper function to keep code clean
