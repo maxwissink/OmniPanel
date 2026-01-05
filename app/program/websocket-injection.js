@@ -88,64 +88,67 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
 
+    // Helper function to find which Joystick index an element belongs to
+    function getJoystickIndex(element) {
+        const parent = element.closest('[virtual-joystick]');
+        return parent ? parent.getAttribute('virtual-joystick') : "0";
+    }
+
     const buttons = document.querySelectorAll('[emulate-button]');
 
     buttons.forEach(button => {
         const btnId = button.getAttribute('emulate-button');
 
-        // Use pointerdown instead of touchstart/mousedown
         button.addEventListener('pointerdown', (e) => {
-            // Do NOT use e.preventDefault() here! 
-            // That is what kills the swipe.
+            const jsIndex = getJoystickIndex(button); // Find parent JS ID
 
             socket.send(JSON.stringify({
                 type: 'simulate-button',
-                data: { id: btnId, state: 1 }
+                data: {
+                    js: jsIndex, // New: Joystick Index
+                    id: btnId,
+                    state: 1
+                }
             }));
             button.classList.add('active');
-
-            // Ensure the button keeps tracking the pointer even if the finger 
-            // moves off the button (important for fast gaming)
             button.setPointerCapture(e.pointerId);
         });
 
         button.addEventListener('pointerup', () => {
+            const jsIndex = getJoystickIndex(button);
             socket.send(JSON.stringify({
                 type: 'simulate-button',
-                data: { id: btnId, state: 0 }
+                data: { js: jsIndex, id: btnId, state: 0 }
             }));
             button.classList.remove('active');
         });
 
         button.addEventListener('pointercancel', () => {
-            // This triggers if the browser decides the touch is actually a SWIPE
+            const jsIndex = getJoystickIndex(button);
             socket.send(JSON.stringify({
                 type: 'simulate-button',
-                data: { id: btnId, state: 0 }
+                data: { js: jsIndex, id: btnId, state: 0 }
             }));
             button.classList.remove('active');
         });
     });
 
-    // Select any element with the emulate-slider attribute
     const sliders = document.querySelectorAll('[emulate-slider]');
-    console.log(`Binder found ${sliders.length} sliders`);
 
     sliders.forEach(slider => {
-        // Get the Axis ID (e.g., "1" from your HTML)
         const axisId = parseInt(slider.getAttribute('emulate-slider'));
 
         slider.addEventListener('input', (event) => {
-            // Construct the payload with both ID and Value
+            const jsIndex = getJoystickIndex(slider); // Find parent JS ID
+
             const payload = {
                 type: 'simulate-slider',
                 data: {
+                    js: jsIndex, // New: Joystick Index
                     id: axisId,
                     value: parseInt(event.target.value)
                 }
             };
-
-            // Send to your Node.js server
             socket.send(JSON.stringify(payload));
         });
     });

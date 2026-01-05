@@ -1,41 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
     const { ipcRenderer } = require('electron');
     const select = document.getElementById('theme-select');
+    const joystickInput = document.getElementById('joystick-count'); // New reference
 
     async function initializeSettings() {
-    // 1. Get the list (this is a simple array: ['theme1', 'theme2'])
-    const themes = await ipcRenderer.invoke('get-themes');
+        // Populate Themes
+        const themes = await ipcRenderer.invoke('get-themes');
+        select.innerHTML = '';
+        themes.allThemes.forEach(theme => {
+            const opt = document.createElement('option');
+            opt.value = theme;
+            opt.textContent = theme;
+            select.appendChild(opt);
+        });
 
-    // 2. Clear and populate
-    select.innerHTML = '';
-    themes.allThemes.forEach(theme => {
-        const opt = document.createElement('option');
-        opt.value = theme;
-        opt.textContent = theme;
-        select.appendChild(opt);
-    });
+        // Handle Config Load
+        ipcRenderer.on('init-config', (event, currentConfig) => {
+            select.value = currentConfig.theme;
+            joystickInput.value = currentConfig.numJoysticks || 1; // Load from config
+            console.log("Config loaded:", currentConfig);
+        });
 
-    /** * THE TRICK: 
-     * We don't know if 'init-config' will arrive BEFORE or AFTER 
-     * the themes are loaded. So we handle both cases.
-     **/
+        ipcRenderer.send('request-current-config'); 
+    }
 
-    // Case A: The 'init-config' event arrives from Main
-    ipcRenderer.on('init-config', (event, currentConfig) => {
-        select.value = currentConfig.theme;
-        console.log("Config received. Theme set to:", currentConfig.theme);
-    });
-
-    // Case B: Request the config manually just in case 'did-finish-load' 
-    // fired before this script was ready to listen.
-    ipcRenderer.send('request-current-config'); 
-}
-
-    // Handle manual changes
+    // Save Theme change
     select.addEventListener('change', () => {
         ipcRenderer.send('save-theme', select.value);
     });
 
-    // Run on startup
+    // Save Joystick Count change
+    joystickInput.addEventListener('change', () => {
+        const count = parseInt(joystickInput.value);
+        ipcRenderer.send('save-joystick-count', count);
+    });
+
     initializeSettings();
 });

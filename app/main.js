@@ -3,7 +3,7 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
-const setupThemeManager = require('./program/themes');
+const setupConfigHandler = require('./program/config-handler');
 const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
 
@@ -46,7 +46,7 @@ expressApp.use((req, res, next) => {
 
 
 app.whenReady().then(() => {
-    setupThemeManager(config, wss);
+    setupConfigHandler(config, wss);
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server: http://localhost:${config.port}`);
     });

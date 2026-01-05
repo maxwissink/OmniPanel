@@ -1,39 +1,73 @@
 const { spawn } = require('child_process');
+const fs = require('fs'); // Make sure this is at the top of the file
 const path = require('path');
 const scriptPath = path.join(__dirname, '../python/virtual-joystick.py');
 
 let pyProcess = null;
 
 function startJoystickProcess() {
-    // Start the python script and keep it open
-    pyProcess = spawn('python3', [scriptPath]);
+    let count = 1; // Default fallback
 
-    // This captures your print("...") statements from Python
+    try {
+        // Path to your config.json (adjust path if necessary)
+        const configPath = path.join(__dirname, '..', '..', '..', 'config.json');
+
+        if (fs.existsSync(configPath)) {
+            const configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+            count = configData.numJoysticks || 1;
+        }
+    } catch (err) {
+        console.error("[Node] Error reading config for Python startup:", err);
+    }
+
+    console.log(`[Node] Launching Python with ${count} joysticks...`);
+
+    // Pass the count as the second argument in the array
+    pyProcess = spawn('python3', [scriptPath, count.toString()]);
+
     pyProcess.stdout.on('data', (data) => {
         console.log(`[Python Joystick]: ${data.toString().trim()}`);
     });
 
-    // This captures Python errors (like missing libraries)
     pyProcess.stderr.on('data', (data) => {
         console.error(`[Python ERROR]: ${data.toString().trim()}`);
     });
 
     pyProcess.on('close', (code) => {
         console.log(`Joystick process exited with code ${code}. Restarting...`);
-        setTimeout(startJoystickProcess, 1000); // Auto-restart if it crashes
+        setTimeout(startJoystickProcess, 1000);
     });
 }
 
-// Start the process once when the app starts
+function reloadJoysticks() {
+    if (pyProcess) {
+        console.log("[Node] Config change detected. Restarting Python backend...");
+        // This triggers the 'close' event, which calls startJoystickProcess() again
+        pyProcess.kill();
+    } else {
+        startJoystickProcess();
+    }
+}
+
+// Start the process once
 startJoystickProcess();
 
 module.exports = function (type, payload) {
-    // Inside your message listener
+    // NEW: Handle a manual reload request from the main process
+    if (type === 'reload-backend') {
+        reloadJoysticks();
+        return;
+    }
+
+    if (!pyProcess) return;
+
+    const jsIndex = payload.js !== undefined ? payload.js : 0;
+
     if (type === 'simulate-button') {
         const { id, state } = payload;
-        pyProcess.stdin.write(`btn,${id},${state}\n`);
+        pyProcess.stdin.write(`${jsIndex},btn,${id},${state}\n`);
     } else if (type === 'simulate-slider') {
         const { id, value } = payload;
-        pyProcess.stdin.write(`ax,${id},${value}\n`);
+        pyProcess.stdin.write(`${jsIndex},ax,${id},${value}\n`);
     }
 };
