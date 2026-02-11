@@ -28,9 +28,9 @@ function connect() {
     if (socket && (socket.readyState === WebSocket.CONNECTING || socket.readyState === WebSocket.OPEN)) {
         return;
     }
-
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     console.log("Attempting to connect...");
-    socket = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
+    socket = new WebSocket(`${protocol}//${window.location.hostname}:${window.location.port}`);
 
     socket.onopen = () => {
         console.log("Connected to OmniPanel Host");
