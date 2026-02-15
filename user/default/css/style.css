@@ -4,7 +4,8 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-tap-highlight-color: transparent;
-    user-select: none; /* Prevents text selection during gaming */
+    user-select: none;
+    /* Prevents text selection during gaming */
 }
 
 html {
@@ -31,7 +32,8 @@ body {
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
-    touch-action: pan-x; /* Essential for swiping while allowing button taps */
+    touch-action: pan-x;
+    /* Essential for swiping while allowing button taps */
 }
 
 .deck-viewport::-webkit-scrollbar {
@@ -40,17 +42,20 @@ body {
 
 .deck-wrapper {
     display: flex;
-    width: 200vw; /* Adjust based on number of pages */
+    width: 200vw;
+    /* Adjust based on number of pages */
     height: 100%;
 }
 
 .main-panel {
-    position: relative; /* Crucial for sticky title positioning */
+    position: relative;
+    /* Crucial for sticky title positioning */
     flex: 0 0 100vw;
     height: 100dvh;
     scroll-snap-align: start;
     display: grid;
-    grid-template-rows: repeat(3, 1fr) 100px; /* 3 button rows + room for Nav Bar */
+    grid-template-rows: repeat(3, 1fr) 100px;
+    /* 3 button rows + room for Nav Bar */
 }
 
 .button-background {
@@ -80,28 +85,113 @@ body {
     font-weight: bold;
     font-size: 1.1rem;
     cursor: pointer;
-    touch-action: manipulation; /* Allows the parent to still swipe */
+    touch-action: manipulation;
+    /* Allows the parent to still swipe */
     -webkit-user-drag: none;
-    user-select: none;         /* Prevents highlighting text */
-    -webkit-user-drag: none;   /* Prevents the browser from trying to 'drag' the button image */
-    touch-action: none;        /* Blocks touch-swiping on the buttons */
+    user-select: none;
+    /* Prevents highlighting text */
+    -webkit-user-drag: none;
+    /* Prevents the browser from trying to 'drag' the button image */
+    touch-action: none;
+    /* Blocks touch-swiping on the buttons */
 }
 
-.control-button:active, .control-button.active {
+.control-button:active,
+.control-button.active {
     background-color: #fff;
     color: #0dc8fc;
     transform: scale(0.98);
 }
 
-.slider-container {
-    grid-column: span 3;
-    padding: 0 10px;
+.slider-container-1,
+.slider-container-2,
+.slider-container-3,
+.slider-container-4,
+.slider-container-5,
+.slider-container-6 {
+    border-radius: 0.4rem;
+    height: 80%;
 }
 
+.slider-container-1 {
+    grid-column: span 1;
+}
+
+.slider-container-2 {
+    grid-column: span 2;
+}
+
+.slider-container-3 {
+    grid-column: span 3;
+}
+
+.slider-container-4 {
+    grid-column: span 4;
+}
+
+.slider-container-5 {
+    grid-column: span 5;
+}
+
+.slider-container-6 {
+    grid-column: span 6;
+}
+
+
+
 .control-slider {
+    -webkit-appearance: none;
+    border-radius: 0.4rem;
+    appearance: none;
     width: 100%;
-    height: 40px;
-    touch-action: none; /* Sliders must block swiping to work */
+    height: 100%;
+    /* Give it a fixed height or use your container height */
+    background: #56f6f17e;
+    overflow: hidden;
+    /* Let the track handle the color */
+    outline: none;
+    touch-action: none;
+    margin: 0;
+}
+
+/* 1. Style the Track for Chromium */
+.control-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+/* 2. Style the Thumb for Chromium */
+.control-slider::-webkit-slider-thumb {
+    border-radius: 0.4rem;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 50px;
+    height: 100%;
+    /* Now this will fill the track height */
+    background: rgb(13, 200, 252);
+    border: 0.2rem solid #fff;
+    box-shadow: -50000px 0 0 50000px rgb(68, 173, 201);
+    cursor: pointer;
+    margin-top: 0;
+}
+
+/* 3. Style the Track for Firefox */
+.control-slider::-moz-range-track {
+    border-radius: 0.4rem;
+    width: 100%;
+    height: 100%;
+}
+
+/* 4. Style the Thumb for Firefox */
+.control-slider::-moz-range-thumb {
+    border-radius: 0.4rem;
+    width: 25px;
+    height: 100%;
+    background: rgb(13, 200, 252);
+    border: 0.2rem solid #fff;
+    box-shadow: -50025px 0 0 50000px rgb(68, 173, 201);
 }
 
 /* --- 4. NAVIGATION BAR (FIXED) --- */
@@ -133,10 +223,14 @@ body {
     border: 2px solid rgba(13, 200, 252, 0.4);
     background: rgba(13, 200, 252, 0.1);
     border-radius: 8px;
-    touch-action: none; /* Prevents swipe interference on nav click */
-    user-select: none;         /* Prevents highlighting text */
-    -webkit-user-drag: none;   /* Prevents the browser from trying to 'drag' the button image */
-    touch-action: none;        /* Blocks touch-swiping on the buttons */
+    touch-action: none;
+    /* Prevents swipe interference on nav click */
+    user-select: none;
+    /* Prevents highlighting text */
+    -webkit-user-drag: none;
+    /* Prevents the browser from trying to 'drag' the button image */
+    touch-action: none;
+    /* Blocks touch-swiping on the buttons */
 }
 
 .nav-item:active {
@@ -163,15 +257,19 @@ body {
 /* --- 5. PURE CSS STICKY TITLES --- */
 .sticky-title-container {
     position: absolute;
-    bottom: 0; /* Sits at the bottom of the main-panel */
+    bottom: 0;
+    /* Sits at the bottom of the main-panel */
     left: 0;
     width: 100%;
-    height: 100px; /* Matches Nav Bar height */
+    height: 100px;
+    /* Matches Nav Bar height */
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none; /* Lets you click 'through' to the nav bar */
-    z-index: 1001; /* Sits on top of nav bar background */
+    pointer-events: none;
+    /* Lets you click 'through' to the nav bar */
+    z-index: 1001;
+    /* Sits on top of nav bar background */
 }
 
 .status-value {

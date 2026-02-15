@@ -16,5 +16,6 @@ TODO:
  * fullscreen on client
  * dont sleep on clients
  * show host local address on popup
+ - syncing states of sliders with other clients (in case someone wants to use multiple clients)
  -
  - and more...
