@@ -172,7 +172,7 @@ body {
     /* Now this will fill the track height */
     background: rgb(13, 200, 252);
     border: 0.2rem solid #fff;
-    box-shadow: -50000px 0 0 50000px rgb(68, 173, 201);
+    box-shadow: -50025px 0 0 50000px rgb(68, 173, 201);
     cursor: pointer;
     margin-top: 0;
 }
@@ -257,11 +257,11 @@ body {
 /* --- 5. PURE CSS STICKY TITLES --- */
 .sticky-title-container {
     position: absolute;
-    bottom: 0;
+    top: 10px;
     /* Sits at the bottom of the main-panel */
     left: 0;
     width: 100%;
-    height: 100px;
+    /* height: 100px; */
     /* Matches Nav Bar height */
     display: flex;
     justify-content: center;

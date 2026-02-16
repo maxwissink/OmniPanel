@@ -90,8 +90,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Helper function to find which Joystick index an element belongs to
     function getJoystickIndex(element) {
-        const parent = element.closest('[virtual-joystick]');
-        return parent ? parent.getAttribute('virtual-joystick') : "0";
+        //const parent = element.closest('[virtual-joystick]');
+        return parent ? element.getAttribute('virtual-joystick') : "0";
     }
 
     const buttons = document.querySelectorAll('[emulate-button]');
