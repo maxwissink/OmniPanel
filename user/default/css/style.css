@@ -73,6 +73,7 @@ body {
     gap: 12px;
     padding: 20px;
     align-items: center;
+    justify-content: center;
 }
 
 .control-button {
