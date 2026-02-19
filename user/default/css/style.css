@@ -105,11 +105,26 @@ body {
 .important {
     background-color: var(--important-color) !important;
 }
+.important:active,
+.important.active{
+    background-color: #fff !important;
+    color: var(--important-color) !important;
+}
 .critical {
     background-color: var(--critical-color) !important;
 }
+.critical:active,
+.critical.active{
+    background-color: #fff !important;
+    color: var(--critical-color) !important;
+}
 .light {
     background-color: var(--light-color) !important;
+}
+.light:active,
+.light.active{
+    background-color: #fff !important;
+    color: var(--light-color) !important;
 }
 
 
