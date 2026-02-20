@@ -4,8 +4,7 @@
   "description": "",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron .",
-    "x11": "electron . --ozone-platform=x11"
+    "start": "electron ."
   },
   "keywords": [],
   "author": "",
@@ -18,5 +17,24 @@
     "express": "^5.2.1",
     "node-forge": "^1.3.3",
     "ws": "^8.18.3"
+  },
+  "build": {
+    "asar": true,
+    "extraResources": [
+      {
+        "from": "user/",
+        "to": "user/",
+        "filter": [
+          "**/*"
+        ]
+      },
+      "python-env/"
+    ],
+    "win": {
+      "target": "zip"
+    },
+    "linux": {
+      "target": "zip"
+    }
   }
 }

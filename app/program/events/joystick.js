@@ -1,9 +1,21 @@
+const { app } = require('electron');
 const { spawn } = require('child_process');
 const fs = require('fs'); // Make sure this is at the top of the file
 const path = require('path');
 const scriptPath = path.join(__dirname, '../python/virtual-joystick.py');
 
 let pyProcess = null;
+
+function getPythonPath() {
+    // If we are running in the compiled app
+    if (app.isPackaged) {
+        return process.platform === 'win32'
+            ? path.join(process.resourcesPath, 'python-env/windows/python.exe')
+            : path.join(process.resourcesPath, 'python-env/linux/bin/python3');
+    }
+    // If we are in development mode (standard system python)
+    return 'python3';
+}
 
 function startJoystickProcess() {
     let count = 1; // Default fallback
@@ -23,7 +35,7 @@ function startJoystickProcess() {
     console.log(`[Node] Launching Python with ${count} joysticks...`);
 
     // Pass the count as the second argument in the array
-    pyProcess = spawn('python3', [scriptPath, count.toString()]);
+    pyProcess = spawn(getPythonPath(), [scriptPath, count.toString()]);
 
     pyProcess.stdout.on('data', (data) => {
         console.log(`[Python Joystick]: ${data.toString().trim()}`);
