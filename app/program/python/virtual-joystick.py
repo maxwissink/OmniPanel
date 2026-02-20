@@ -10,7 +10,7 @@ if IS_WINDOWS:
     exe_dir = os.path.dirname(sys.executable)
 
     # 2. Build the path to the site-packages folder next to it
-    site_packages_dir = os.path.join(exe_dir, "site-packages")
+    site_packages_dir = os.path.join(exe_dir, "..", "site-packages")
 
     # 3. Force this path into Python's brain
     if os.path.exists(site_packages_dir):
