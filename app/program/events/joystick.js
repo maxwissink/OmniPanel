@@ -38,8 +38,12 @@ function startJoystickProcess() {
     let count = 1; // Default fallback
 
     try {
-        // Path to your config.json (adjust path if necessary)
-        const configPath = path.join(__dirname, '..', '..', '..', 'config.json');
+        let configPath = null;
+        if (app.isPackaged) {
+            configPath = path.join(path.dirname(process.execPath), 'config.json');
+        } else {
+            configPath = path.join(__dirname, '..', '..', '..', 'config.json');
+        }
 
         if (fs.existsSync(configPath)) {
             const configData = JSON.parse(fs.readFileSync(configPath, 'utf8'));
