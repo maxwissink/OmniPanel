@@ -147,7 +147,7 @@ app.whenReady().then(() => {
     const win = new BrowserWindow({
         width: config.width || 600,
         height: config.height || 400,
-        icon: path.join(__dirname, 'resources', 'assets', 'icon.jpg'),
+        icon: path.join(__dirname, 'build', 'icon.png'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false

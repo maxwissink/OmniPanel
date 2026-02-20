@@ -1,13 +1,14 @@
 {
   "name": "omnipanel",
+  "productName": "OmniPanel",
   "version": "1.0.0",
-  "description": "",
+  "description": "A virtual joystick controller hosted on your local network.",
+  "author": "Max Wissink",
   "main": "app/main.js",
   "scripts": {
     "start": "electron ."
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "type": "commonjs",
   "devDependencies": {
@@ -19,12 +20,18 @@
     "ws": "^8.18.3"
   },
   "build": {
+    "appId": "com.maxwissink.omnipanel",
     "asar": true,
     "asarUnpack": [
       "python-env/**/*",
       "app/program/python/**/*"
     ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
     "win": {
+      "icon": "build/icon.ico",
       "extraResources": [
         {
           "from": "python-env/windows/",
@@ -33,6 +40,8 @@
       ]
     },
     "linux": {
+      "icon": "build/icon.png",
+      "category": "Utility",
       "extraResources": [
         {
           "from": "python-env/linux/",
