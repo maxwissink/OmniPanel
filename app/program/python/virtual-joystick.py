@@ -28,8 +28,8 @@ if IS_WINDOWS:
         print("[DEBUG] pyvjoy imported successfully!")
     except ImportError as e:
         print(f"[ERROR] Import failed: {e}")
-    else:
-        from evdev import UInput, ecodes as e, AbsInfo
+else:
+    from evdev import UInput, ecodes as e, AbsInfo
 
 def create_joystick(index):
     """Creates a single virtual joystick instance with 16 buttons"""
