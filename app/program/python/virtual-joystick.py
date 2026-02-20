@@ -6,6 +6,11 @@ import time
 IS_WINDOWS = os.name == 'nt'
 
 if IS_WINDOWS:
+    # Get the directory where the python executable is located
+    base_dir = os.path.dirname(sys.executable)
+    site_packages = os.path.join(base_dir, 'site-packages')
+    if os.path.exists(site_packages):
+        sys.path.append(site_packages)
     import pyvjoy
 else:
     from evdev import UInput, ecodes as e, AbsInfo
