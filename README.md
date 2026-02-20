@@ -44,26 +44,18 @@ Windows requires the vJoy driver to create virtual joysticks that games can reco
 ### 🐧 Linux Setup
 Linux uses the native `uinput` kernel module for high-performance virtual input.
 
-1.  **Install Dependencies:**
-    ```bash
-    # Arch Linux
-    sudo pacman -S python python-pip
-    
-    # Ubuntu/Debian
-    sudo apt install python3 python3-pip
-    ```
-2.  **Enable uinput Module:**
+1.  **Enable uinput Module:**
     ```bash
     sudo modprobe uinput
     ```
-3.  **Set Permissions:**
+2.  **Set Permissions:**
     ```bash
     echo 'KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"' | sudo tee /etc/udev/rules.d/99-uinput.rules
     sudo groupadd -f uinput
     sudo usermod -aG uinput $USER
     ```
     *(Note: You must log out and back in for group changes to take effect).*
-4.  **Enable on Startup:**
+3.  **Enable on Startup:**
     ```bash
     echo "uinput" | sudo tee /etc/modules-load.d/uinput.conf
     ```
