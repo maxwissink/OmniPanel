@@ -34,8 +34,16 @@ else:
 def create_joystick(index):
     """Creates a single virtual joystick instance with 16 buttons"""
     if IS_WINDOWS:
-        # vJoy devices must be enabled in vJoy Conf (Device 1, 2, 3...)
-        return pyvjoy.VJoyDevice(index + 1)
+        device_id = index + 1
+        try:
+            device = pyvjoy.VJoyDevice(device_id)
+            # Optional: Check if the device is actually ready
+            # vJoy devices can be 'Free', 'Owned' (by us), or 'Missing'
+            print(f"[DEBUG] Windows: Initialized vJoy Device {device_id}", flush=True)
+            return device
+        except Exception as er:
+            print(f"[ERROR] Windows: Failed to claim vJoy Device {device_id}. Is it enabled in vJoy Conf? {er}", flush=True)
+            return None
     else:
         # 8 Analog Axes
         axis_map = [
