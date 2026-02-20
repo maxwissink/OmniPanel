@@ -20,21 +20,29 @@
   },
   "build": {
     "asar": true,
-    "extraResources": [
-      {
-        "from": "user/",
-        "to": "user/",
-        "filter": [
-          "**/*"
-        ]
-      },
-      "python-env/"
+    "asarUnpack": [
+      "python-env/**/*",
+      "app/program/python/**/*"
     ],
     "win": {
-      "target": "zip"
+      "extraResources": [
+        {
+          "from": "python-env/windows/",
+          "to": "python-env/windows/"
+        }
+      ]
     },
     "linux": {
-      "target": "zip"
-    }
+      "extraResources": [
+        {
+          "from": "python-env/linux/",
+          "to": "python-env/linux/"
+        }
+      ]
+    },
+    "extraFiles": [
+      "config.json",
+      "user/"
+    ]
   }
 }

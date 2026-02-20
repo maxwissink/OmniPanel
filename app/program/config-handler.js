@@ -1,11 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-const { ipcMain } = require('electron');
+const { app, ipcMain } = require('electron');
 const joystickHandler = require('./events/joystick');
 
 module.exports = function (config, wss) {
-    const userPath = path.join(__dirname, '..', '..', 'user');
-    const configPath = path.join(__dirname, '..', '..', 'config.json');
+    let userPath = null;
+    let configPath = null;
+    if (app.isPackaged) {
+        userPath = path.join(path.dirname(process.execPath), 'user');
+        configPath = path.join(path.dirname(process.execPath), 'config.json');
+    } else {
+        userPath = path.join(__dirname, '..', '..', 'user');
+        configPath = path.join(__dirname, '..', '..', 'config.json');
+    }
 
     // Timer variable for the debounce
     let debounceTimer = null;

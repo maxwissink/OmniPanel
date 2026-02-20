@@ -1,20 +1,37 @@
 const { app } = require('electron');
 const { spawn } = require('child_process');
-const fs = require('fs'); // Make sure this is at the top of the file
+const fs = require('fs');
 const path = require('path');
-const scriptPath = path.join(__dirname, '../python/virtual-joystick.py');
+
+
+const scriptPath = app.isPackaged
+    ? path.join(process.resourcesPath, 'app.asar.unpacked', 'app/program/python/virtual-joystick.py')
+    : path.join(__dirname, '../python/virtual-joystick.py');
 
 let pyProcess = null;
 
-function getPythonPath() {
-    // If we are running in the compiled app
-    if (app.isPackaged) {
-        return process.platform === 'win32'
-            ? path.join(process.resourcesPath, 'python-env/windows/python.exe')
-            : path.join(process.resourcesPath, 'python-env/linux/bin/python3');
+if (app.isPackaged && process.platform !== 'win32') {
+    const fs = require('fs');
+    try {
+        // Force executable permissions (rwxr-xr-x)
+        fs.chmodSync(getPythonPath(), 0o755); 
+        console.log("Permissions set for Python binary");
+    } catch (err) {
+        console.error("Failed to set Python permissions:", err);
     }
-    // If we are in development mode (standard system python)
-    return 'python3';
+}
+
+function getPythonPath() {
+    if (!app.isPackaged) return 'python3';
+
+    const resPath = process.resourcesPath;
+    const unpackedPath = path.join(resPath, 'app.asar.unpacked');
+
+    if (process.platform === 'win32') {
+        return path.join(unpackedPath, 'python-env/windows/python-3.13.12-embed-amd64/python.exe');
+    } else {
+        return path.join(unpackedPath, 'python-env/linux/python/bin/python3');
+    }
 }
 
 function startJoystickProcess() {

@@ -9,7 +9,14 @@ const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
 
 // Load logic modules
-const config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json'), 'utf8'));
+let config = null;
+if (app.isPackaged) {
+    // Combine the executable's folder with the filename
+    const packagedConfigPath = path.join(path.dirname(process.execPath), 'config.json');
+    config = JSON.parse(fs.readFileSync(packagedConfigPath, 'utf8'));
+} else {
+    config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'config.json'), 'utf8'));
+}
 
 const expressApp = express();
 
@@ -31,14 +38,14 @@ function getCertificates() {
             key: fs.readFileSync(keyPath),
             cert: fs.readFileSync(certPath)
         };
-    } 
+    }
 
     // Generate NEW certs using node-forge
     console.log("OmniPanel: Generating new SSL certificate (this may take a moment)...");
 
     // 1. Generate Keypair (2048-bit RSA)
     const keys = forge.pki.rsa.generateKeyPair(2048);
-    
+
     // 2. Create Certificate
     const cert = forge.pki.createCertificate();
     cert.publicKey = keys.publicKey;
@@ -78,7 +85,14 @@ function getCertificates() {
 // Routes
 // 1. Serve Injected HTML
 expressApp.get('/', (req, res) => {
-    const themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
+    let themePath = null;
+    if (app.isPackaged) {
+        // Look next to the OmniPanel.exe
+        themePath = path.join(path.dirname(process.execPath), 'user', config.theme, 'html', 'index.html');
+    } else {
+        themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
+    }
+
     if (!securityFilter(themePath)) {
         if (fs.existsSync(themePath)) {
             let html = fs.readFileSync(themePath, 'utf8');
@@ -100,7 +114,12 @@ expressApp.get('/internal/websocket-injection.js', (req, res) => {
 
 // 3. Static Assets
 expressApp.use((req, res, next) => {
-    const themeFolder = path.join(__dirname, '..', 'user', config.theme);
+    let themeFolder = null;
+    if (app.isPackaged) {
+        themeFolder = path.join(path.dirname(process.execPath), 'user', config.theme);
+    } else {
+        themeFolder = path.join(__dirname, '..', 'user', config.theme);
+    }
     express.static(themeFolder)(req, res, next);
 });
 
@@ -120,13 +139,13 @@ app.whenReady().then(() => {
     const wss = initSocketManager(server);
 
     setupConfigHandler(config, wss);
-    
+
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server Secure: https://localhost:${config.port}`);
     });
 
     const win = new BrowserWindow({
-        width: config.width || 600, 
+        width: config.width || 600,
         height: config.height || 400,
         icon: path.join(__dirname, 'resources', 'assets', 'icon.jpg'),
         webPreferences: {
