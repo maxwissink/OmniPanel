@@ -46,7 +46,7 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
     touch-action: pan-x;
 }
 
