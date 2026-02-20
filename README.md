@@ -78,6 +78,8 @@ OmniPanel themes use standard web technologies. To keep the app secure and light
 2.  Add an `index.html` and your CSS files.
 3.  Refer to the **Default Theme** provided in the repository as a template.
 
+The default theme is made for star citizen.
+
 Also please be carefull when downloading someone elses theme, I cannot guarantee that I filtered out all possibly mallicious tags
 
 ---
