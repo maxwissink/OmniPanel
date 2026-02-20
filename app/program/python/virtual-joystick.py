@@ -6,14 +6,30 @@ import time
 IS_WINDOWS = os.name == 'nt'
 
 if IS_WINDOWS:
-    # Get the directory where the python executable is located
-    base_dir = os.path.dirname(sys.executable)
-    site_packages = os.path.join(base_dir, 'site-packages')
-    if os.path.exists(site_packages):
-        sys.path.append(site_packages)
-    import pyvjoy
-else:
-    from evdev import UInput, ecodes as e, AbsInfo
+    # 1. Find exactly where python.exe is living right now
+    exe_dir = os.path.dirname(sys.executable)
+
+    # 2. Build the path to the site-packages folder next to it
+    site_packages_dir = os.path.join(exe_dir, "site-packages")
+
+    # 3. Force this path into Python's brain
+    if os.path.exists(site_packages_dir):
+        sys.path.insert(0, site_packages_dir)
+        print(f"[DEBUG] Successfully injected path: {site_packages_dir}")
+    else:
+        print(f"[DEBUG] WARNING: site-packages not found at {site_packages_dir}")
+
+    # 4. Print the paths so we can verify it worked
+    print(f"[DEBUG] Current sys.path: {sys.path}")
+
+    # 5. Now try the import
+    try:
+        import pyvjoy
+        print("[DEBUG] pyvjoy imported successfully!")
+    except ImportError as e:
+        print(f"[ERROR] Import failed: {e}")
+    else:
+        from evdev import UInput, ecodes as e, AbsInfo
 
 def create_joystick(index):
     """Creates a single virtual joystick instance with 16 buttons"""
