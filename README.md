@@ -67,16 +67,18 @@ Linux uses the native `uinput` kernel module for high-performance virtual input.
     ```bash
     echo "uinput" | sudo tee /etc/modules-load.d/uinput.conf
     ```
-5.  **Done.** For more details, see the [Arch Wiki uinput guide](https://wiki.archlinux.org/title/Uinput).
+5.  **Done.**
 
 ---
 
 ## 🎨 Creating a Theme
-OmniPanel themes use standard web technologies. To keep the app secure and lightweight, **JavaScript is not allowed** inside theme folders—all logic is handled by the OmniPanel core.
+OmniPanel themes use standard web technologies. To keep the app secure and lightweight, **JavaScript is not allowed and will be blocked** inside theme folders—all logic is handled by the OmniPanel core.
 
 1.  Navigate to `omnipanel/user/[your-theme-name]/html`.
 2.  Add an `index.html` and your CSS files.
 3.  Refer to the **Default Theme** provided in the repository as a template.
+
+Also please be carefull when downloading someone elses theme, I cannot guarantee that I filtered out all possibly mallicious tags
 
 ---
 
@@ -97,4 +99,4 @@ Contributions make the open-source community amazing.
 4.  Push to the Branch (`git push origin feature/AmazingFeature`).
 5.  Open a **clear Pull Request** so I can easily understand your changes.
 
-**Thank you for trying OmniPanel! Fly safe.**
+**Thank you for trying OmniPanel!**
