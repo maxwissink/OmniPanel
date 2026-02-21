@@ -1,5 +1,7 @@
 /.directory
 /dist
+/python-env
+/python-env.zip
 /node_modules
 /package-lock.json
 /omnipanel.xml
