@@ -15,12 +15,9 @@ function getLocalIP() {
 }
 
 function showLocalIp(config){
-    // Display this on your PC app's main screen
 const mobileURL = `https://${getLocalIP()}:${config.port}`;
 document.getElementById('url-display').innerText = mobileURL;
 }
-
-// Inside your did-finish-load or where you send init-config:
 ipcRenderer.on('init-config', (event, currentConfig) => {
     showLocalIp(currentConfig)
 });

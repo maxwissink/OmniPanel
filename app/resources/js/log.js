@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Use Electron's IPC to listen for the log
     const { ipcRenderer } = require('electron');
     const container = document.getElementById('log-container');
 
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
         console.log(log);
         if (container) {
-            container.prepend(entry); // Newest logs at the top
+            container.prepend(entry);
             while (container.children.length > 500) {
                 container.lastElementChild.remove();
             }

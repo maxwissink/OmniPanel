@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// Path to your modular event handlers
 const eventsFolder = path.join(__dirname, 'events');
 const eventHandlers = [];
 
@@ -18,7 +17,6 @@ if (fs.existsSync(eventsFolder)) {
 module.exports = function handleSocket(ws) {
     ws.isAlive = true;
 
-    // When the client responds to our ping, set isAlive to true
     ws.on('pong', () => {
         ws.isAlive = true;
         //console.log("ping pong")
@@ -26,7 +24,6 @@ module.exports = function handleSocket(ws) {
 
     ws.on('message', (rawMessage) => {
         try {
-            // Parse the JSON we sent from the phone
             const message = JSON.parse(rawMessage.toString());
             const { type, data } = message;
 
@@ -38,7 +35,6 @@ module.exports = function handleSocket(ws) {
             }
             console.log(`[WS] Event Received: ${type} -> ${displayData}`);
 
-            // Loop through all loaded event files and execute them
             eventHandlers.forEach(handler => {
                 handler(type, data, ws);
             });

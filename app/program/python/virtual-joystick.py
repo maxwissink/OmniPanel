@@ -6,23 +6,18 @@ import time
 IS_WINDOWS = os.name == 'nt'
 
 if IS_WINDOWS:
-    # 1. Find exactly where python.exe is living right now
     exe_dir = os.path.dirname(sys.executable)
 
-    # 2. Build the path to the site-packages folder next to it
     site_packages_dir = os.path.join(exe_dir, "..", "site-packages")
 
-    # 3. Force this path into Python's brain
     if os.path.exists(site_packages_dir):
         sys.path.insert(0, site_packages_dir)
         print(f"[DEBUG] Successfully injected path: {site_packages_dir}")
     else:
         print(f"[DEBUG] WARNING: site-packages not found at {site_packages_dir}")
 
-    # 4. Print the paths so we can verify it worked
     print(f"[DEBUG] Current sys.path: {sys.path}")
 
-    # 5. Now try the import
     try:
         import pyvjoy
         print("[DEBUG] pyvjoy imported successfully!")
@@ -37,8 +32,6 @@ def create_joystick(index):
         device_id = index + 1
         try:
             device = pyvjoy.VJoyDevice(device_id)
-            # Optional: Check if the device is actually ready
-            # vJoy devices can be 'Free', 'Owned' (by us), or 'Missing'
             print(f"[DEBUG] Windows: Initialized vJoy Device {device_id}", flush=True)
             return device
         except Exception as er:
@@ -62,7 +55,6 @@ def create_joystick(index):
         }
         
         name = f'OmniPanel-Virtual-Controller-{index + 1}'
-        # bus=e.BUS_USB helps games identify it as a plug-and-play controller
         ui = UInput(cap, name=name)
         
         # Center all axes on startup
@@ -73,19 +65,15 @@ def create_joystick(index):
         return {"ui": ui, "axes": axis_map, "buttons": button_map}
 
 def main():
-    # 1. Get joystick count from command line argument (passed by Node.js)
-    # sys.argv[0] is the script name, sys.argv[1] is the first argument
     try:
         num_joysticks = int(sys.argv[1]) if len(sys.argv) > 1 else 1
     except (ValueError, IndexError):
         num_joysticks = 1
         
-    # 2. Initialize the devices
     joysticks = [create_joystick(i) for i in range(num_joysticks)]
     
     print(f"Python backend active: Created {num_joysticks} joysticks (16 buttons each).", flush=True)
 
-    # 3. Listen for commands from Node.js stdin
     for line in sys.stdin:
         try:
             parts = line.strip().split(',')
@@ -99,7 +87,6 @@ def main():
 
             if cmd_type == 'ax':
                 if IS_WINDOWS:
-                    # vJoy uses 0-32768
                     vjoy_val = int((val / 255) * 32768)
                     usages = [0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37]
                     if target_id < len(usages):
@@ -111,11 +98,9 @@ def main():
 
             elif cmd_type == 'btn':
                 if IS_WINDOWS:
-                    # Buttons are 1-indexed in pyvjoy
                     js.set_button(target_id + 1, 1 if val == 1 else 0)
                 else:
                     ui = js["ui"]
-                    # Map the 0-15 ID to the specific hex code in our button_map
                     if target_id < len(js["buttons"]):
                         ui.write(e.EV_KEY, js["buttons"][target_id], 1 if val == 1 else 0)
                         ui.syn()

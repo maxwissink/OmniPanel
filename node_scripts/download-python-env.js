@@ -3,17 +3,13 @@ const https = require('https');
 const path = require('path');
 const extract = require('extract-zip');
 
-// 1. Determine the OS
-const platform = process.platform;
-
 const downloadUrl = 'https://github.com/maxwissink/OmniPanel/releases/download/Python-env/python-env.zip';
 const zipName = 'python-env.zip';
 
 const zipPath = path.join(__dirname, '..', zipName);
 const targetDir = path.join(__dirname, '..');
 
-// 2. Download the Zip
-console.log(`Downloading Python environment for ${platform}...`);
+console.log(`Downloading Python environment...`);
 const file = fs.createWriteStream(zipPath);
 
 https.get(downloadUrl, (response) => {
@@ -33,11 +29,10 @@ function handleDownload(res) {
         file.close();
         console.log('Download complete. Extracting...');
         
-        // 3. Extract the Zip
         try {
             await extract(zipPath, { dir: targetDir });
             console.log('Extraction complete! Cleaning up zip file...');
-            fs.unlinkSync(zipPath); // Delete the zip file to save space
+            fs.unlinkSync(zipPath);
         } catch (err) {
             console.error('Extraction failed:', err);
         }

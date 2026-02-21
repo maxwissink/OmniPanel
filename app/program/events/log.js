@@ -1,4 +1,3 @@
-// In your events/log.js
 const bridge = require('../bridge');
 
 module.exports = function(type, data) {

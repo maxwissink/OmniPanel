@@ -75,7 +75,6 @@ function startJoystickProcess() {
 function reloadJoysticks() {
     if (pyProcess) {
         console.log("[Node] Config change detected. Restarting Python backend...");
-        // This triggers the 'close' event, which calls startJoystickProcess() again
         pyProcess.kill();
     } else {
         startJoystickProcess();
@@ -86,7 +85,6 @@ function reloadJoysticks() {
 startJoystickProcess();
 
 module.exports = function (type, payload) {
-    // NEW: Handle a manual reload request from the main process
     if (type === 'reload-backend') {
         reloadJoysticks();
         return;

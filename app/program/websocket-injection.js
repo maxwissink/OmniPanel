@@ -1,8 +1,7 @@
 // This file lives in app/program/ and is injected into the theme
-let socket;// = new WebSocket(`ws://${window.location.hostname}:${window.location.port}`);
+let socket;
 let reconnectInterval;
 
-// Function to keep the screen awake
 async function keepScreenAlive() {
     if ('wakeLock' in navigator) {
         try {
@@ -37,17 +36,15 @@ function connect() {
     };
 
     socket.onmessage = (event) => {
-        // Handle incoming messages from PC if needed
         const msg = JSON.parse(event.data);
 
         if (msg.type === 'force-reload') {
             console.log("Host changed theme. Reloading...");
-            location.reload(); // This refreshes the phone browser instantly
+            location.reload();
         }
     };
 }
 
-// THE WATCHDOG: Check every 3 seconds if we are still connected
 function startWatchdog() {
     if (reconnectInterval) clearInterval(reconnectInterval);
 
@@ -64,21 +61,18 @@ window.addEventListener('DOMContentLoaded', () => {
 
     fsBtn.addEventListener('click', () => {
         if (!document.fullscreenElement) {
-            // ENTER FULLSCREEN
             document.documentElement.requestFullscreen().catch(err => {
                 console.error(`Error attempting to enable full-screen mode: ${err.message}`);
             });
         } else {
-            // EXIT FULLSCREEN
             document.exitFullscreen();
         }
     });
 
-    // Update button text based on state
     document.addEventListener('fullscreenchange', () => {
         if (document.fullscreenElement) {
             fsBtn.innerText = "EXIT FULLSCREEN";
-            fsBtn.style.borderColor = "#ff3333"; // Make it red when in fullscreen
+            fsBtn.style.borderColor = "#ff3333";
             fsBtn.style.color = "#ff3333";
         } else {
             fsBtn.innerText = "ENTER FULLSCREEN";
@@ -88,9 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // Helper function to find which Joystick index an element belongs to
     function getJoystickIndex(element) {
-        //const parent = element.closest('[virtual-joystick]');
         return parent ? element.getAttribute('virtual-joystick') : "0";
     }
 
@@ -100,12 +92,12 @@ window.addEventListener('DOMContentLoaded', () => {
         const btnId = button.getAttribute('emulate-button');
 
         button.addEventListener('pointerdown', (e) => {
-            const jsIndex = getJoystickIndex(button); // Find parent JS ID
+            const jsIndex = getJoystickIndex(button);
 
             socket.send(JSON.stringify({
                 type: 'simulate-button',
                 data: {
-                    js: jsIndex, // New: Joystick Index
+                    js: jsIndex,
                     id: btnId,
                     state: 1
                 }
@@ -139,12 +131,12 @@ window.addEventListener('DOMContentLoaded', () => {
         const axisId = parseInt(slider.getAttribute('emulate-slider'));
 
         slider.addEventListener('input', (event) => {
-            const jsIndex = getJoystickIndex(slider); // Find parent JS ID
+            const jsIndex = getJoystickIndex(slider);
 
             const payload = {
                 type: 'simulate-slider',
                 data: {
-                    js: jsIndex, // New: Joystick Index
+                    js: jsIndex,
                     id: axisId,
                     value: parseInt(event.target.value)
                 }

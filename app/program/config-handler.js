@@ -14,7 +14,6 @@ module.exports = function (config, wss) {
         configPath = path.join(__dirname, '..', '..', 'config.json');
     }
 
-    // Timer variable for the debounce
     let debounceTimer = null;
 
     // 1. Get List of Folders in /user
@@ -29,7 +28,6 @@ module.exports = function (config, wss) {
         };
     });
 
-    // 2. Save Theme Selection
     ipcMain.on('save-theme', (event, selectedTheme) => {
         config.theme = selectedTheme;
         saveConfig(config);
@@ -41,27 +39,21 @@ module.exports = function (config, wss) {
         });
     });
 
-    // 3. Save Joystick Count with Debounced Restart
     ipcMain.on('save-joystick-count', (event, count) => {
-        // Update local object and save to file immediately
         config.numJoysticks = parseInt(count) || 1;
         saveConfig(config);
         console.log(`Joystick count saved to config: ${config.numJoysticks}`);
 
-        // DEBOUNCE LOGIC:
-        // Clear any previous timer if the user clicked again quickly
         if (debounceTimer) {
             clearTimeout(debounceTimer);
         }
 
-        // Wait 1 second after the LAST click before restarting Python
         debounceTimer = setTimeout(() => {
             console.log("[Node] Restarting virtual joysticks...");
             joystickHandler('reload-backend', {});
         }, 1000); 
     });
 
-    // Helper function to keep code clean
     function saveConfig(data) {
         try {
             fs.writeFileSync(configPath, JSON.stringify(data, null, 2));

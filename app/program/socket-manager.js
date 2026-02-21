@@ -26,14 +26,12 @@ module.exports = function(server) {
 
         ws.on('pong', () => { ws.isAlive = true; });
 
-        // Log Connection
         bridge.push('log-event', {
             timestamp: new Date().toLocaleTimeString(),
             type: "System",
             data: `Connected: ${ws.deviceIp}`
         });
 
-        // Log Disconnection
         ws.on('close', () => {
             bridge.push('log-event', {
                 timestamp: new Date().toLocaleTimeString(),
@@ -42,9 +40,8 @@ module.exports = function(server) {
             });
         });
 
-        // Pass to your existing modular manager (for key presses, etc.)
         handleSocket(ws);
     });
 
-    return wss; // Return it in case main.js needs it for broadcasting
+    return wss;
 };

@@ -1,4 +1,3 @@
-// app/program/bridge.js
 const { BrowserWindow } = require('electron');
 
 module.exports = {
