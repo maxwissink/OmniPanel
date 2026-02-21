@@ -6,7 +6,8 @@
   "author": "Max Wissink",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "postinstall": "node node_scripts/download-python-env.js"
   },
   "keywords": [],
   "license": "ISC",

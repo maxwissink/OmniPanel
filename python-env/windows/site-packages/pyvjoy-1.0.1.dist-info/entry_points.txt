@@ -1,3 +1,0 @@
-[console_scripts]
-pyvjoy = vjoyvevice.__main__:main
-
