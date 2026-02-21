@@ -82,6 +82,7 @@ Also please be carefull when downloading someone elses theme, I cannot guarantee
 * **Multi-Instance Support:** Host different themes for different devices simultaneously.
 * **Slider Sync:** Real-time state syncing across multiple clients.
 * **Dedicated Client App:** Reducing browser "jank" with a native wrapper.
+* **Plugins:** Plugins for specific games, like api support etc.
 
 ---
 
