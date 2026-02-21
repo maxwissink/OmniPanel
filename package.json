@@ -27,6 +27,13 @@
       "python-env/**/*",
       "app/program/python/**/*"
     ],
+    "files": [
+      "**/*",
+      "!dist${/*}",
+      "!node_scripts${/*}",
+      "!python-env/windows${/*}",
+      "!python-env/linux${/*}"
+    ],
     "directories": {
       "output": "dist",
       "buildResources": "build"
@@ -34,22 +41,16 @@
     "win": {
       "icon": "build/icon.ico",
       "target": ["zip", "dir"],
-      "extraResources": [
-        {
-          "from": "python-env/windows/",
-          "to": "python-env/windows/"
-        }
+      "files": [
+        "python-env/windows/**/*"
       ]
     },
     "linux": {
       "icon": "build/icon.png",
       "target": ["zip", "dir"],
       "category": "Utility",
-      "extraResources": [
-        {
-          "from": "python-env/linux/",
-          "to": "python-env/linux/"
-        }
+      "files": [
+        "python-env/linux/**/*"
       ]
     },
     "extraFiles": [
