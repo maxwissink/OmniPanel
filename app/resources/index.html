@@ -10,6 +10,7 @@
     <script src="./js/config.js"></script>
     <script src="./js/log.js"></script>
     <script src="./js/info.js"></script>
+    <script src="./js/edit-theme.js"></script>
 </head>
 
 <body>
@@ -18,12 +19,14 @@
             <label for="url-display">Connection string: </label>
             <span id="url-display">local ipv4 address + the port in config.json</span>
         </div>
-        
+
         <div class="setting-item">
             <label for="theme-select">Current Theme:</label>
             <select id="theme-select"></select>
         </div>
-
+        <div class="setting-item">
+            <button id="edit-theme-btn">Edit theme</button>
+        </div>
         <div class="setting-item">
             <label for="joystick-count">Number of Joysticks:</label>
             <input type="number" id="joystick-count" min="1" max="8" value="1">
@@ -32,9 +35,6 @@
     <div id="log-container">
         <div class="log-entry">Waiting for connection...</div>
     </div>
-    <!-- <div class="test-area">
-        <input placeholder="Input test area" type="text">
-    </div> -->
 </body>
 
 </html>

@@ -7,6 +7,7 @@ const forge = require('node-forge');
 const setupConfigHandler = require('./program/config-handler');
 const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
+const themeHandler = require('./program/editor/edit-handler');
 
 let config = null;
 if (app.isPackaged) {
@@ -121,6 +122,7 @@ app.whenReady().then(() => {
     const wss = initSocketManager(server);
 
     setupConfigHandler(config, wss);
+    themeHandler();
 
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server Secure: https://localhost:${config.port}`);
