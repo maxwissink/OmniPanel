@@ -139,7 +139,8 @@ app.whenReady().then(() => {
     });
 
     win.loadFile(path.join(__dirname, 'resources', 'index.html'));
-
+    win.setMenuBarVisibility(false);
+    
     win.webContents.on('did-finish-load', () => {
         win.webContents.send('init-config', config);
     });
