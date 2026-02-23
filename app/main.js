@@ -7,7 +7,7 @@ const forge = require('node-forge');
 const setupConfigHandler = require('./program/config-handler');
 const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
-const themeHandler = require('./program/editor/edit-handler');
+const themeHandler = require('./program/editor/editor-handler');
 
 let config = null;
 if (app.isPackaged) {
