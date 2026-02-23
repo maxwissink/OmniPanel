@@ -4,12 +4,6 @@ body {
     overflow: hidden;
 }
 
-body * {
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-}
-
 .openmenu {
     position: absolute;
     top: 10px;
@@ -30,7 +24,7 @@ body * {
 
 .menu>* {
     position: relative;
-    padding: 10px 0;
+    /* padding: 10px 0; */
 }
 
 .menu>*::after {
@@ -67,6 +61,10 @@ body * {
 
 .menu .menu-title {
     text-align: center;
+}
+
+.blockscontainer ul {
+    margin-left: 10px;
 }
 
 .maincontainer {
