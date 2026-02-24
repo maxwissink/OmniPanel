@@ -2,6 +2,7 @@ body {
     margin: 0;
     background-color: #e6e6e6;
     overflow: hidden;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 .openmenu {
@@ -15,19 +16,29 @@ body {
     padding: 5px;
 }
 
-.menu {
+#menu {
     background-color: #909090;
     position: absolute;
     height: 100vh;
     width: 20rem;
+    top: 0;
+    left: 0;
+
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-in-out;
+    z-index: 100;
 }
 
-.menu>* {
+#menu.open {
+    transform: translateX(0);
+}
+
+.menucontainer>* {
     position: relative;
     /* padding: 10px 0; */
 }
 
-.menu>*::after {
+.menucontainer>*::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -38,28 +49,28 @@ body {
     background: #00000045;
 }
 
-.menu>*:last-child::after {
+.menucontainer>*:last-child::after {
     display: none !important;
 }
 
-.menu .closemenu {
+#menu .closemenu {
     position: absolute;
     right: 10px;
     top: 10px;
     padding: 0 !important;
 }
 
-.menu .closemenu::after {
+#menu .closemenu::after {
     display: none !important;
 }
 
 #closemenu {
-
+    z-index: 100;
     padding: 5px;
 
 }
 
-.menu .menu-title {
+#menu .menu-title {
     text-align: center;
 }
 
@@ -67,9 +78,51 @@ body {
     margin-left: 10px;
 }
 
-.maincontainer {
+#trash-zone {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(255, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px dashed white;
+    z-index: 50;
+    transition: transform 0.2s, background-color 0.2s;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+    transition: opacity 0.3s, transform 0.3s, background-color 0.2s;
+}
+
+#trash-zone.visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+#trash-zone.drag-over {
+    background-color: rgba(255, 0, 0, 0.9);
+    transform: scale(1.1);
+}
+
+#maincontainer {
     display: inline-block;
     width: 100vw;
     height: 100vh;
-    background-color: #ddd;
+    background-size: 4rem 4rem;
+    background-image:
+        linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);
+}
+
+.loaded-block {
+    position: absolute;
+    z-index: 51; /* needs to be higher than than trashcan*/
+    cursor: move;
 }
