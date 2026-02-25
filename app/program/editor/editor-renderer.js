@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     buildTrashcan();
 
     window.addEventListener('dragend', () => {
-    document.getElementById('trash-zone').classList.remove('visible');
-});
+        document.getElementById('trash-zone').classList.remove('visible');
+    });
 });
 
 async function GetBlocks() {
@@ -85,8 +85,11 @@ function BuildEditorArea() {
             const rawX = event.clientX - rect.left - offset.x;
             const rawY = event.clientY - rect.top - offset.y;
 
-            window.draggedElement.style.left = `${Math.round(rawX / 64) * 64}px`;
-            window.draggedElement.style.top = `${Math.round(rawY / 64) * 64}px`;
+            const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - 5;
+            const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - 10;
+
+            window.draggedElement.style.left = `${Math.round(xPercent / 10) * 10}%`;
+            window.draggedElement.style.top = `${Math.round(yPercent / 20) * 20}%`;
 
         } else {
 
@@ -103,8 +106,12 @@ function BuildEditorArea() {
                     blockWrapper.style.position = 'absolute';
 
                     const rect = mainContainer.getBoundingClientRect();
-                    blockWrapper.style.left = `${Math.round((event.clientX - rect.left) / 64) * 64}px`;
-                    blockWrapper.style.top = `${Math.round((event.clientY - rect.top) / 64) * 64}px`;
+
+                    const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - 5;
+                    const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - 10;
+
+                    blockWrapper.style.left = `${Math.round(xPercent / 10) * 10}%`;
+                    blockWrapper.style.top = `${Math.round(yPercent / 20) * 20}%`;
 
                     blockWrapper.innerHTML = htmlContent;
 
@@ -131,7 +138,7 @@ function addWorkspaceDragListeners(el) {
         const offsetY = e.clientY - rect.top;
 
         e.dataTransfer.setData('offset', JSON.stringify({ x: offsetX, y: offsetY }));
-        
+
         window.draggedElement = el;
 
         el.style.opacity = '0.5';
