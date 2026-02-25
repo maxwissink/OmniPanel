@@ -2,6 +2,10 @@ const { ipcRenderer } = require('electron');
 const Block = require('../models/block.js');
 const fs = require('fs').promises;
 
+let highestZ = 100;
+let GridX = 10;
+let GridY = 20;
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Renderer loaded")
 
@@ -91,8 +95,8 @@ function BuildEditorArea() {
             const xPercent = (((event.clientX - rect.left - offset.x) / rect.width) * 100);
             const yPercent = (((event.clientY - rect.top - offset.y) / rect.height) * 100);
 
-            window.draggedElement.style.left = `${Math.round(xPercent / 10) * 10}%`;
-            window.draggedElement.style.top = `${Math.round(yPercent / 20) * 20}%`;
+            window.draggedElement.style.left = `${Math.round(xPercent / GridX) * GridX}%`;
+            window.draggedElement.style.top = `${Math.round(yPercent / GridY) * GridY}%`;
 
         } else {
 
@@ -105,16 +109,16 @@ function BuildEditorArea() {
 
                     const rect = mainContainer.getBoundingClientRect();
 
-                    const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - 5;
-                    const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - 10;
+                    const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - (GridX/2);
+                    const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - (GridY/2);
 
                     const blockWrapper = document.createElement('div');
                     blockWrapper.classList.add('loaded-block');
                     blockWrapper.style.position = 'absolute';
-                    blockWrapper.style.width = '10%';
-                    blockWrapper.style.height = '20%';
-                    blockWrapper.style.left = `${Math.round(xPercent / 10) * 10}%`;
-                    blockWrapper.style.top = `${Math.round(yPercent / 20) * 20}%`;
+                    blockWrapper.style.width =  `${GridX}%`;
+                    blockWrapper.style.height = `${GridY}%`;
+                    blockWrapper.style.left = `${Math.round(xPercent / GridX) * GridX}%`;
+                    blockWrapper.style.top = `${Math.round(yPercent / GridY) * GridY}%`;
 
                     blockWrapper.innerHTML = htmlContent;
 
@@ -201,6 +205,15 @@ function addSelectionListeners(blockWrapper) {
         e.stopPropagation();
 
         document.querySelectorAll('.loaded-block.selected').forEach(el => {
+            el.classList.remove('selected');
+        });
+        
+        blockWrapper.classList.add('selected');
+
+        highestZ++;
+        blockWrapper.style.zIndex = highestZ;
+
+        document.querySelectorAll('.loaded-block.selected').forEach(el => {
             if (el !== blockWrapper) el.classList.remove('selected');
         });
 
@@ -252,11 +265,11 @@ function addResizeListeners(blockWrapper, handle) {
         let newWidthPercent = startWidthPercent + dxPercent;
         let newHeightPercent = startHeightPercent + dyPercent;
 
-        let snappedWidth = Math.round(newWidthPercent / 10) * 10;
-        let snappedHeight = Math.round(newHeightPercent / 20) * 20;
+        let snappedWidth = Math.round(newWidthPercent / GridX) * GridX;
+        let snappedHeight = Math.round(newHeightPercent / GridY) * GridY;
 
-        snappedWidth = Math.max(10, snappedWidth);
-        snappedHeight = Math.max(20, snappedHeight);
+        snappedWidth = Math.max(GridX, snappedWidth);
+        snappedHeight = Math.max(GridY, snappedHeight);
 
         blockWrapper.style.width = `${snappedWidth}%`;
         blockWrapper.style.height = `${snappedHeight}%`;
@@ -265,7 +278,6 @@ function addResizeListeners(blockWrapper, handle) {
     function stopResize() {
         if (isResizing) {
             isResizing = false;
-            //blockWrapper.draggable = true;
 
             document.removeEventListener('mousemove', resize);
             document.removeEventListener('mouseup', stopResize);

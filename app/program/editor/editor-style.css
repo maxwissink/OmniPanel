@@ -132,6 +132,9 @@ body {
     border-color: #007bff;
     z-index: 15;
 }
+.loaded-block.dragging {
+    z-index: 1000 !important;
+}
 
 .move-handle, .resize-handle {
     position: absolute;
