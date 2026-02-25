@@ -61,32 +61,35 @@ function buildHtmlTree(blocksArray, parentElement) {
 }
 
 function BuildEditorArea() {
-    console.log("Renderer loaded");
-
+    console.log("Editor area initializing...");
     GetBlocks();
 
     const mainContainer = document.querySelector('#maincontainer');
 
+    mainContainer.addEventListener('mousedown', (e) => {
+        if (e.target === mainContainer) {
+            document.querySelectorAll('.loaded-block.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+        }
+    });
+
     mainContainer.addEventListener('dragover', (event) => {
-        event.preventDefault(); // important
+        event.preventDefault();
         event.dataTransfer.dropEffect = 'copy';
     });
 
     mainContainer.addEventListener('drop', async (event) => {
-        event.preventDefault(); // important
+        event.preventDefault();
 
         const action = event.dataTransfer.getData('action');
         const rect = mainContainer.getBoundingClientRect();
 
         if (action === 'move' && window.draggedElement) {
-            // --- LOGIC FOR MOVING EXISTING BLOCK ---
             const offset = JSON.parse(event.dataTransfer.getData('offset'));
 
-            const rawX = event.clientX - rect.left - offset.x;
-            const rawY = event.clientY - rect.top - offset.y;
-
-            const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - 5;
-            const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - 10;
+            const xPercent = (((event.clientX - rect.left - offset.x) / rect.width) * 100);
+            const yPercent = (((event.clientY - rect.top - offset.y) / rect.height) * 100);
 
             window.draggedElement.style.left = `${Math.round(xPercent / 10) * 10}%`;
             window.draggedElement.style.top = `${Math.round(yPercent / 20) * 20}%`;
@@ -94,28 +97,40 @@ function BuildEditorArea() {
         } else {
 
             const filePath = event.dataTransfer.getData('text/plain');
-            const blockName = event.dataTransfer.getData('block-name');
 
             if (filePath && filePath.endsWith('.html')) {
                 try {
                     const htmlContent = await fs.readFile(filePath, 'utf-8');
-                    const blockWrapper = document.createElement('div');
 
-                    blockWrapper.classList.add('loaded-block');
-                    blockWrapper.draggable = true;
-                    blockWrapper.style.position = 'absolute';
 
                     const rect = mainContainer.getBoundingClientRect();
 
                     const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - 5;
                     const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - 10;
 
+                    const blockWrapper = document.createElement('div');
+                    blockWrapper.classList.add('loaded-block');
+                    blockWrapper.style.position = 'absolute';
+                    blockWrapper.style.width = '10%';
+                    blockWrapper.style.height = '20%';
                     blockWrapper.style.left = `${Math.round(xPercent / 10) * 10}%`;
                     blockWrapper.style.top = `${Math.round(yPercent / 20) * 20}%`;
 
                     blockWrapper.innerHTML = htmlContent;
 
-                    addWorkspaceDragListeners(blockWrapper);
+                    const moveHandle = document.createElement('div');
+                    moveHandle.classList.add('move-handle');
+                    moveHandle.innerHTML = '☩';
+                    moveHandle.draggable = true;
+                    blockWrapper.appendChild(moveHandle);
+
+                    const resizeHandle = document.createElement('div');
+                    resizeHandle.classList.add('resize-handle');
+                    blockWrapper.appendChild(resizeHandle);
+
+                    addSelectionListeners(blockWrapper);
+                    addWorkspaceDragListeners(blockWrapper, moveHandle);
+                    addResizeListeners(blockWrapper, resizeHandle);
 
                     mainContainer.appendChild(blockWrapper);
 
@@ -129,25 +144,27 @@ function BuildEditorArea() {
     });
 }
 
-function addWorkspaceDragListeners(el) {
-    el.addEventListener('dragstart', (e) => {
+function addWorkspaceDragListeners(blockWrapper, moveHandle) {
+    moveHandle.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('action', 'move');
 
-        const rect = el.getBoundingClientRect();
+        const rect = blockWrapper.getBoundingClientRect();
         const offsetX = e.clientX - rect.left;
         const offsetY = e.clientY - rect.top;
 
         e.dataTransfer.setData('offset', JSON.stringify({ x: offsetX, y: offsetY }));
 
-        window.draggedElement = el;
+        e.dataTransfer.setDragImage(blockWrapper, offsetX, offsetY);
 
-        el.style.opacity = '0.5';
+        window.draggedElement = blockWrapper;
+
         document.getElementById('trash-zone').classList.add('visible');
+        setTimeout(() => { blockWrapper.style.pointerEvents = 'none'; }, 0);
     });
 
-    el.addEventListener('dragend', (e) => {
+    moveHandle.addEventListener('dragend', (e) => {
         document.getElementById('trash-zone').classList.remove('visible');
-        el.style.opacity = '1';
+        blockWrapper.style.pointerEvents = 'all';
         window.draggedElement = null;
     });
 }
@@ -177,6 +194,83 @@ function buildTrashcan() {
             console.log("Block deleted successfully.");
         }
     });
+}
+
+function addSelectionListeners(blockWrapper) {
+    blockWrapper.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+
+        document.querySelectorAll('.loaded-block.selected').forEach(el => {
+            if (el !== blockWrapper) el.classList.remove('selected');
+        });
+
+        blockWrapper.classList.add('selected');
+    });
+
+    document.querySelector('#maincontainer').addEventListener('mousedown', (e) => {
+        if (e.target.classList.contains('maincontainer')) {
+            document.querySelectorAll('.loaded-block.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
+        }
+    });
+}
+
+function addResizeListeners(blockWrapper, handle) {
+    let isResizing = false;
+    let startX, startY, startWidthPercent, startHeightPercent;
+    const mainContainer = document.querySelector('#maincontainer');
+
+    handle.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        isResizing = true;
+        blockWrapper.draggable = false;
+
+        startX = e.clientX;
+        startY = e.clientY;
+
+        const blockRect = blockWrapper.getBoundingClientRect();
+        const containerRect = mainContainer.getBoundingClientRect();
+
+        startWidthPercent = (blockRect.width / containerRect.width) * 100;
+        startHeightPercent = (blockRect.height / containerRect.height) * 100;
+
+        document.addEventListener('mousemove', resize);
+        document.addEventListener('mouseup', stopResize);
+    });
+
+    function resize(e) {
+        if (!isResizing) return;
+
+        const containerRect = mainContainer.getBoundingClientRect();
+
+        const dxPercent = ((e.clientX - startX) / containerRect.width) * 100;
+        const dyPercent = ((e.clientY - startY) / containerRect.height) * 100;
+
+        let newWidthPercent = startWidthPercent + dxPercent;
+        let newHeightPercent = startHeightPercent + dyPercent;
+
+        let snappedWidth = Math.round(newWidthPercent / 10) * 10;
+        let snappedHeight = Math.round(newHeightPercent / 20) * 20;
+
+        snappedWidth = Math.max(10, snappedWidth);
+        snappedHeight = Math.max(20, snappedHeight);
+
+        blockWrapper.style.width = `${snappedWidth}%`;
+        blockWrapper.style.height = `${snappedHeight}%`;
+    }
+
+    function stopResize() {
+        if (isResizing) {
+            isResizing = false;
+            //blockWrapper.draggable = true;
+
+            document.removeEventListener('mousemove', resize);
+            document.removeEventListener('mouseup', stopResize);
+        }
+    }
 }
 
 function OpenMenu() {
