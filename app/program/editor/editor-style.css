@@ -26,7 +26,7 @@ body {
 
     transform: translateX(-100%);
     transition: transform 0.2s ease-in-out;
-    z-index: 100;
+    z-index: 10000;
 }
 
 #menu.open {
@@ -115,7 +115,7 @@ body {
     display: inline-block;
     width: 100vw;
     height: 100vh;
-    background-size: 10% 20%;
+    background-size: 5% 10%;
     background-image:
         linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);

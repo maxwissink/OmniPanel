@@ -3,8 +3,8 @@ const Block = require('../models/block.js');
 const fs = require('fs').promises;
 
 let highestZ = 100;
-let GridX = 10;
-let GridY = 20;
+let GridX = 5;
+let GridY = 10;
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Renderer loaded")
