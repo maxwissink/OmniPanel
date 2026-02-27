@@ -6,6 +6,8 @@ let highestZ = 100;
 let GridX = 5;
 let GridY = 10;
 
+const generateId = () => `block_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Renderer loaded")
 
@@ -104,23 +106,36 @@ function BuildEditorArea() {
 
             if (filePath && filePath.endsWith('.html')) {
                 try {
-                    const htmlContent = await fs.readFile(filePath, 'utf-8');
+                    const rawHtml = await fs.readFile(filePath, 'utf-8');
 
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(rawHtml, 'text/html');
+                    const settingsTag = doc.querySelector('settings');
 
-                    const rect = mainContainer.getBoundingClientRect();
-
-                    const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - (GridX/2);
-                    const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - (GridY/2);
+                    let initialSettings = {};
+                    if (settingsTag) {
+                        // Extract attributes from <settings width="10" color="red">
+                        for (let attr of settingsTag.attributes) {
+                            initialSettings[attr.name] = attr.value;
+                        }
+                        settingsTag.remove(); // Remove it so it doesn't show up in the template
+                    }
 
                     const blockWrapper = document.createElement('div');
                     blockWrapper.classList.add('loaded-block');
+                    blockWrapper.id = generateId();
                     blockWrapper.style.position = 'absolute';
-                    blockWrapper.style.width =  `${GridX}%`;
-                    blockWrapper.style.height = `${GridY}%`;
-                    blockWrapper.style.left = `${Math.round(xPercent / GridX) * GridX}%`;
-                    blockWrapper.style.top = `${Math.round(yPercent / GridY) * GridY}%`;
+                    blockWrapper.style.width = '10%';
+                    blockWrapper.style.height = '20%';
 
-                    blockWrapper.innerHTML = htmlContent;
+                    blockWrapper.settings = initialSettings;
+                    blockWrapper.htmlTemplate = doc.body.innerHTML;
+
+                    const rect = mainContainer.getBoundingClientRect();
+                    const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - 5;
+                    const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - 10;
+                    blockWrapper.style.left = `${Math.round(xPercent / 10) * 10}%`;
+                    blockWrapper.style.top = `${Math.round(yPercent / 20) * 20}%`;
 
                     const moveHandle = document.createElement('div');
                     moveHandle.classList.add('move-handle');
@@ -128,20 +143,37 @@ function BuildEditorArea() {
                     moveHandle.draggable = true;
                     blockWrapper.appendChild(moveHandle);
 
+                    const settingsBtn = document.createElement('div');
+                    settingsBtn.classList.add('settings-button');
+                    settingsBtn.innerHTML = '⚙';
+                    blockWrapper.appendChild(settingsBtn);
+
                     const resizeHandle = document.createElement('div');
                     resizeHandle.classList.add('resize-handle');
                     blockWrapper.appendChild(resizeHandle);
+
+                    const contentArea = document.createElement('div');
+                    contentArea.classList.add('block-content-area');
+                    contentArea.style.height = '100%';
+                    blockWrapper.appendChild(contentArea);
+
+                    renderBlockFromTemplate(blockWrapper);
 
                     addSelectionListeners(blockWrapper);
                     addWorkspaceDragListeners(blockWrapper, moveHandle);
                     addResizeListeners(blockWrapper, resizeHandle);
 
-                    mainContainer.appendChild(blockWrapper);
+                    settingsBtn.addEventListener('mousedown', (e) => e.stopPropagation()); // Prevent drag
+                    settingsBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        openSettingsModal(blockWrapper);
+                    });
 
+                    mainContainer.appendChild(blockWrapper);
                     CloseMenu();
 
                 } catch (error) {
-                    console.error("Failed to load the HTML file:", error);
+                    console.error("Failed to load/parse the block:", error);
                 }
             }
         }
@@ -207,7 +239,7 @@ function addSelectionListeners(blockWrapper) {
         document.querySelectorAll('.loaded-block.selected').forEach(el => {
             el.classList.remove('selected');
         });
-        
+
         blockWrapper.classList.add('selected');
 
         highestZ++;
@@ -283,6 +315,59 @@ function addResizeListeners(blockWrapper, handle) {
             document.removeEventListener('mouseup', stopResize);
         }
     }
+}
+
+function renderBlockFromTemplate(blockWrapper) {
+    let finalHtml = blockWrapper.htmlTemplate;
+
+    Object.keys(blockWrapper.settings).forEach(key => {
+        const value = blockWrapper.settings[key];
+
+        const placeholder = new RegExp(`settings-${key}`, 'g');
+
+        finalHtml = finalHtml.replace(placeholder, value);
+    });
+
+    const contentArea = blockWrapper.querySelector('.block-content-area') || document.createElement('div');
+    if (!blockWrapper.querySelector('.block-content-area')) {
+        contentArea.classList.add('block-content-area');
+        blockWrapper.appendChild(contentArea);
+    }
+
+    contentArea.innerHTML = finalHtml;
+}
+
+function openSettingsModal(blockWrapper) {
+    const modal = document.getElementById('settings-modal');
+    const fieldsContainer = document.getElementById('modal-fields');
+    fieldsContainer.innerHTML = '';
+
+    Object.keys(blockWrapper.settings).forEach(key => {
+        const row = document.createElement('div');
+        row.classList.add('setting-row');
+
+        const label = document.createElement('label');
+        label.textContent = key;
+
+        const input = document.createElement('input');
+        input.value = blockWrapper.settings[key];
+
+        //  LIVE UPDATE
+        input.addEventListener('input', (e) => {
+            blockWrapper.settings[key] = e.target.value;
+            renderBlockFromTemplate(blockWrapper);
+        });
+
+        row.appendChild(label);
+        row.appendChild(input);
+        fieldsContainer.appendChild(row);
+    });
+
+    modal.style.display = 'block';
+}
+
+function closeSettingsModal() {
+    document.getElementById('settings-modal').style.display = 'none';
 }
 
 function OpenMenu() {

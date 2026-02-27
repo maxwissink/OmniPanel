@@ -168,3 +168,43 @@ body {
     background-color: #007bff;
     cursor: se-resize;
 }
+
+.settings-button {
+    position: absolute;
+    top: 0;
+    left: 24px;
+    width: 24px;
+    height: 24px;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    z-index: 20;
+}
+
+.loaded-block.selected .settings-button {
+    display: flex;
+}
+
+#settings-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #252526;
+    border: 1px solid #444;
+    padding: 20px;
+    z-index: 10000;
+    min-width: 300px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.modal-header { margin-bottom: 15px; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 5px; }
+.setting-row { margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+.setting-row input { background: #3c3c3c; border: 1px solid #555; color: white; padding: 3px; width: 60%; }
+.modal-actions { margin-top: 20px; text-align: right; }

@@ -1,18 +1,21 @@
+<settings width="80%" height="80%" label="Click Me" color="green"></settings>
 <style>
     .simple-button {
         width: 100%;
         height: 100%;
-        background-color: red;
+        background-color: settings-color;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    .simple-button button{
-        height: 80%;
-        width: 80%;
+    .simple-button button {
+        height: settings-width;
+        width: settings-height;
     }
 </style>
 <div class="simple-button">
-    <button>Simple button</button>
+    <button>
+        settings-label
+    </button>
 </div>
