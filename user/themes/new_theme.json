@@ -1,0 +1,32 @@
+[
+    {
+        "id": "block_1772206046103_fpkj9zj2o",
+        "left": "25%",
+        "top": "20%",
+        "width": "40%",
+        "height": "30%",
+        "zIndex": "104",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "label": "Click Me",
+            "color": "red"
+        },
+        "path": "user/blocks/default/simple-button.html"
+    },
+    {
+        "id": "block_1772206057798_g263i6ny5",
+        "left": "55%",
+        "top": "10%",
+        "width": "25%",
+        "height": "40%",
+        "zIndex": "103",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "label": "Click Me",
+            "color": "green"
+        },
+        "path": "user/blocks/default/simple-button.html"
+    }
+]

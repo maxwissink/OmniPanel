@@ -157,6 +157,8 @@ function BuildEditorArea() {
                     contentArea.style.height = '100%';
                     blockWrapper.appendChild(contentArea);
 
+                    blockWrapper.dataset.sourcePath = filePath;
+
                     renderBlockFromTemplate(blockWrapper);
 
                     addSelectionListeners(blockWrapper);
@@ -319,22 +321,31 @@ function addResizeListeners(blockWrapper, handle) {
 
 function renderBlockFromTemplate(blockWrapper) {
     let finalHtml = blockWrapper.htmlTemplate;
+    const blockId = blockWrapper.id;
 
     Object.keys(blockWrapper.settings).forEach(key => {
         const value = blockWrapper.settings[key];
-
         const placeholder = new RegExp(`settings-${key}`, 'g');
-
         finalHtml = finalHtml.replace(placeholder, value);
     });
 
-    const contentArea = blockWrapper.querySelector('.block-content-area') || document.createElement('div');
-    if (!blockWrapper.querySelector('.block-content-area')) {
-        contentArea.classList.add('block-content-area');
-        blockWrapper.appendChild(contentArea);
-    }
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = finalHtml;
+    const styleTags = tempDiv.querySelectorAll('style');
 
-    contentArea.innerHTML = finalHtml;
+    styleTags.forEach(style => {
+        style.innerHTML = style.innerHTML.replace(/(^|}|;)\s*([^{};]+)\s*\{/g, (match, p1, p2) => {
+            const scopedSelectors = p2.split(',').map(sel => `#${blockId} ${sel.trim()}`).join(', ');
+            return `${p1} ${scopedSelectors} {`;
+        });
+    });
+
+    finalHtml = tempDiv.innerHTML;
+
+    const contentArea = blockWrapper.querySelector('.block-content-area');
+    if (contentArea) {
+        contentArea.innerHTML = finalHtml;
+    }
 }
 
 function openSettingsModal(blockWrapper) {
@@ -378,4 +389,99 @@ function OpenMenu() {
 function CloseMenu() {
     const menu = document.getElementById("menu");
     menu.classList.remove("open");
+}
+
+async function saveWorkspace() {
+    const blocks = [];
+    const allBlocks = document.querySelectorAll('.loaded-block');
+
+    allBlocks.forEach(block => {
+        blocks.push({
+            id: block.id,
+            left: block.style.left,
+            top: block.style.top,
+            width: block.style.width,
+            height: block.style.height,
+            zIndex: block.style.zIndex,
+            settings: block.settings,
+            path: block.dataset.sourcePath,
+        });
+    });
+
+    const success = await ipcRenderer.invoke('save-workspace-json', blocks);
+    if (success) {
+        alert("Workspace saved successfully!");
+    }
+}
+
+async function loadWorkspace() {
+    const data = await ipcRenderer.invoke('load-workspace-json');
+    if (!data) return;
+
+    const mainContainer = document.querySelector('#maincontainer');
+    mainContainer.querySelectorAll('.loaded-block').forEach(el => el.remove());
+
+    for (const blockData of data) {
+        try {
+            const rawHtml = await fs.readFile(blockData.path, 'utf-8');
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(rawHtml, 'text/html');
+
+            const settingsTag = doc.querySelector('settings');
+            if (settingsTag) settingsTag.remove();
+
+            const blockWrapper = document.createElement('div');
+            blockWrapper.classList.add('loaded-block');
+            blockWrapper.id = blockData.id;
+            blockWrapper.dataset.sourcePath = blockData.path;
+            blockWrapper.style.position = 'absolute';
+            blockWrapper.style.left = blockData.left;
+            blockWrapper.style.top = blockData.top;
+            blockWrapper.style.width = blockData.width;
+            blockWrapper.style.height = blockData.height;
+            blockWrapper.style.zIndex = blockData.zIndex;
+
+            blockWrapper.settings = blockData.settings;
+            blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
+
+            const moveHandle = document.createElement('div');
+            moveHandle.classList.add('move-handle');
+            moveHandle.innerHTML = '☩';
+            moveHandle.draggable = true;
+            blockWrapper.appendChild(moveHandle);
+
+            const settingsBtn = document.createElement('div');
+            settingsBtn.classList.add('settings-button');
+            settingsBtn.innerHTML = '⚙';
+            blockWrapper.appendChild(settingsBtn);
+
+            const resizeHandle = document.createElement('div');
+            resizeHandle.classList.add('resize-handle');
+            blockWrapper.appendChild(resizeHandle);
+
+            const contentArea = document.createElement('div');
+            contentArea.classList.add('block-content-area');
+            contentArea.style.height = '100%';
+            blockWrapper.appendChild(contentArea);
+
+            renderBlockFromTemplate(blockWrapper);
+
+            addSelectionListeners(blockWrapper);
+            addWorkspaceDragListeners(blockWrapper, moveHandle);
+            addResizeListeners(blockWrapper, resizeHandle);
+
+            settingsBtn.addEventListener('mousedown', (e) => e.stopPropagation()); // Prevent drag
+            settingsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openSettingsModal(blockWrapper);
+            });
+
+            mainContainer.appendChild(blockWrapper);
+            CloseMenu();
+
+        } catch (error) {
+            console.error(`Failed to reload block from ${blockData.path}:`, error);
+        }
+    }
 }
