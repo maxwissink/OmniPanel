@@ -73,6 +73,7 @@ function getCertificates() {
 }
 
 expressApp.get('/', (req, res) => {
+    const client = path.join(__dirname, 'program', 'client', 'index.html');
     let themePath = null;
     if (app.isPackaged) {
         themePath = path.join(path.dirname(process.execPath), 'user', config.theme, 'html', 'index.html');
@@ -80,23 +81,23 @@ expressApp.get('/', (req, res) => {
         themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
     }
 
-    if (!securityFilter(themePath)) {
-        if (fs.existsSync(themePath)) {
-            let html = fs.readFileSync(themePath, 'utf8');
-            const scriptTag = `<script src="/internal/websocket-injection.js"></script>`;
-            res.send(html.replace('</body>', `${scriptTag}</body>`));
+    //if (!securityFilter(themePath)) {
+        if (fs.existsSync(client)) {
+            let html = fs.readFileSync(client, 'utf8');
+            res.send(html);
         } else {
             res.status(404).send("Theme not found");
         }
-    } else {
-        res.status(500).send("Malicious code detected in theme.");
-    }
+    // } else {
+    //     res.status(500).send("Malicious code detected in theme.");
+    // }
 });
 
 //injection script to client
-expressApp.get('/internal/websocket-injection.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'program', 'websocket-injection.js'));
+expressApp.get('/client.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'program', 'client', 'client.js'));
 });
+expressApp.use('/blocks/', express.static(path.join(__dirname, '..', 'user', 'blocks')));
 
 expressApp.use((req, res, next) => {
     let themeFolder = null;

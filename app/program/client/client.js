@@ -1,6 +1,88 @@
-// This file lives in app/program/ and is injected into the theme
 let socket;
 let reconnectInterval;
+
+async function loadTheme(data) {
+    const mainContainer = document.querySelector('body');
+    mainContainer.innerHTML = "";
+    // Clear old blocks
+    mainContainer.querySelectorAll('.loaded-block').forEach(el => el.remove());
+    
+    for (const blockData of data) {
+        try {
+            const fileName = blockData.path.split('blocks').pop().replace(/\\/g, '/');
+            const url = `/blocks/${fileName}`;
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Could not find block: ${blockData.path}`);
+
+            const rawHtml = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(rawHtml, 'text/html');
+
+            // Remove the <settings> tag from the template
+            const settingsTag = doc.querySelector('settings');
+            if (settingsTag) settingsTag.remove();
+
+            const blockWrapper = document.createElement('div');
+            blockWrapper.classList.add('loaded-block');
+            
+            blockWrapper.id = blockData.id;
+            Object.assign(blockWrapper.style, {
+                position: 'absolute',
+                left: blockData.left,
+                top: blockData.top,
+                width: blockData.width,
+                height: blockData.height,
+                zIndex: blockData.zIndex,
+            });
+
+            blockWrapper.settings = blockData.settings;
+            blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
+
+            const contentArea = document.createElement('div');
+            contentArea.classList.add('block-content-area');
+            contentArea.style.width = '100%';
+            contentArea.style.height = '100%';
+            blockWrapper.appendChild(contentArea);
+
+            renderBlockFromTemplate(blockWrapper);
+
+            mainContainer.appendChild(blockWrapper);
+
+        } catch (e) {
+            console.error("Display Load Error:", e);
+        }
+    }
+}
+
+function renderBlockFromTemplate(blockWrapper) {
+    let finalHtml = blockWrapper.htmlTemplate;
+    const blockId = blockWrapper.id;
+
+    Object.keys(blockWrapper.settings).forEach(key => {
+        const value = blockWrapper.settings[key];
+        const placeholder = new RegExp(`settings-${key}`, 'g');
+        finalHtml = finalHtml.replace(placeholder, value);
+    });
+
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = finalHtml;
+    const styleTags = tempDiv.querySelectorAll('style');
+
+    styleTags.forEach(style => {
+        style.innerHTML = style.innerHTML.replace(/(^|}|;)\s*([^{};]+)\s*\{/g, (match, p1, p2) => {
+            const scopedSelectors = p2.split(',').map(sel => `#${blockId} ${sel.trim()}`).join(', ');
+            return `${p1} ${scopedSelectors} {`;
+        });
+    });
+
+    finalHtml = tempDiv.innerHTML;
+
+    const contentArea = blockWrapper.querySelector('.block-content-area');
+    if (contentArea) {
+        contentArea.innerHTML = finalHtml;
+    }
+}
 
 async function keepScreenAlive() {
     if ('wakeLock' in navigator) {
@@ -42,6 +124,10 @@ function connect() {
             console.log("Host changed theme. Reloading...");
             location.reload();
         }
+
+        if (msg.type === 'load-theme') {
+            loadTheme(msg.data);
+        }
     };
 }
 
@@ -56,7 +142,7 @@ function startWatchdog() {
     }, 3000);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+function enableInputs() {
     const fsBtn = document.getElementById('fullscreen-btn');
 
     fsBtn.addEventListener('click', () => {
@@ -145,8 +231,11 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+}
+
+window.addEventListener('DOMContentLoaded', () => {
     connect();
+    //enableInputs();
     startWatchdog();
     keepScreenAlive();
 });
-

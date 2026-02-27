@@ -18,9 +18,10 @@ module.exports = function (config, wss) {
 
     // 1. Get List of Folders in /user
     ipcMain.handle('get-themes', async () => {
-        const themes = fs.readdirSync(userPath, { withFileTypes: true })
-            .filter(dirent => dirent.isDirectory())
-            .map(dirent => dirent.name);
+        const themesPath = path.join(userPath, 'themes');
+        const themes = fs.readdirSync(themesPath, { withFileTypes: true })
+            .filter(file => file.isFile() && file.name.toLowerCase().endsWith('.json'))
+            .map(file => file.name.replace('.json', ''));
 
         return {
             allThemes: themes,
