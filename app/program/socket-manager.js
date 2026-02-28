@@ -48,11 +48,7 @@ module.exports = function (server) {
             themeJSON = JSON.parse(content);
         }
 
-        wss.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(JSON.stringify({ type: 'load-theme', data: themeJSON}));
-            }
-        });
+        ws.send(JSON.stringify({ type: 'load-theme', data: themeJSON}));
 
         ws.on('pong', () => { ws.isAlive = true; });
 
