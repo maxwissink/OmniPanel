@@ -3,10 +3,10 @@ let reconnectInterval;
 
 async function loadTheme(data) {
     const mainContainer = document.querySelector('body');
-    mainContainer.innerHTML = "";
+    mainContainer.innerHTML = "<button id='fullscreen-btn' class='fullscreen-toggle'>ENTER FULLSCREEN</button>";
     // Clear old blocks
     mainContainer.querySelectorAll('.loaded-block').forEach(el => el.remove());
-    
+
     for (const blockData of data) {
         try {
             const fileName = blockData.path.split('blocks').pop().replace(/\\/g, '/');
@@ -25,7 +25,7 @@ async function loadTheme(data) {
 
             const blockWrapper = document.createElement('div');
             blockWrapper.classList.add('loaded-block');
-            
+
             blockWrapper.id = blockData.id;
             Object.assign(blockWrapper.style, {
                 position: 'absolute',
@@ -144,16 +144,17 @@ function startWatchdog() {
 
 function enableInputs() {
     const fsBtn = document.getElementById('fullscreen-btn');
-
-    fsBtn.addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => {
-                console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-            });
-        } else {
-            document.exitFullscreen();
-        }
-    });
+    if (fsBtn != null) {
+        fsBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.error(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+    }
 
     document.addEventListener('fullscreenchange', () => {
         if (document.fullscreenElement) {
@@ -173,69 +174,71 @@ function enableInputs() {
     }
 
     const buttons = document.querySelectorAll('[emulate-button]');
+    if (buttons != null) {
+        buttons.forEach(button => {
+            const btnId = button.getAttribute('emulate-button');
 
-    buttons.forEach(button => {
-        const btnId = button.getAttribute('emulate-button');
+            button.addEventListener('pointerdown', (e) => {
+                const jsIndex = getJoystickIndex(button);
 
-        button.addEventListener('pointerdown', (e) => {
-            const jsIndex = getJoystickIndex(button);
+                socket.send(JSON.stringify({
+                    type: 'simulate-button',
+                    data: {
+                        js: jsIndex,
+                        id: btnId,
+                        state: 1
+                    }
+                }));
+                button.classList.add('active');
+                button.setPointerCapture(e.pointerId);
+            });
 
-            socket.send(JSON.stringify({
-                type: 'simulate-button',
-                data: {
-                    js: jsIndex,
-                    id: btnId,
-                    state: 1
-                }
-            }));
-            button.classList.add('active');
-            button.setPointerCapture(e.pointerId);
+            button.addEventListener('pointerup', () => {
+                const jsIndex = getJoystickIndex(button);
+                socket.send(JSON.stringify({
+                    type: 'simulate-button',
+                    data: { js: jsIndex, id: btnId, state: 0 }
+                }));
+                button.classList.remove('active');
+            });
+
+            button.addEventListener('pointercancel', () => {
+                const jsIndex = getJoystickIndex(button);
+                socket.send(JSON.stringify({
+                    type: 'simulate-button',
+                    data: { js: jsIndex, id: btnId, state: 0 }
+                }));
+                button.classList.remove('active');
+            });
         });
-
-        button.addEventListener('pointerup', () => {
-            const jsIndex = getJoystickIndex(button);
-            socket.send(JSON.stringify({
-                type: 'simulate-button',
-                data: { js: jsIndex, id: btnId, state: 0 }
-            }));
-            button.classList.remove('active');
-        });
-
-        button.addEventListener('pointercancel', () => {
-            const jsIndex = getJoystickIndex(button);
-            socket.send(JSON.stringify({
-                type: 'simulate-button',
-                data: { js: jsIndex, id: btnId, state: 0 }
-            }));
-            button.classList.remove('active');
-        });
-    });
+    }
 
     const sliders = document.querySelectorAll('[emulate-slider]');
+    if (sliders != null) {
+        sliders.forEach(slider => {
+            const axisId = parseInt(slider.getAttribute('emulate-slider'));
 
-    sliders.forEach(slider => {
-        const axisId = parseInt(slider.getAttribute('emulate-slider'));
+            slider.addEventListener('input', (event) => {
+                const jsIndex = getJoystickIndex(slider);
 
-        slider.addEventListener('input', (event) => {
-            const jsIndex = getJoystickIndex(slider);
-
-            const payload = {
-                type: 'simulate-slider',
-                data: {
-                    js: jsIndex,
-                    id: axisId,
-                    value: parseInt(event.target.value)
-                }
-            };
-            socket.send(JSON.stringify(payload));
+                const payload = {
+                    type: 'simulate-slider',
+                    data: {
+                        js: jsIndex,
+                        id: axisId,
+                        value: parseInt(event.target.value)
+                    }
+                };
+                socket.send(JSON.stringify(payload));
+            });
         });
-    });
+    }
 
 }
 
 window.addEventListener('DOMContentLoaded', () => {
     connect();
-    //enableInputs();
+    enableInputs();
     startWatchdog();
     keepScreenAlive();
 });

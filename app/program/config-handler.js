@@ -16,7 +16,17 @@ module.exports = function (config, wss) {
 
     let debounceTimer = null;
 
-    // 1. Get List of Folders in /user
+    ipcMain.handle('get-config', async () => {
+        let config = null;
+        if (app.isPackaged) {
+            const packagedConfigPath = path.join(path.dirname(process.execPath), 'config.json');
+            config = JSON.parse(fs.readFileSync(packagedConfigPath, 'utf8'));
+        } else {
+            config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'config.json'), 'utf8'));
+        }
+        return config;
+    });
+
     ipcMain.handle('get-themes', async () => {
         const themesPath = path.join(userPath, 'themes');
         const themes = fs.readdirSync(themesPath, { withFileTypes: true })

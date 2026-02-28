@@ -7,7 +7,7 @@ const forge = require('node-forge');
 const setupConfigHandler = require('./program/config-handler');
 const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
-const themeHandler = require('./program/editor/editor-handler');
+const editorHandler = require('./program/editor/editor-handler');
 
 let config = null;
 if (app.isPackaged) {
@@ -120,10 +120,10 @@ app.whenReady().then(() => {
     }
 
     const server = https.createServer(certs, expressApp);
-    const wss = initSocketManager(server);
+    const wss = initSocketManager(config, server);
 
     setupConfigHandler(config, wss);
-    themeHandler();
+    editorHandler();
 
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server Secure: https://localhost:${config.port}`);

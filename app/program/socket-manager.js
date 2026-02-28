@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-module.exports = function (server) {
+module.exports = function (config ,server) {
     const wss = new WebSocketServer({ server });
 
     // --- Heartbeat Logic ---
@@ -27,15 +27,6 @@ module.exports = function (server) {
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         ws.deviceIp = ip.replace('::ffff:', '');
         ws.isAlive = true;
-
-        // config, need to replace with global method
-        let config = null;
-        if (app.isPackaged) {
-            const packagedConfigPath = path.join(path.dirname(process.execPath), 'config.json');
-            config = JSON.parse(fs.readFileSync(packagedConfigPath, 'utf8'));
-        } else {
-            config = JSON.parse(fs.readFileSync(path.join(__dirname, '..', '..', 'config.json'), 'utf8'));
-        }
 
         const theme = config.theme;
         let themePath = app.isPackaged
