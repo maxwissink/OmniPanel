@@ -1,21 +1,14 @@
 TODO:
- * filter out the meta/windows key (linux done)
  - initial popup with settings/config 
     settings include:
     * theme selection
-    * debugger option?
     - updater(or link to github)
  * make an actually good looking and usefull default theme
- * implement key simulator for windows
  - multiple panels at once?
  * multiple layers/pages in one theme without enabling code injection
  - star citizen API intergration
  - options to call other api's? (if it can be done without enabling code injection into themes)
- * allow system notifications to be displayed on top of OmniPanel -- not needed cus hosted
  - make a framework so its easier for people to make a theme
- * fullscreen on client
- * dont sleep on clients
- * show host local address on popup
  - syncing states of sliders with other clients (in case someone wants to use multiple clients)
- -
- - and more...
+ - blocks: block with pages, nested blocks
+ - blocks: overview of what joystick+button does what in game, example: js1,btn3="toggle gear"
