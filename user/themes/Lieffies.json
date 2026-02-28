@@ -10,7 +10,9 @@
             "width": "100%",
             "height": "50%",
             "label": "Naomi is lieffies",
-            "color": "pink"
+            "color": "pink",
+            "joystick": "0",
+            "button": "0"
         },
         "path": "user/blocks/default/simple-button.html"
     },
@@ -20,12 +22,14 @@
         "top": "20%",
         "width": "10%",
         "height": "20%",
-        "zIndex": "104",
+        "zIndex": "101",
         "settings": {
             "width": "80%",
             "height": "80%",
             "label": "Floki is kushies",
-            "color": "#ffff00"
+            "color": "#ffff00",
+            "joystick": "0",
+            "button": "1"
         },
         "path": "user/blocks/default/simple-button.html"
     },
@@ -35,12 +39,14 @@
         "top": "50%",
         "width": "10%",
         "height": "20%",
-        "zIndex": "104",
+        "zIndex": "102",
         "settings": {
             "width": "80%",
             "height": "80%",
             "label": "Click Me",
-            "color": "green"
+            "color": "green",
+            "joystick": "0",
+            "button": "2"
         },
         "path": "user/blocks/default/simple-button.html"
     }

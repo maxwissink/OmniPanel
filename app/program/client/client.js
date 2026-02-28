@@ -53,6 +53,7 @@ async function loadTheme(data) {
             console.error("Display Load Error:", e);
         }
     }
+    enableInputs();
 }
 
 function renderBlockFromTemplate(blockWrapper) {
@@ -238,7 +239,6 @@ function enableInputs() {
 
 window.addEventListener('DOMContentLoaded', () => {
     connect();
-    enableInputs();
     startWatchdog();
     keepScreenAlive();
 });

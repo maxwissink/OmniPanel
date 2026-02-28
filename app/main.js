@@ -99,15 +99,16 @@ expressApp.get('/client.js', (req, res) => {
 });
 expressApp.use('/blocks/', express.static(path.join(__dirname, '..', 'user', 'blocks')));
 
-expressApp.use((req, res, next) => {
-    let themeFolder = null;
-    if (app.isPackaged) {
-        themeFolder = path.join(path.dirname(process.execPath), 'user', config.theme);
-    } else {
-        themeFolder = path.join(__dirname, '..', 'user', config.theme);
-    }
-    express.static(themeFolder)(req, res, next);
-});
+// dynamic exposing
+// expressApp.use((req, res, next) => {
+//     let themeFolder = null;
+//     if (app.isPackaged) {
+//         themeFolder = path.join(path.dirname(process.execPath), 'user', config.theme);
+//     } else {
+//         themeFolder = path.join(__dirname, '..', 'user', config.theme);
+//     }
+//     express.static(themeFolder)(req, res, next);
+// });
 
 // --- Initialization ---
 app.whenReady().then(() => {

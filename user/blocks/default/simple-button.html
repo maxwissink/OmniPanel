@@ -1,4 +1,4 @@
-<settings width="80%" height="80%" label="Click Me" color="green"></settings>
+<settings width="80%" height="80%" label="Click Me" color="green" joystick="0" button="0"></settings>
 <style>
     .simple-button {
         width: 100%;
@@ -15,7 +15,7 @@
     }
 </style>
 <div class="simple-button">
-    <button>
+    <button virtual-joystick="settings-joystick" emulate-button="settings-button">
         settings-label
     </button>
 </div>
