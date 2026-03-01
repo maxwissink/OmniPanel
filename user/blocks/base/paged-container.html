@@ -1,2 +1,59 @@
-<settings text="custom text" size="30px"></settings>
-<p style="font-size: settings-size;">settings-text</p>
+<settings pages="2" background="#222" gridx="5" gridy="5"></settings>
+<style>
+    .ui-container {
+        width: 100%;
+        height: 100%;
+        background-color: settings-background;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid #444;
+    }
+
+    .tab-header {
+        display: flex;
+        background: #111;
+        height: 30px;
+    }
+
+    .tab-btn {
+        flex: 1;
+        color: white;
+        cursor: pointer;
+        border: none;
+        background: #333;
+    }
+
+    .tab-btn.active {
+        background: #555;
+    }
+
+    .page-wrapper {
+        position: relative;
+        flex: 1;
+        display: none;
+        width: 100%;
+        height: 100%;
+    }
+    .pages-container {
+        flex: 1;
+        display: flex;
+        min-height: 50px;
+    }
+
+    .page-wrapper.active {
+        display: block;
+        width: 100%;
+        height: 100%;
+        pointer-events: all;
+    }
+
+    .page-wrapper.nested-dropzone {
+        border: 1px dashed transparent;
+        transition: background 0.2s;
+    }
+</style>
+
+<div class="ui-container">
+    <div class="tab-header"></div>
+    <div class="pages-container"></div>
+</div>

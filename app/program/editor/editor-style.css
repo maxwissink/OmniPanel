@@ -9,6 +9,7 @@ body {
     position: absolute;
     top: 10px;
     left: 10px;
+    z-index: 10000000;
 }
 
 #openmenu {
@@ -26,7 +27,7 @@ body {
 
     transform: translateX(-100%);
     transition: transform 0.2s ease-in-out;
-    z-index: 10000;
+    z-index: 100000000;
 }
 
 #menu.open {
@@ -115,10 +116,27 @@ body {
     display: inline-block;
     width: 100vw;
     height: 100vh;
-    background-size: 5% 10%;
+    /* background-size: 5% 10%;
+    background-image:
+        linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px); */
+}
+
+#maincontainer::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+    
+    /* Use the variables from the parent */
+    background-size: var(--grid-w, 10%) var(--grid-h, 10%);
+    
     background-image:
         linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);
+    
+    background-repeat: repeat;
 }
 
 .loaded-block {

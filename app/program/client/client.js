@@ -4,56 +4,67 @@ let reconnectInterval;
 async function loadTheme(data) {
     const mainContainer = document.querySelector('body');
     mainContainer.innerHTML = "<button id='fullscreen-btn' class='fullscreen-toggle'>ENTER FULLSCREEN</button>";
-    // Clear old blocks
-    mainContainer.querySelectorAll('.loaded-block').forEach(el => el.remove());
 
     for (const blockData of data) {
-        try {
-            const fileName = blockData.path.split('blocks').pop().replace(/\\/g, '/');
-            const url = `/blocks/${fileName}`;
-
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`Could not find block: ${blockData.path}`);
-
-            const rawHtml = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(rawHtml, 'text/html');
-
-            // Remove the <settings> tag from the template
-            const settingsTag = doc.querySelector('settings');
-            if (settingsTag) settingsTag.remove();
-
-            const blockWrapper = document.createElement('div');
-            blockWrapper.classList.add('loaded-block');
-
-            blockWrapper.id = blockData.id;
-            Object.assign(blockWrapper.style, {
-                position: 'absolute',
-                left: blockData.left,
-                top: blockData.top,
-                width: blockData.width,
-                height: blockData.height,
-                zIndex: blockData.zIndex,
-            });
-
-            blockWrapper.settings = blockData.settings;
-            blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
-
-            const contentArea = document.createElement('div');
-            contentArea.classList.add('block-content-area');
-            contentArea.style.width = '100%';
-            contentArea.style.height = '100%';
-            blockWrapper.appendChild(contentArea);
-
-            renderBlockFromTemplate(blockWrapper);
-
-            mainContainer.appendChild(blockWrapper);
-
-        } catch (e) {
-            console.error("Display Load Error:", e);
-        }
+        await renderBlockRecursive(blockData, mainContainer);
     }
+
     enableInputs();
+}
+
+async function renderBlockRecursive(blockData, parentElement) {
+    try {
+        const fileName = blockData.path.split('blocks').pop().replace(/\\/g, '/');
+        const url = `/blocks/${fileName}`;
+        const response = await fetch(url);
+        const rawHtml = await response.text();
+
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(rawHtml, 'text/html');
+        if (doc.querySelector('settings')) doc.querySelector('settings').remove();
+
+        const blockWrapper = document.createElement('div');
+        blockWrapper.classList.add('loaded-block');
+        blockWrapper.id = blockData.id;
+
+        Object.assign(blockWrapper.style, {
+            position: 'absolute',
+            left: blockData.left,
+            top: blockData.top,
+            width: blockData.width,
+            height: blockData.height,
+            zIndex: blockData.zIndex || 1
+        });
+
+        blockWrapper.settings = blockData.settings;
+        blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
+
+        const contentArea = document.createElement('div');
+        contentArea.classList.add('block-content-area');
+        contentArea.style.width = '100%';
+        contentArea.style.height = '100%';
+        blockWrapper.appendChild(contentArea);
+
+        renderBlockFromTemplate(blockWrapper);
+
+        if (blockData.children && blockData.children.length > 0) {
+            // Data structure: children: [{ pageIndex: 1, blocks: [...] }]
+            for (const pageGroup of blockData.children) {
+                const targetPage = blockWrapper.querySelector(`.page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
+
+                if (targetPage) {
+                    for (const childBlock of pageGroup.blocks) {
+                        await renderBlockRecursive(childBlock, targetPage);
+                    }
+                }
+            }
+        }
+
+        parentElement.appendChild(blockWrapper);
+
+    } catch (e) {
+        console.error("Recursive Load Error:", e);
+    }
 }
 
 function renderBlockFromTemplate(blockWrapper) {
@@ -68,8 +79,8 @@ function renderBlockFromTemplate(blockWrapper) {
 
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = finalHtml;
-    const styleTags = tempDiv.querySelectorAll('style');
 
+    const styleTags = tempDiv.querySelectorAll('style');
     styleTags.forEach(style => {
         style.innerHTML = style.innerHTML.replace(/(^|}|;)\s*([^{};]+)\s*\{/g, (match, p1, p2) => {
             const scopedSelectors = p2.split(',').map(sel => `#${blockId} ${sel.trim()}`).join(', ');
@@ -77,11 +88,40 @@ function renderBlockFromTemplate(blockWrapper) {
         });
     });
 
-    finalHtml = tempDiv.innerHTML;
-
     const contentArea = blockWrapper.querySelector('.block-content-area');
     if (contentArea) {
-        contentArea.innerHTML = finalHtml;
+        contentArea.innerHTML = tempDiv.innerHTML;
+
+        // BUILD PAGES (Same as Editor)
+        if (blockWrapper.settings.pages) {
+            const numPages = parseInt(blockWrapper.settings.pages);
+            const header = contentArea.querySelector('.tab-header');
+            const pagesContainer = contentArea.querySelector('.pages-container');
+
+            if (header && pagesContainer) {
+                header.innerHTML = '';
+                pagesContainer.innerHTML = '';
+                for (let i = 1; i <= numPages; i++) {
+                    const btn = document.createElement('button');
+                    btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
+                    btn.innerText = `Page ${i}`;
+
+                    const page = document.createElement('div');
+                    page.className = `page-wrapper ${i === 1 ? 'active' : ''}`;
+                    page.dataset.pageIndex = i; // Crucial for the recursive loader to find it
+
+                    btn.onclick = () => {
+                        header.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                        pagesContainer.querySelectorAll('.page-wrapper').forEach(p => p.classList.remove('active'));
+                        btn.classList.add('active');
+                        page.classList.add('active');
+                    };
+
+                    header.appendChild(btn);
+                    pagesContainer.appendChild(page);
+                }
+            }
+        }
     }
 }
 
