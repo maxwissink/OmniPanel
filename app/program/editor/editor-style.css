@@ -222,17 +222,93 @@ body {
     transform: translate(-50%, -50%);
     background: #252526;
     border: 1px solid #444;
-    padding: 20px;
+    padding: 24px; 
     z-index: 10000;
-    min-width: 300px;
+    min-width: 320px;
     color: white;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    border-radius: 8px; 
 }
 
-.modal-header { margin-bottom: 15px; font-weight: bold; border-bottom: 1px solid #444; padding-bottom: 5px; }
-.setting-row { margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-.setting-row input { background: #3c3c3c; border: 1px solid #555; color: white; padding: 3px; width: 60%; }
-.modal-actions { margin-top: 20px; text-align: right; }
+.modal-header { 
+    margin-bottom: 20px; 
+    font-weight: bold; 
+    font-size: 1.1em;
+    border-bottom: 1px solid #444; 
+    padding-bottom: 10px; 
+    color: #0078d4; 
+}
+
+.setting-row { 
+    margin-bottom: 18px;
+    display: flex; 
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px; 
+}
+
+.setting-row label {
+    font-size: 0.85em;
+    color: #ccc;
+    font-weight: 500;
+}
+
+.setting-row input { 
+    background: #3c3c3c; 
+    border: 1px solid #555; 
+    color: white; 
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: none;
+}
+
+.setting-row input:focus {
+    border-color: #0078d4;
+    background: #454545;
+}
+
+.modal-actions { 
+    margin-top: 25px; 
+    text-align: right; 
+    border-top: 1px solid #444;
+    padding-top: 15px;
+}
+
+.modal-actions button {
+    background: #0078d4;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.modal-actions button:hover {
+    background: #0086f0;
+}
+
+.setting-row input[type="color"] {
+    height: 40px;
+    padding: 2px;
+    cursor: pointer;
+    border: 1px solid #555;
+    background: #3c3c3c;
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.setting-row input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.setting-row input[type="color"]::-webkit-color-swatch {
+    border: none;
+    border-radius: 3px;
+}
 
 .modal-overlay {
     position: fixed;

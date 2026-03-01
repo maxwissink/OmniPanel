@@ -171,14 +171,38 @@ function BuildEditorArea() {
                     const settingsTag = doc.querySelector('settings');
 
                     let initialSettings = {};
+                    let settingsMeta = {};
+
                     if (settingsTag) {
                         for (let attr of settingsTag.attributes) {
-                            initialSettings[attr.name] = attr.value;
+                            const name = attr.name;
+                            const value = attr.value;
+
+                            if (name.startsWith('type-')) {
+                                const key = name.replace('type-', '');
+                                if (!settingsMeta[key]) settingsMeta[key] = {};
+                                settingsMeta[key].type = value;
+                            } else if (name.startsWith('min-')) {
+                                const key = name.replace('min-', '');
+                                if (!settingsMeta[key]) settingsMeta[key] = {};
+                                settingsMeta[key].min = value;
+                            } else if (name.startsWith('max-')) {
+                                const key = name.replace('max-', '');
+                                if (!settingsMeta[key]) settingsMeta[key] = {};
+                                settingsMeta[key].max = value;
+                            } else {
+                                // It's a standard value
+                                initialSettings[name] = value;
+                            }
                         }
                         settingsTag.remove();
                     }
 
                     const blockWrapper = document.createElement('div');
+
+                    blockWrapper.settings = initialSettings;
+                    blockWrapper.settingsMeta = settingsMeta;
+
                     blockWrapper.classList.add('loaded-block');
                     blockWrapper.id = generateId();
                     blockWrapper.style.position = 'absolute';
@@ -428,28 +452,58 @@ function renderBlockFromTemplate(blockWrapper) {
 }
 
 function openSettingsModal(blockWrapper) {
-    const modal = document.getElementById('settings-modal');
-    const fieldsContainer = document.getElementById('modal-fields');
+    const modal = document.querySelector('#settings-modal');
+    const fieldsContainer = document.querySelector('#modal-fields');
     fieldsContainer.innerHTML = '';
 
     Object.keys(blockWrapper.settings).forEach(key => {
-        const row = document.createElement('div');
-        row.classList.add('setting-row');
+        const value = blockWrapper.settings[key];
+
+        const meta = (blockWrapper.settingsMeta && blockWrapper.settingsMeta[key])
+            ? blockWrapper.settingsMeta[key]
+            : { type: 'string' };
+
+        const fieldRow = document.createElement('div');
+        fieldRow.className = 'setting-row';
 
         const label = document.createElement('label');
-        label.textContent = key;
+        label.innerText = key.charAt(0).toUpperCase() + key.slice(1);
 
         const input = document.createElement('input');
-        input.value = blockWrapper.settings[key];
 
-        input.addEventListener('input', (e) => {
-            blockWrapper.settings[key] = e.target.value;
+        if (meta.type === 'color') {
+            input.type = 'color';
+            input.classList.add('color-input');
+        } else if (meta.type === 'number') {
+            input.type = 'number';
+            if (meta.min !== undefined) input.min = meta.min;
+            if (meta.max !== undefined) input.max = meta.max;
+        } else {
+            input.type = 'text';
+        }
+
+        input.value = value;
+
+        input.oninput = () => {
+            let newValue = input.value;
+
+            if (meta.type === 'number') {
+                let num = parseInt(newValue);
+                if (!isNaN(num)) {
+                    if (meta.min !== undefined && num < meta.min) num = meta.min;
+                    if (meta.max !== undefined && num > meta.max) num = meta.max;
+                    newValue = num;
+                }
+            }
+
+            blockWrapper.settings[key] = newValue;
+
             renderBlockFromTemplate(blockWrapper);
-        });
+        };
 
-        row.appendChild(label);
-        row.appendChild(input);
-        fieldsContainer.appendChild(row);
+        fieldRow.appendChild(label);
+        fieldRow.appendChild(input);
+        fieldsContainer.appendChild(fieldRow);
     });
 
     modal.style.display = 'block';
