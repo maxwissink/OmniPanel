@@ -88,7 +88,7 @@ body {
     background: #ff4444;
     color: white;
     border-radius: 4px;
-    display: none; /* 👈 Hidden */
+    display: none;
     align-items: center;
     justify-content: center;
     cursor: pointer;
