@@ -16,12 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //GetBlocks();
     BuildEditorArea();
-    buildTrashcan();
     initWorkspaceGrid();
-
-    window.addEventListener('dragend', () => {
-        document.getElementById('trash-zone').classList.remove('visible');
-    });
 });
 
 async function GetBlocks() {
@@ -218,6 +213,11 @@ function BuildEditorArea() {
                     contentArea.style.height = '100%';
                     blockWrapper.appendChild(contentArea);
 
+                    const deleteBtn = document.createElement('div');
+                    deleteBtn.classList.add('delete-button');
+                    deleteBtn.innerHTML = '🗑';
+                    blockWrapper.appendChild(deleteBtn);
+
                     blockWrapper.dataset.sourcePath = filePath;
 
                     renderBlockFromTemplate(blockWrapper);
@@ -226,6 +226,7 @@ function BuildEditorArea() {
                     addSelectionListeners(blockWrapper);
                     addWorkspaceDragListeners(blockWrapper, moveHandle);
                     addResizeListeners(blockWrapper, resizeHandle);
+                    addDeleteFunctionality(blockWrapper, deleteBtn);
 
                     settingsBtn.addEventListener('mousedown', (e) => e.stopPropagation());
                     settingsBtn.addEventListener('click', (e) => {
@@ -262,43 +263,15 @@ function addWorkspaceDragListeners(blockWrapper, moveHandle) {
 
         window.draggedElement = blockWrapper;
 
-        document.getElementById('trash-zone').classList.add('visible');
         setTimeout(() => { blockWrapper.style.pointerEvents = 'none'; }, 0);
     });
 
     moveHandle.addEventListener('dragend', (e) => {
-        document.getElementById('trash-zone').classList.remove('visible');
         blockWrapper.style.pointerEvents = 'all';
         window.draggedElement = null;
     });
 }
 
-function buildTrashcan() {
-    const trashZone = document.getElementById('trash-zone');
-
-    trashZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        trashZone.classList.add('drag-over');
-    });
-
-    trashZone.addEventListener('dragleave', () => {
-        trashZone.classList.remove('drag-over');
-    });
-
-    trashZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        trashZone.classList.remove('drag-over');
-
-        const action = e.dataTransfer.getData('action');
-
-        if (action === 'move' && window.draggedElement) {
-            window.draggedElement.remove();
-            window.draggedElement = null;
-            console.log("Block deleted successfully.");
-        }
-    });
-}
 
 function addSelectionListeners(blockWrapper) {
     blockWrapper.addEventListener('mousedown', (e) => {
@@ -492,9 +465,9 @@ function CloseMenu() {
 
 async function saveWorkspace() {
     const mainContainer = document.querySelector('#maincontainer');
-    
+
     const topLevelElements = mainContainer.querySelectorAll(':scope > .loaded-block');
-    
+
     const blocksTree = [];
     topLevelElements.forEach(el => {
         blocksTree.push(getBlockDataRecursive(el));
@@ -520,11 +493,11 @@ function getBlockDataRecursive(block) {
     };
 
     const pages = block.querySelectorAll('.page-wrapper.nested-dropzone');
-    
+
     pages.forEach(page => {
         const pageIndex = page.dataset.pageIndex;
         const childBlocks = page.querySelectorAll(':scope > .loaded-block');
-        
+
         if (childBlocks.length > 0) {
             const pageGroup = {
                 pageIndex: parseInt(pageIndex),
@@ -553,7 +526,7 @@ async function loadWorkspace() {
     for (const blockData of data) {
         await createBlockRecursive(blockData, mainContainer);
     }
-    
+
     CloseMenu();
 }
 
@@ -569,7 +542,7 @@ async function createBlockRecursive(blockData, parentElement) {
         blockWrapper.classList.add('loaded-block');
         blockWrapper.id = blockData.id;
         blockWrapper.dataset.sourcePath = blockData.path;
-        
+
         Object.assign(blockWrapper.style, {
             position: 'absolute',
             left: blockData.left,
@@ -620,7 +593,7 @@ async function createBlockRecursive(blockData, parentElement) {
             blockData.children.forEach(pageGroup => {
                 // Find the specific page created by renderBlockFromTemplate
                 const targetPage = blockWrapper.querySelector(`.page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
-                
+
                 if (targetPage) {
                     pageGroup.blocks.forEach(async (childBlockData) => {
                         await createBlockRecursive(childBlockData, targetPage);
@@ -634,4 +607,24 @@ async function createBlockRecursive(blockData, parentElement) {
     } catch (error) {
         console.error(`Failed to reload block:`, error);
     }
+}
+
+function addDeleteFunctionality(blockWrapper, deleteBtn) {
+    deleteBtn.addEventListener('mousedown', (e) => e.stopPropagation());
+
+    deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+
+        const confirmed = confirm("Are you sure you want to remove this block? (All nested content will be lost)");
+
+        if (confirmed) {
+            blockWrapper.style.transition = "opacity 0.2s, transform 0.2s";
+            blockWrapper.style.opacity = "0";
+            blockWrapper.style.transform = "scale(0.95)";
+
+            setTimeout(() => {
+                blockWrapper.remove();
+            }, 200);
+        }
+    });
 }
