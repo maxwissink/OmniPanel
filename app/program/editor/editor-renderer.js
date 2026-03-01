@@ -142,30 +142,49 @@ function BuildEditorArea() {
         const action = event.dataTransfer.getData('action');
 
         if (action === 'move' && window.draggedElement) {
-            const offset = JSON.parse(event.dataTransfer.getData('offset'));
+            const block = window.draggedElement;
+            let finalTarget = targetDropZone;
 
-            const mouseXInParent = event.clientX - rect.left - snapStepX;
-            const mouseYInParent = event.clientY - rect.top - snapStepY;
-
-            const finalXPixels = mouseXInParent - offset.x;
-            const finalYPixels = mouseYInParent - offset.y;
-
-            let xPercent = (finalXPixels / rect.width) * 100;
-            let yPercent = (finalYPixels / rect.height) * 100;
-
-            const blockWidthPct = parseFloat(window.draggedElement.style.width);
-            const blockHeightPct = parseFloat(window.draggedElement.style.height);
-
-            xPercent = Math.max(0, Math.min(xPercent, 100 - blockWidthPct));
-            yPercent = Math.max(0, Math.min(yPercent, 100 - blockHeightPct));
-
-            window.draggedElement.style.left = `${Math.round(xPercent / snapStepX) * snapStepX}%`;
-            window.draggedElement.style.top = `${Math.round(yPercent / snapStepY) * snapStepY}%`;
-
-            if (window.draggedElement.parentElement !== targetDropZone) {
-                targetDropZone.appendChild(window.draggedElement);
+            if (block.contains(finalTarget)) {
+                finalTarget = block.parentElement.closest('.nested-dropzone') || document.querySelector('#maincontainer');
             }
 
+            const newParent = finalTarget;
+            const parentRect = newParent.getBoundingClientRect();
+
+            const blockRect = block.getBoundingClientRect();
+            const physWidth = blockRect.width;
+            const physHeight = blockRect.height;
+
+            const offset = JSON.parse(event.dataTransfer.getData('offset'));
+
+            const finalXPixels = event.clientX - parentRect.left - offset.x;
+            const finalYPixels = event.clientY - parentRect.top - offset.y;
+
+            let nWPct = (physWidth / parentRect.width) * 100;
+            let nHPct = (physHeight / parentRect.height) * 100;
+            let nLPct = (finalXPixels / parentRect.width) * 100;
+            let nTPct = (finalYPixels / parentRect.height) * 100;
+
+            // Clamp
+            nWPct = Math.min(nWPct, 100);
+            nHPct = Math.min(nHPct, 100);
+            nLPct = Math.max(0, Math.min(nLPct, 100 - nWPct));
+            nTPct = Math.max(0, Math.min(nTPct, 100 - nHPct));
+
+            const gX = parseInt(newParent.dataset.gridx) || 12;
+            const gY = parseInt(newParent.dataset.gridy) || 12;
+            const sX = 100 / gX;
+            const sY = 100 / gY;
+
+            block.style.width = `${Math.round(nWPct / sX) * sX}%`;
+            block.style.height = `${Math.round(nHPct / sY) * sY}%`;
+            block.style.left = `${Math.round(nLPct / sX) * sX}%`;
+            block.style.top = `${Math.round(nTPct / sY) * sY}%`;
+
+            if (block.parentElement !== newParent) {
+                newParent.appendChild(block);
+            }
         } else {
             const filePath = event.dataTransfer.getData('text/plain');
 
@@ -417,7 +436,7 @@ function renderBlockFromTemplate(blockWrapper) {
 
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = finalHtml;
-    
+
     const styleTags = tempDiv.querySelectorAll('style');
     styleTags.forEach(style => {
         style.innerHTML = style.innerHTML.replace(/(^|}|;)\s*([^{};]+)\s*\{/g, (match, p1, p2) => {
@@ -459,11 +478,13 @@ function renderBlockFromTemplate(blockWrapper) {
                     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
                 `;
 
-                // RE-HOME THE CHILDREN
-                // Put them back into the newly created page
                 rescuedBlocks.forEach(rescue => {
                     if (rescue.pageIndex === i) {
                         page.appendChild(rescue.element);
+
+                        if (rescue.element.settings && rescue.element.settings.pages) {
+                            renderBlockFromTemplate(rescue.element);
+                        }
                     }
                 });
 
@@ -471,8 +492,15 @@ function renderBlockFromTemplate(blockWrapper) {
                     e.stopPropagation();
                     header.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
                     pagesContainer.querySelectorAll('.page-wrapper').forEach(p => p.classList.remove('active'));
+
                     btn.classList.add('active');
                     page.classList.add('active');
+
+                    page.querySelectorAll(':scope > .loaded-block').forEach(child => {
+                        if (child.settings && child.settings.pages) {
+                            renderBlockFromTemplate(child);
+                        }
+                    });
                 };
 
                 header.appendChild(btn);
@@ -583,10 +611,21 @@ function getBlockDataRecursive(block) {
         children: []
     };
 
-    const pages = block.querySelectorAll('.page-wrapper.nested-dropzone');
+    // 1. Find the pages container for THIS block. 
+    // We use a normal find because contentArea might be nested.
+    const pagesContainer = block.querySelector('.pages-container');
+
+    // If there is no pages container, this is a simple block (like a button)
+    if (!pagesContainer) return blockData;
+
+    // 2. 🛑 THE CRITICAL FIX: Only find pages that are DIRECT children of the container
+    // This stops the parent from "seeing" pages inside a nested paged-block.
+    const pages = pagesContainer.querySelectorAll(':scope > .page-wrapper');
 
     pages.forEach(page => {
         const pageIndex = page.dataset.pageIndex;
+
+        // 3. 🛑 Only find blocks that are DIRECT children of THIS page
         const childBlocks = page.querySelectorAll(':scope > .loaded-block');
 
         if (childBlocks.length > 0) {
@@ -596,6 +635,7 @@ function getBlockDataRecursive(block) {
             };
 
             childBlocks.forEach(child => {
+                // Recursively get data for the child
                 pageGroup.blocks.push(getBlockDataRecursive(child));
             });
 
