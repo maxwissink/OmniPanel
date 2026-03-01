@@ -12,3 +12,5 @@ TODO:
  - syncing states of sliders with other clients (in case someone wants to use multiple clients)
  - blocks: block with pages, nested blocks
  - blocks: overview of what joystick+button does what in game, example: js1,btn3="toggle gear"
+
+ - editor overhaul = list of blocks on the left, with option to duplicate there, and then selected it brings the block to the front so you can select it

@@ -150,8 +150,14 @@ function BuildEditorArea() {
             const finalXPixels = mouseXInParent - offset.x;
             const finalYPixels = mouseYInParent - offset.y;
 
-            const xPercent = (finalXPixels / rect.width) * 100;
-            const yPercent = (finalYPixels / rect.height) * 100;
+            let xPercent = (finalXPixels / rect.width) * 100;
+            let yPercent = (finalYPixels / rect.height) * 100;
+
+            const blockWidthPct = parseFloat(window.draggedElement.style.width);
+            const blockHeightPct = parseFloat(window.draggedElement.style.height);
+
+            xPercent = Math.max(0, Math.min(xPercent, 100 - blockWidthPct));
+            yPercent = Math.max(0, Math.min(yPercent, 100 - blockHeightPct));
 
             window.draggedElement.style.left = `${Math.round(xPercent / snapStepX) * snapStepX}%`;
             window.draggedElement.style.top = `${Math.round(yPercent / snapStepY) * snapStepY}%`;
@@ -357,11 +363,20 @@ function addResizeListeners(block, handle) {
             let newWidthPct = ((startWidth + deltaX) / parentRect.width) * 100;
             let newHeightPct = ((startHeight + deltaY) / parentRect.height) * 100;
 
+            const currentLeft = parseFloat(block.style.left) || 0;
+            const currentTop = parseFloat(block.style.top) || 0;
+
+            const maxWidth = 100 - currentLeft;
+            const maxHeight = 100 - currentTop;
+
+            newWidthPct = Math.max(snapStepX, Math.min(newWidthPct, maxWidth));
+            newHeightPct = Math.max(snapStepY, Math.min(newHeightPct, maxHeight));
+
             newWidthPct = Math.round(newWidthPct / snapStepX) * snapStepX;
             newHeightPct = Math.round(newHeightPct / snapStepY) * snapStepY;
 
-            block.style.width = `${Math.max(snapStepX, newWidthPct)}%`;
-            block.style.height = `${Math.max(snapStepY, newHeightPct)}%`;
+            block.style.width = `${newWidthPct}%`;
+            block.style.height = `${newHeightPct}%`;
         };
 
         const onMouseUp = () => {
@@ -375,6 +390,22 @@ function addResizeListeners(block, handle) {
 }
 
 function renderBlockFromTemplate(blockWrapper) {
+    const contentArea = blockWrapper.querySelector('.block-content-area');
+    if (!contentArea) return;
+
+    const rescuedBlocks = [];
+    const existingPagesContainer = contentArea.querySelector('.pages-container');
+    if (existingPagesContainer) {
+        existingPagesContainer.querySelectorAll('.page-wrapper').forEach(page => {
+            const pIndex = parseInt(page.dataset.pageIndex);
+            // Grab direct children only
+            const blocks = Array.from(page.querySelectorAll(':scope > .loaded-block'));
+            blocks.forEach(b => {
+                rescuedBlocks.push({ pageIndex: pIndex, element: b });
+            });
+        });
+    }
+
     let finalHtml = blockWrapper.htmlTemplate;
     const blockId = blockWrapper.id;
 
@@ -386,8 +417,8 @@ function renderBlockFromTemplate(blockWrapper) {
 
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = finalHtml;
+    
     const styleTags = tempDiv.querySelectorAll('style');
-
     styleTags.forEach(style => {
         style.innerHTML = style.innerHTML.replace(/(^|}|;)\s*([^{};]+)\s*\{/g, (match, p1, p2) => {
             const scopedSelectors = p2.split(',').map(sel => `#${blockId} ${sel.trim()}`).join(', ');
@@ -395,57 +426,57 @@ function renderBlockFromTemplate(blockWrapper) {
         });
     });
 
-    finalHtml = tempDiv.innerHTML;
+    contentArea.innerHTML = tempDiv.innerHTML;
 
-    const contentArea = blockWrapper.querySelector('.block-content-area');
-    if (contentArea) {
-        contentArea.innerHTML = finalHtml;
+    if (blockWrapper.settings.pages) {
+        const numPages = parseInt(blockWrapper.settings.pages);
+        const gX = blockWrapper.settings.gridx || 10;
+        const gY = blockWrapper.settings.gridy || 10;
 
-        if (blockWrapper.settings.pages) {
-            const numPages = parseInt(blockWrapper.settings.pages);
+        const header = contentArea.querySelector('.tab-header');
+        const pagesContainer = contentArea.querySelector('.pages-container');
 
-            const gX = blockWrapper.settings.gridx || 10;
-            const gY = blockWrapper.settings.gridy || 10;
+        if (header && pagesContainer) {
+            header.innerHTML = '';
+            pagesContainer.innerHTML = '';
 
-            const header = contentArea.querySelector('.tab-header');
-            const pagesContainer = contentArea.querySelector('.pages-container');
+            for (let i = 1; i <= numPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
+                btn.innerText = `Page ${i}`;
 
-            if (header && pagesContainer) {
-                header.innerHTML = '';
-                pagesContainer.innerHTML = '';
+                const page = document.createElement('div');
+                page.className = `page-wrapper nested-dropzone ${i === 1 ? 'active' : ''}`;
+                page.dataset.pageIndex = i;
+                page.dataset.gridx = gX;
+                page.dataset.gridy = gY;
 
-                for (let i = 1; i <= numPages; i++) {
-                    const btn = document.createElement('button');
-                    btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
-                    btn.innerText = `Page ${i}`;
+                const cellWidth = 100 / gX;
+                const cellHeight = 100 / gY;
+                page.style.backgroundSize = `${cellWidth}% ${cellHeight}%`;
+                page.style.backgroundImage = `
+                    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
+                `;
 
-                    const page = document.createElement('div');
-                    page.className = `page-wrapper nested-dropzone ${i === 1 ? 'active' : ''}`;
+                // RE-HOME THE CHILDREN
+                // Put them back into the newly created page
+                rescuedBlocks.forEach(rescue => {
+                    if (rescue.pageIndex === i) {
+                        page.appendChild(rescue.element);
+                    }
+                });
 
-                    page.dataset.pageIndex = i;
-                    page.dataset.gridx = gX;
-                    page.dataset.gridy = gY;
+                btn.onclick = (e) => {
+                    e.stopPropagation();
+                    header.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    pagesContainer.querySelectorAll('.page-wrapper').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    page.classList.add('active');
+                };
 
-                    const cellWidth = 100 / gX;
-                    const cellHeight = 100 / gY;
-
-                    page.style.backgroundSize = `${cellWidth}% ${cellHeight}%`;
-                    page.style.backgroundImage = `
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
-`;
-
-                    btn.onclick = (e) => {
-                        e.stopPropagation();
-                        header.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                        pagesContainer.querySelectorAll('.page-wrapper').forEach(p => p.classList.remove('active'));
-                        btn.classList.add('active');
-                        page.classList.add('active');
-                    };
-
-                    header.appendChild(btn);
-                    pagesContainer.appendChild(page);
-                }
+                header.appendChild(btn);
+                pagesContainer.appendChild(page);
             }
         }
     }

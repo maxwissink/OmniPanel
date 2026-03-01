@@ -1,32 +1,20 @@
 [
     {
-        "id": "block_1772206046103_fpkj9zj2o",
+        "id": "block_1772390375640_wbezro88i",
         "left": "25%",
-        "top": "20%",
-        "width": "40%",
-        "height": "30%",
-        "zIndex": "104",
+        "top": "8.33333%",
+        "width": "16.6667%",
+        "height": "16.6667%",
+        "zIndex": "102",
         "settings": {
-            "width": "80%",
-            "height": "80%",
-            "label": "Click Me",
-            "color": "red"
+            "width": 50,
+            "height": 100,
+            "label": "test me",
+            "color": "#0033ff",
+            "joystick": "0",
+            "button": "0"
         },
-        "path": "user/blocks/default/simple-button.html"
-    },
-    {
-        "id": "block_1772206057798_g263i6ny5",
-        "left": "55%",
-        "top": "10%",
-        "width": "25%",
-        "height": "40%",
-        "zIndex": "103",
-        "settings": {
-            "width": "80%",
-            "height": "80%",
-            "label": "Click Me",
-            "color": "green"
-        },
-        "path": "user/blocks/default/simple-button.html"
+        "path": "user/blocks/default/simple-button.html",
+        "children": []
     }
 ]
