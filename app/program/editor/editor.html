@@ -31,12 +31,22 @@
     <div id="maincontainer">
     </div>
     <div id="settings-modal">
-    <div class="modal-header">Block Settings</div>
-    <div id="modal-fields"></div>
-    <div class="modal-actions">
-        <button onclick="closeSettingsModal()">Close</button>
+        <div class="modal-header">Block Settings</div>
+        <div id="modal-fields"></div>
+        <div class="modal-actions">
+            <button onclick="closeSettingsModal()">Close</button>
+        </div>
     </div>
-</div>
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Delete Block?</h3>
+            <p>This will permanently remove this block and everything inside it.</p>
+            <div class="modal-actions">
+                <button id="modal-cancel">Cancel</button>
+                <button id="modal-confirm" class="danger">Delete</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

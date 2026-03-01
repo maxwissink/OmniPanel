@@ -9,6 +9,8 @@ const WORKSPACE_GRID_Y = 12;
 
 const DEFAULT_NESTED_GRID = 10;
 
+let blockToDelete = null; // Store which block is on death row
+
 const generateId = () => `block_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //GetBlocks();
     BuildEditorArea();
     initWorkspaceGrid();
+    initModalListeners();
 });
 
 async function GetBlocks() {
@@ -141,8 +144,8 @@ function BuildEditorArea() {
         if (action === 'move' && window.draggedElement) {
             const offset = JSON.parse(event.dataTransfer.getData('offset'));
 
-            const mouseXInParent = event.clientX - rect.left;
-            const mouseYInParent = event.clientY - rect.top;
+            const mouseXInParent = event.clientX - rect.left - snapStepX;
+            const mouseYInParent = event.clientY - rect.top - snapStepY;
 
             const finalXPixels = mouseXInParent - offset.x;
             const finalYPixels = mouseYInParent - offset.y;
@@ -253,6 +256,8 @@ function addWorkspaceDragListeners(blockWrapper, moveHandle) {
     moveHandle.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('action', 'move');
 
+        document.querySelector('.openmenu').style.display = 'none';
+
         const rect = blockWrapper.getBoundingClientRect();
         const offsetX = e.clientX - rect.left;
         const offsetY = e.clientY - rect.top;
@@ -267,6 +272,7 @@ function addWorkspaceDragListeners(blockWrapper, moveHandle) {
     });
 
     moveHandle.addEventListener('dragend', (e) => {
+        document.querySelector('.openmenu').style.display = 'block';
         blockWrapper.style.pointerEvents = 'all';
         window.draggedElement = null;
     });
@@ -576,12 +582,19 @@ async function createBlockRecursive(blockData, parentElement) {
         contentArea.style.height = '100%';
         blockWrapper.appendChild(contentArea);
 
+        const deleteBtn = document.createElement('div');
+        deleteBtn.classList.add('delete-button');
+        deleteBtn.innerHTML = '🗑';
+        blockWrapper.appendChild(deleteBtn);
+
         // Render the inner HTML (Creates .page-wrapper nested-dropzones)
         renderBlockFromTemplate(blockWrapper);
 
         addSelectionListeners(blockWrapper);
         addWorkspaceDragListeners(blockWrapper, moveHandle);
         addResizeListeners(blockWrapper, resizeHandle);
+        addDeleteFunctionality(blockWrapper, deleteBtn);
+
 
         settingsBtn.addEventListener('mousedown', (e) => e.stopPropagation());
         settingsBtn.addEventListener('click', (e) => {
@@ -615,16 +628,35 @@ function addDeleteFunctionality(blockWrapper, deleteBtn) {
     deleteBtn.addEventListener('click', (e) => {
         e.stopPropagation();
 
-        const confirmed = confirm("Are you sure you want to remove this block? (All nested content will be lost)");
+        // Show the modal
+        const modal = document.querySelector('#delete-modal');
+        modal.style.display = 'flex';
 
-        if (confirmed) {
-            blockWrapper.style.transition = "opacity 0.2s, transform 0.2s";
-            blockWrapper.style.opacity = "0";
-            blockWrapper.style.transform = "scale(0.95)";
-
-            setTimeout(() => {
-                blockWrapper.remove();
-            }, 200);
-        }
+        // Mark this block for deletion
+        blockToDelete = blockWrapper;
     });
+}
+
+function initModalListeners() {
+    const modal = document.querySelector('#delete-modal');
+
+    document.querySelector('#modal-cancel').onclick = () => {
+        modal.style.display = 'none';
+        blockToDelete = null;
+    };
+
+    document.querySelector('#modal-confirm').onclick = () => {
+        if (blockToDelete) {
+            // Apply the fade-out we talked about
+            blockToDelete.style.transition = "all 0.15s ease";
+            blockToDelete.style.opacity = "0";
+            blockToDelete.style.transform = "scale(0.95)";
+
+            // Use a tiny timeout to let the animation play and signals clear
+            const target = blockToDelete;
+            setTimeout(() => target.remove(), 150);
+        }
+        modal.style.display = 'none';
+        blockToDelete = null;
+    };
 }

@@ -233,3 +233,41 @@ body {
 .setting-row { margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
 .setting-row input { background: #3c3c3c; border: 1px solid #555; color: white; padding: 3px; width: 60%; }
 .modal-actions { margin-top: 20px; text-align: right; }
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    background: #222;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    width: 300px;
+    text-align: center;
+    color: white;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.modal-actions button {
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+#modal-cancel { background: #444; color: white; }
+#modal-confirm.danger { background: #ff4444; color: white; }
