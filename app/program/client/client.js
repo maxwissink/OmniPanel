@@ -96,19 +96,33 @@ function renderBlockFromTemplate(blockWrapper) {
     contentArea.innerHTML = finalHtml;
 
     if (blockWrapper.settings.pages) {
-        const numPages = parseInt(blockWrapper.settings.pages);
         const header = contentArea.querySelector('.tab-header');
         const container = contentArea.querySelector('.pages-container');
 
         if (header && container) {
-            rebuildPages(blockWrapper, header, container, numPages);
+            rebuildPages(blockWrapper, header, container, blockWrapper.settings.pages);
         }
     }
 }
 
-function rebuildPages(blockWrapper, header, container, numPages) {
+function rebuildPages(blockWrapper, header, container, pagesSetting) {
     header.innerHTML = '';
-    
+
+    const pagesVal = pagesSetting.toString();
+    let pageNames = [];
+    let count = 0;
+
+    if (pagesVal.includes(',')) {
+        pageNames = pagesVal.split(',').map(s => s.trim());
+        count = pageNames.length;
+    } else if (!isNaN(pagesVal) && pagesVal.trim() !== "") {
+        count = parseInt(pagesVal);
+        for (let i = 1; i <= count; i++) pageNames.push(`Page ${i}`);
+    } else {
+        pageNames = [pagesVal];
+        count = 1;
+    }
+
     const rescued = [];
     container.querySelectorAll(':scope > .page-wrapper').forEach(page => {
         const idx = parseInt(page.dataset.pageIndex);
@@ -120,12 +134,13 @@ function rebuildPages(blockWrapper, header, container, numPages) {
 
     if (!blockWrapper.currentPage) blockWrapper.currentPage = 1;
 
-    for (let i = 1; i <= numPages; i++) {
+    for (let i = 1; i <= count; i++) {
         const isActive = (i === blockWrapper.currentPage);
 
         const btn = document.createElement('button');
         btn.className = `tab-btn ${isActive ? 'active' : ''}`;
-        btn.innerText = `Page ${i}`;
+
+        btn.innerText = pageNames[i - 1] || `Page ${i}`;
 
         const page = document.createElement('div');
         page.className = `page-wrapper ${isActive ? 'active' : ''}`;
@@ -139,12 +154,9 @@ function rebuildPages(blockWrapper, header, container, numPages) {
 
         btn.onclick = (e) => {
             if (e) e.stopPropagation();
-            
             blockWrapper.currentPage = i;
-
             header.querySelectorAll(':scope > .tab-btn').forEach(b => b.classList.remove('active'));
             container.querySelectorAll(':scope > .page-wrapper').forEach(p => p.classList.remove('active'));
-
             btn.classList.add('active');
             page.classList.add('active');
         };

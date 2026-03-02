@@ -459,7 +459,21 @@ function renderBlockFromTemplate(blockWrapper) {
     contentArea.innerHTML = tempDiv.innerHTML;
 
     if (blockWrapper.settings.pages) {
-        const numPages = parseInt(blockWrapper.settings.pages);
+        const pagesSetting = blockWrapper.settings.pages.toString();
+        let pageNames = [];
+        let numPages = 0;
+
+        if (pagesSetting.includes(',')) {
+            pageNames = pagesSetting.split(',').map(s => s.trim());
+            numPages = pageNames.length;
+        } else if (!isNaN(pagesSetting) && pagesSetting.trim() !== "") {
+            numPages = parseInt(pagesSetting);
+            for (let i = 1; i <= numPages; i++) pageNames.push(`Page ${i}`);
+        } else {
+            pageNames = [pagesSetting];
+            numPages = 1;
+        }
+
         const gX = blockWrapper.settings.gridx || 10;
         const gY = blockWrapper.settings.gridy || 10;
 
@@ -473,7 +487,8 @@ function renderBlockFromTemplate(blockWrapper) {
             for (let i = 1; i <= numPages; i++) {
                 const btn = document.createElement('button');
                 btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
-                btn.innerText = `Page ${i}`;
+
+                btn.innerText = pageNames[i - 1] || `Page ${i}`;
 
                 const page = document.createElement('div');
                 page.className = `page-wrapper nested-dropzone ${i === 1 ? 'active' : ''}`;
@@ -492,7 +507,6 @@ function renderBlockFromTemplate(blockWrapper) {
                 rescuedBlocks.forEach(rescue => {
                     if (rescue.pageIndex === i) {
                         page.appendChild(rescue.element);
-
                         if (rescue.element.settings && rescue.element.settings.pages) {
                             renderBlockFromTemplate(rescue.element);
                         }
@@ -501,10 +515,8 @@ function renderBlockFromTemplate(blockWrapper) {
 
                 btn.onclick = (e) => {
                     e.stopPropagation();
-
                     header.querySelectorAll(':scope > .tab-btn').forEach(b => b.classList.remove('active'));
                     pagesContainer.querySelectorAll(':scope > .page-wrapper').forEach(p => p.classList.remove('active'));
-
                     btn.classList.add('active');
                     page.classList.add('active');
 
@@ -673,6 +685,8 @@ async function createBlockRecursive(blockData, parentElement) {
 
         const settingsTag = doc.querySelector('settings');
         const settingsMeta = {};
+        
+        if (!blockData.settings) blockData.settings = {};
 
         if (settingsTag) {
             for (let attr of settingsTag.attributes) {
@@ -692,8 +706,9 @@ async function createBlockRecursive(blockData, parentElement) {
                     if (!settingsMeta[key]) settingsMeta[key] = {};
                     settingsMeta[key].max = value;
                 } else {
-                    // It's a standard value
-                    blockData.settings[name] = value;
+                    if (blockData.settings[name] === undefined) {
+                        blockData.settings[name] = value;
+                    }
                 }
             }
             settingsTag.remove();
@@ -713,10 +728,8 @@ async function createBlockRecursive(blockData, parentElement) {
             zIndex: blockData.zIndex || 1
         });
 
-        blockWrapper.settings = blockData.settings || {};
-        blockWrapper.settingsMeta = settingsMeta; // This allows the modal to know the types
-
         blockWrapper.settings = blockData.settings;
+        blockWrapper.settingsMeta = settingsMeta; 
         blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
 
         // --- EDITOR UI ELEMENTS ---
@@ -759,10 +772,10 @@ async function createBlockRecursive(blockData, parentElement) {
         });
 
         if (blockData.children && blockData.children.length > 0) {
-            for (const pageGroup of blockData.children) {
-
-                const pagesContainer = blockWrapper.querySelector('.pages-container');
-                if (pagesContainer) {
+            const pagesContainer = blockWrapper.querySelector('.pages-container');
+            
+            if (pagesContainer) {
+                for (const pageGroup of blockData.children) {
                     const targetPage = pagesContainer.querySelector(`:scope > .page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
 
                     if (targetPage) {
