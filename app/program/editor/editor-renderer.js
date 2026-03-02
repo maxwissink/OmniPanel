@@ -415,9 +415,9 @@ function renderBlockFromTemplate(blockWrapper) {
     const rescuedBlocks = [];
     const existingPagesContainer = contentArea.querySelector('.pages-container');
     if (existingPagesContainer) {
-        existingPagesContainer.querySelectorAll('.page-wrapper').forEach(page => {
+        // 🛑 Use :scope here to only rescue blocks from THIS level
+        existingPagesContainer.querySelectorAll(':scope > .page-wrapper').forEach(page => {
             const pIndex = parseInt(page.dataset.pageIndex);
-            // Grab direct children only
             const blocks = Array.from(page.querySelectorAll(':scope > .loaded-block'));
             blocks.forEach(b => {
                 rescuedBlocks.push({ pageIndex: pIndex, element: b });
@@ -490,8 +490,9 @@ function renderBlockFromTemplate(blockWrapper) {
 
                 btn.onclick = (e) => {
                     e.stopPropagation();
-                    header.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    pagesContainer.querySelectorAll('.page-wrapper').forEach(p => p.classList.remove('active'));
+
+                    header.querySelectorAll(':scope > .tab-btn').forEach(b => b.classList.remove('active'));
+                    pagesContainer.querySelectorAll(':scope > .page-wrapper').forEach(p => p.classList.remove('active'));
 
                     btn.classList.add('active');
                     page.classList.add('active');
@@ -502,7 +503,6 @@ function renderBlockFromTemplate(blockWrapper) {
                         }
                     });
                 };
-
                 header.appendChild(btn);
                 pagesContainer.appendChild(page);
             }
@@ -514,7 +514,7 @@ function openSettingsModal(blockWrapper) {
     const modal = document.querySelector('#settings-modal');
     const fieldsContainer = document.querySelector('#modal-fields');
     fieldsContainer.innerHTML = '';
-
+    console.log(blockWrapper.settingsMeta);
     Object.keys(blockWrapper.settings).forEach(key => {
         const value = blockWrapper.settings[key];
 
@@ -611,21 +611,15 @@ function getBlockDataRecursive(block) {
         children: []
     };
 
-    // 1. Find the pages container for THIS block. 
-    // We use a normal find because contentArea might be nested.
     const pagesContainer = block.querySelector('.pages-container');
 
-    // If there is no pages container, this is a simple block (like a button)
     if (!pagesContainer) return blockData;
 
-    // 2. 🛑 THE CRITICAL FIX: Only find pages that are DIRECT children of the container
-    // This stops the parent from "seeing" pages inside a nested paged-block.
     const pages = pagesContainer.querySelectorAll(':scope > .page-wrapper');
 
     pages.forEach(page => {
         const pageIndex = page.dataset.pageIndex;
 
-        // 3. 🛑 Only find blocks that are DIRECT children of THIS page
         const childBlocks = page.querySelectorAll(':scope > .loaded-block');
 
         if (childBlocks.length > 0) {
@@ -635,7 +629,6 @@ function getBlockDataRecursive(block) {
             };
 
             childBlocks.forEach(child => {
-                // Recursively get data for the child
                 pageGroup.blocks.push(getBlockDataRecursive(child));
             });
 
@@ -667,7 +660,33 @@ async function createBlockRecursive(blockData, parentElement) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(rawHtml, 'text/html');
 
-        if (doc.querySelector('settings')) doc.querySelector('settings').remove();
+        const settingsTag = doc.querySelector('settings');
+        const settingsMeta = {};
+
+        if (settingsTag) {
+            for (let attr of settingsTag.attributes) {
+                const name = attr.name;
+                const value = attr.value;
+
+                if (name.startsWith('type-')) {
+                    const key = name.replace('type-', '');
+                    if (!settingsMeta[key]) settingsMeta[key] = {};
+                    settingsMeta[key].type = value;
+                } else if (name.startsWith('min-')) {
+                    const key = name.replace('min-', '');
+                    if (!settingsMeta[key]) settingsMeta[key] = {};
+                    settingsMeta[key].min = value;
+                } else if (name.startsWith('max-')) {
+                    const key = name.replace('max-', '');
+                    if (!settingsMeta[key]) settingsMeta[key] = {};
+                    settingsMeta[key].max = value;
+                } else {
+                    // It's a standard value
+                    blockData.settings[name] = value;
+                }
+            }
+            settingsTag.remove();
+        }
 
         const blockWrapper = document.createElement('div');
         blockWrapper.classList.add('loaded-block');
@@ -682,6 +701,9 @@ async function createBlockRecursive(blockData, parentElement) {
             height: blockData.height,
             zIndex: blockData.zIndex || 1
         });
+
+        blockWrapper.settings = blockData.settings || {};
+        blockWrapper.settingsMeta = settingsMeta; // This allows the modal to know the types
 
         blockWrapper.settings = blockData.settings;
         blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
@@ -712,14 +734,12 @@ async function createBlockRecursive(blockData, parentElement) {
         deleteBtn.innerHTML = '🗑';
         blockWrapper.appendChild(deleteBtn);
 
-        // Render the inner HTML (Creates .page-wrapper nested-dropzones)
         renderBlockFromTemplate(blockWrapper);
 
         addSelectionListeners(blockWrapper);
-        addWorkspaceDragListeners(blockWrapper, moveHandle);
-        addResizeListeners(blockWrapper, resizeHandle);
-        addDeleteFunctionality(blockWrapper, deleteBtn);
-
+        addWorkspaceDragListeners(blockWrapper, blockWrapper.querySelector('.move-handle'));
+        addResizeListeners(blockWrapper, blockWrapper.querySelector('.resize-handle'));
+        addDeleteFunctionality(blockWrapper, blockWrapper.querySelector('.delete-button'));
 
         settingsBtn.addEventListener('mousedown', (e) => e.stopPropagation());
         settingsBtn.addEventListener('click', (e) => {
@@ -728,16 +748,19 @@ async function createBlockRecursive(blockData, parentElement) {
         });
 
         if (blockData.children && blockData.children.length > 0) {
-            blockData.children.forEach(pageGroup => {
-                // Find the specific page created by renderBlockFromTemplate
-                const targetPage = blockWrapper.querySelector(`.page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
+            for (const pageGroup of blockData.children) {
 
-                if (targetPage) {
-                    pageGroup.blocks.forEach(async (childBlockData) => {
-                        await createBlockRecursive(childBlockData, targetPage);
-                    });
+                const pagesContainer = blockWrapper.querySelector('.pages-container');
+                if (pagesContainer) {
+                    const targetPage = pagesContainer.querySelector(`:scope > .page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
+
+                    if (targetPage) {
+                        for (const childBlockData of pageGroup.blocks) {
+                            await createBlockRecursive(childBlockData, targetPage);
+                        }
+                    }
                 }
-            });
+            }
         }
 
         parentElement.appendChild(blockWrapper);
