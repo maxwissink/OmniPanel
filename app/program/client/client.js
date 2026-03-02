@@ -101,60 +101,49 @@ function renderBlockFromTemplate(blockWrapper) {
         const container = contentArea.querySelector('.pages-container');
 
         if (header && container) {
-            header.innerHTML = '';
-            container.innerHTML = '';
-
-            for (let i = 1; i <= numPages; i++) {
-                const btn = document.createElement('button');
-                btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
-                btn.innerText = `Page ${i}`;
-
-                const page = document.createElement('div');
-                page.className = `page-wrapper ${i === 1 ? 'active' : ''}`;
-                page.dataset.pageIndex = i;
-
-                rescuedBlocks.forEach(rescue => {
-                    if (rescue.pageIndex === i) {
-                        page.appendChild(rescue.element);
-                    }
-                });
-
-                btn.onclick = (e) => {
-                    if (e) e.stopPropagation();
-                    header.querySelectorAll(':scope > .tab-btn').forEach(b => b.classList.remove('active'));
-                    container.querySelectorAll(':scope > .page-wrapper').forEach(p => p.classList.remove('active'));
-                    btn.classList.add('active');
-                    page.classList.add('active');
-                };
-
-                header.appendChild(btn);
-                container.appendChild(page);
-            }
+            rebuildPages(blockWrapper, header, container, numPages);
         }
     }
 }
 
 function rebuildPages(blockWrapper, header, container, numPages) {
     header.innerHTML = '';
+    
+    const rescued = [];
+    container.querySelectorAll(':scope > .page-wrapper').forEach(page => {
+        const idx = parseInt(page.dataset.pageIndex);
+        const children = Array.from(page.querySelectorAll(':scope > .loaded-block'));
+        children.forEach(child => rescued.push({ pageIndex: idx, element: child }));
+    });
+
     container.innerHTML = '';
 
+    if (!blockWrapper.currentPage) blockWrapper.currentPage = 1;
+
     for (let i = 1; i <= numPages; i++) {
+        const isActive = (i === blockWrapper.currentPage);
+
         const btn = document.createElement('button');
-        btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
+        btn.className = `tab-btn ${isActive ? 'active' : ''}`;
         btn.innerText = `Page ${i}`;
 
         const page = document.createElement('div');
-        page.className = `page-wrapper ${i === 1 ? 'active' : ''}`;
+        page.className = `page-wrapper ${isActive ? 'active' : ''}`;
         page.dataset.pageIndex = i;
+
+        rescued.forEach(item => {
+            if (item.pageIndex === i) {
+                page.appendChild(item.element);
+            }
+        });
 
         btn.onclick = (e) => {
             if (e) e.stopPropagation();
+            
+            blockWrapper.currentPage = i;
 
-            const allBtns = header.querySelectorAll(':scope > .tab-btn');
-            const allPages = container.querySelectorAll(':scope > .page-wrapper');
-
-            allBtns.forEach(b => b.classList.remove('active'));
-            allPages.forEach(p => p.classList.remove('active'));
+            header.querySelectorAll(':scope > .tab-btn').forEach(b => b.classList.remove('active'));
+            container.querySelectorAll(':scope > .page-wrapper').forEach(p => p.classList.remove('active'));
 
             btn.classList.add('active');
             page.classList.add('active');
