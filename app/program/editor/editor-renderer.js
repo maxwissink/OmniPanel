@@ -238,11 +238,23 @@ function BuildEditorArea() {
                     blockWrapper.settings = initialSettings;
                     blockWrapper.htmlTemplate = doc.body.innerHTML;
 
-                    const xPercent = (((event.clientX - rect.left) / rect.width) * 100) - (snapStepX);
-                    const yPercent = (((event.clientY - rect.top) / rect.height) * 100) - (snapStepY);
+                    const blockWidthPx = blockWrapper.offsetWidth;
+                    const blockHeightPx = blockWrapper.offsetHeight;
 
-                    blockWrapper.style.left = `${Math.round(xPercent / snapStepX) * snapStepX}%`;
-                    blockWrapper.style.top = `${Math.round(yPercent / snapStepY) * snapStepY}%`;
+                    const blockWidthPercent = (blockWidthPx / rect.width) * 100;
+                    const blockHeightPercent = (blockHeightPx / rect.height) * 100;
+
+                    let xPercent = (((event.clientX - rect.left) / rect.width) * 100) - (snapStepX);
+                    let yPercent = (((event.clientY - rect.top) / rect.height) * 100) - (snapStepY);
+
+                    let snappedX = Math.round(xPercent / snapStepX) * snapStepX;
+                    let snappedY = Math.round(yPercent / snapStepY) * snapStepY;
+
+                    snappedX = Math.max(0, Math.min(snappedX, 100 - blockWidthPercent));
+                    snappedY = Math.max(0, Math.min(snappedY, 100 - blockHeightPercent));
+
+                    blockWrapper.style.left = `${snappedX}%`;
+                    blockWrapper.style.top = `${snappedY}%`;
 
                     // UI Components
                     const moveHandle = document.createElement('div');
@@ -776,11 +788,9 @@ function addDeleteFunctionality(blockWrapper, deleteBtn) {
     deleteBtn.addEventListener('click', (e) => {
         e.stopPropagation();
 
-        // Show the modal
         const modal = document.querySelector('#delete-modal');
         modal.style.display = 'flex';
 
-        // Mark this block for deletion
         blockToDelete = blockWrapper;
     });
 }
@@ -795,12 +805,10 @@ function initModalListeners() {
 
     document.querySelector('#modal-confirm').onclick = () => {
         if (blockToDelete) {
-            // Apply the fade-out we talked about
             blockToDelete.style.transition = "all 0.15s ease";
             blockToDelete.style.opacity = "0";
             blockToDelete.style.transform = "scale(0.95)";
 
-            // Use a tiny timeout to let the animation play and signals clear
             const target = blockToDelete;
             setTimeout(() => target.remove(), 150);
         }
