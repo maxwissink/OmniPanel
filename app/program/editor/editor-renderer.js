@@ -427,7 +427,6 @@ function renderBlockFromTemplate(blockWrapper) {
     const rescuedBlocks = [];
     const existingPagesContainer = contentArea.querySelector('.pages-container');
     if (existingPagesContainer) {
-        // 🛑 Use :scope here to only rescue blocks from THIS level
         existingPagesContainer.querySelectorAll(':scope > .page-wrapper').forEach(page => {
             const pIndex = parseInt(page.dataset.pageIndex);
             const blocks = Array.from(page.querySelectorAll(':scope > .loaded-block'));

@@ -48,13 +48,15 @@ async function renderBlockRecursive(blockData, parentElement) {
         renderBlockFromTemplate(blockWrapper);
 
         if (blockData.children && blockData.children.length > 0) {
-            // Data structure: children: [{ pageIndex: 1, blocks: [...] }]
             for (const pageGroup of blockData.children) {
-                const targetPage = blockWrapper.querySelector(`.page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
+                const pagesContainer = contentArea.querySelector('.pages-container');
+                if (pagesContainer) {
+                    const targetPage = pagesContainer.querySelector(`:scope > .page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
 
-                if (targetPage) {
-                    for (const childBlock of pageGroup.blocks) {
-                        await renderBlockRecursive(childBlock, targetPage);
+                    if (targetPage) {
+                        for (const childBlock of pageGroup.blocks) {
+                            await renderBlockRecursive(childBlock, targetPage);
+                        }
                     }
                 }
             }
@@ -71,43 +73,62 @@ function renderBlockFromTemplate(blockWrapper) {
     const contentArea = blockWrapper.querySelector('.block-content-area');
     if (!contentArea) return;
 
-    const pagesContainer = contentArea.querySelector('.pages-container');
-    const header = contentArea.querySelector('.tab-header');
-
-    if (!pagesContainer || !header) {
-        let finalHtml = blockWrapper.htmlTemplate;
-        const blockId = blockWrapper.id;
-
-        Object.keys(blockWrapper.settings).forEach(key => {
-            const value = blockWrapper.settings[key];
-            const placeholder = new RegExp(`settings-${key}`, 'g');
-            finalHtml = finalHtml.replace(placeholder, value);
-        });
-
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = finalHtml;
-
-        const styleTags = tempDiv.querySelectorAll('style');
-        styleTags.forEach(style => {
-            style.innerHTML = style.innerHTML.replace(/(^|}|;)\s*([^{};]+)\s*\{/g, (match, p1, p2) => {
-                const scopedSelectors = p2.split(',').map(sel => `#${blockId} ${sel.trim()}`).join(', ');
-                return `${p1} ${scopedSelectors} {`;
+    const rescuedBlocks = [];
+    const existingPagesContainer = contentArea.querySelector('.pages-container');
+    if (existingPagesContainer) {
+        existingPagesContainer.querySelectorAll(':scope > .page-wrapper').forEach(page => {
+            const pIndex = parseInt(page.dataset.pageIndex);
+            const blocks = Array.from(page.querySelectorAll(':scope > .loaded-block'));
+            blocks.forEach(b => {
+                rescuedBlocks.push({ pageIndex: pIndex, element: b });
             });
         });
-
-        contentArea.innerHTML = tempDiv.innerHTML;
     }
+
+    let finalHtml = blockWrapper.htmlTemplate;
+    const blockId = blockWrapper.id;
+    Object.keys(blockWrapper.settings).forEach(key => {
+        const value = blockWrapper.settings[key];
+        const placeholder = new RegExp(`settings-${key}`, 'g');
+        finalHtml = finalHtml.replace(placeholder, value);
+    });
+
+    contentArea.innerHTML = finalHtml;
 
     if (blockWrapper.settings.pages) {
         const numPages = parseInt(blockWrapper.settings.pages);
-        const currentHeader = contentArea.querySelector('.tab-header');
-        const currentContainer = contentArea.querySelector('.pages-container');
+        const header = contentArea.querySelector('.tab-header');
+        const container = contentArea.querySelector('.pages-container');
 
-        if (currentHeader && currentContainer) {
-            const existingPages = currentContainer.querySelectorAll(':scope > .page-wrapper');
+        if (header && container) {
+            header.innerHTML = '';
+            container.innerHTML = '';
 
-            if (existingPages.length !== numPages) {
-                rebuildPages(blockWrapper, currentHeader, currentContainer, numPages);
+            for (let i = 1; i <= numPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${i === 1 ? 'active' : ''}`;
+                btn.innerText = `Page ${i}`;
+
+                const page = document.createElement('div');
+                page.className = `page-wrapper ${i === 1 ? 'active' : ''}`;
+                page.dataset.pageIndex = i;
+
+                rescuedBlocks.forEach(rescue => {
+                    if (rescue.pageIndex === i) {
+                        page.appendChild(rescue.element);
+                    }
+                });
+
+                btn.onclick = (e) => {
+                    if (e) e.stopPropagation();
+                    header.querySelectorAll(':scope > .tab-btn').forEach(b => b.classList.remove('active'));
+                    container.querySelectorAll(':scope > .page-wrapper').forEach(p => p.classList.remove('active'));
+                    btn.classList.add('active');
+                    page.classList.add('active');
+                };
+
+                header.appendChild(btn);
+                container.appendChild(page);
             }
         }
     }
@@ -128,7 +149,7 @@ function rebuildPages(blockWrapper, header, container, numPages) {
 
         btn.onclick = (e) => {
             if (e) e.stopPropagation();
-            
+
             const allBtns = header.querySelectorAll(':scope > .tab-btn');
             const allPages = container.querySelectorAll(':scope > .page-wrapper');
 

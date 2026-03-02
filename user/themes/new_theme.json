@@ -23,7 +23,7 @@
                         "top": "20%",
                         "width": "60%",
                         "height": "60%",
-                        "zIndex": "165",
+                        "zIndex": "101",
                         "settings": {
                             "pages": "2",
                             "background": "#222",
@@ -59,7 +59,7 @@
                                                         "top": "0%",
                                                         "width": "100%",
                                                         "height": "100%",
-                                                        "zIndex": "175",
+                                                        "zIndex": "106",
                                                         "settings": {
                                                             "pages": "2",
                                                             "background": "#222",
@@ -68,6 +68,51 @@
                                                         },
                                                         "path": "user/blocks/base/paged-container.html",
                                                         "children": [
+                                                            {
+                                                                "pageIndex": 1,
+                                                                "blocks": [
+                                                                    {
+                                                                        "id": "block_1772481159565_2ra1d2a6h",
+                                                                        "left": "0%",
+                                                                        "top": "0%",
+                                                                        "width": "100%",
+                                                                        "height": "100%",
+                                                                        "zIndex": "110",
+                                                                        "settings": {
+                                                                            "pages": "2",
+                                                                            "background": "#222",
+                                                                            "gridx": "5",
+                                                                            "gridy": "5"
+                                                                        },
+                                                                        "path": "user/blocks/base/paged-container.html",
+                                                                        "children": [
+                                                                            {
+                                                                                "pageIndex": 2,
+                                                                                "blocks": [
+                                                                                    {
+                                                                                        "id": "block_1772481174282_96miwefpx",
+                                                                                        "left": "20%",
+                                                                                        "top": "0%",
+                                                                                        "width": "40%",
+                                                                                        "height": "80%",
+                                                                                        "zIndex": 1,
+                                                                                        "settings": {
+                                                                                            "width": "80",
+                                                                                            "height": "80",
+                                                                                            "label": "Page 1,2,1,1,2",
+                                                                                            "color": "green",
+                                                                                            "joystick": "0",
+                                                                                            "button": "0"
+                                                                                        },
+                                                                                        "path": "user/blocks/default/simple-button.html",
+                                                                                        "children": []
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
                                                             {
                                                                 "pageIndex": 2,
                                                                 "blocks": [
