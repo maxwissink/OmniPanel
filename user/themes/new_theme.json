@@ -10,7 +10,9 @@
             "pages": "2",
             "background": "#222",
             "gridx": "5",
-            "gridy": "5"
+            "gridy": "5",
+            "position": "top",
+            "menu_width": "15%"
         },
         "path": "user/blocks/base/paged-container.html",
         "children": [
@@ -23,12 +25,14 @@
                         "top": "20%",
                         "width": "60%",
                         "height": "60%",
-                        "zIndex": "101",
+                        "zIndex": "102",
                         "settings": {
                             "pages": "2",
                             "background": "#222",
                             "gridx": "5",
-                            "gridy": "5"
+                            "gridy": "5",
+                            "position": "top",
+                            "menu_width": "15%"
                         },
                         "path": "user/blocks/base/paged-container.html",
                         "children": [
@@ -41,12 +45,14 @@
                                         "top": "20%",
                                         "width": "60%",
                                         "height": "60%",
-                                        "zIndex": "167",
+                                        "zIndex": "108",
                                         "settings": {
                                             "pages": "2",
                                             "background": "#222",
                                             "gridx": "5",
-                                            "gridy": "5"
+                                            "gridy": "5",
+                                            "position": "top",
+                                            "menu_width": "15%"
                                         },
                                         "path": "user/blocks/base/paged-container.html",
                                         "children": [
@@ -59,12 +65,14 @@
                                                         "top": "0%",
                                                         "width": "100%",
                                                         "height": "100%",
-                                                        "zIndex": "106",
+                                                        "zIndex": "110",
                                                         "settings": {
                                                             "pages": "2",
                                                             "background": "#222",
                                                             "gridx": "5",
-                                                            "gridy": "5"
+                                                            "gridy": "5",
+                                                            "position": "top",
+                                                            "menu_width": "15%"
                                                         },
                                                         "path": "user/blocks/base/paged-container.html",
                                                         "children": [
@@ -77,12 +85,14 @@
                                                                         "top": "0%",
                                                                         "width": "100%",
                                                                         "height": "100%",
-                                                                        "zIndex": "110",
+                                                                        "zIndex": "109",
                                                                         "settings": {
                                                                             "pages": "2",
                                                                             "background": "#222",
                                                                             "gridx": "5",
-                                                                            "gridy": "5"
+                                                                            "gridy": "5",
+                                                                            "position": "top",
+                                                                            "menu_width": "15%"
                                                                         },
                                                                         "path": "user/blocks/base/paged-container.html",
                                                                         "children": [
@@ -95,10 +105,10 @@
                                                                                         "top": "0%",
                                                                                         "width": "40%",
                                                                                         "height": "80%",
-                                                                                        "zIndex": 1,
+                                                                                        "zIndex": "1",
                                                                                         "settings": {
-                                                                                            "width": "80",
-                                                                                            "height": "80",
+                                                                                            "width": "80%",
+                                                                                            "height": "80%",
                                                                                             "label": "Page 1,2,1,1,2",
                                                                                             "color": "green",
                                                                                             "joystick": "0",
@@ -122,10 +132,10 @@
                                                                         "top": "0%",
                                                                         "width": "60%",
                                                                         "height": "80%",
-                                                                        "zIndex": "177",
+                                                                        "zIndex": "111",
                                                                         "settings": {
-                                                                            "width": "80",
-                                                                            "height": "80",
+                                                                            "width": "80%",
+                                                                            "height": "80%",
                                                                             "label": "Click Me",
                                                                             "color": "green",
                                                                             "joystick": "0",
