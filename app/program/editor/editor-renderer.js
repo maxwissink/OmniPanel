@@ -238,11 +238,16 @@ function BuildEditorArea() {
                     blockWrapper.settings = initialSettings;
                     blockWrapper.htmlTemplate = doc.body.innerHTML;
 
-                    const blockWidthPx = blockWrapper.offsetWidth;
-                    const blockHeightPx = blockWrapper.offsetHeight;
+                    let blockWidthPercent = 0;
+                    let blockHeightPercent = 0;
 
-                    const blockWidthPercent = (blockWidthPx / rect.width) * 100;
-                    const blockHeightPercent = (blockHeightPx / rect.height) * 100;
+                    if (blockWrapper.offsetWidth > 0) {
+                        blockWidthPercent = (blockWrapper.offsetWidth / rect.width) * 100;
+                        blockHeightPercent = (blockWrapper.offsetHeight / rect.height) * 100;
+                    } else {
+                        blockWidthPercent = parseFloat(blockWrapper.style.width) || 10;
+                        blockHeightPercent = parseFloat(blockWrapper.style.height) || 10;
+                    }
 
                     let xPercent = (((event.clientX - rect.left) / rect.width) * 100) - (snapStepX);
                     let yPercent = (((event.clientY - rect.top) / rect.height) * 100) - (snapStepY);
@@ -685,7 +690,7 @@ async function createBlockRecursive(blockData, parentElement) {
 
         const settingsTag = doc.querySelector('settings');
         const settingsMeta = {};
-        
+
         if (!blockData.settings) blockData.settings = {};
 
         if (settingsTag) {
@@ -729,7 +734,7 @@ async function createBlockRecursive(blockData, parentElement) {
         });
 
         blockWrapper.settings = blockData.settings;
-        blockWrapper.settingsMeta = settingsMeta; 
+        blockWrapper.settingsMeta = settingsMeta;
         blockWrapper.htmlTemplate = doc.head.innerHTML + doc.body.innerHTML;
 
         // --- EDITOR UI ELEMENTS ---
@@ -773,7 +778,7 @@ async function createBlockRecursive(blockData, parentElement) {
 
         if (blockData.children && blockData.children.length > 0) {
             const pagesContainer = blockWrapper.querySelector('.pages-container');
-            
+
             if (pagesContainer) {
                 for (const pageGroup of blockData.children) {
                     const targetPage = pagesContainer.querySelector(`:scope > .page-wrapper[data-page-index="${pageGroup.pageIndex}"]`);
