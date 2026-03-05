@@ -1,6 +1,7 @@
 <settings 
     pages="Page 1, Page 2"
     position="top"
+    menu_width="15" type-menu_width="number" min-menu_width="5" max-menu_width="95"
     background="#222" type-background="color"
     gridx="5" type-gridx="number" min-gridx="1" max-gridx="20"
     gridy="5" type-gridy="number" min-gridy="1" max-gridy="20"
@@ -20,7 +21,7 @@
         display: flex;
         background: #111;
         flex-direction: row;
-        height: 30px;
+        height: settings-menu_width%;
     }
     
     .ui-container[data-position="top"] {
@@ -36,7 +37,7 @@
     }
     .ui-container[data-position="left"] .tab-header {
         flex-direction: column;
-        width: 80px;
+        width: menu_width%;
         height: 100%;
     }
 
