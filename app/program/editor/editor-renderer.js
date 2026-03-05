@@ -542,7 +542,7 @@ function openSettingsModal(blockWrapper) {
     const modal = document.querySelector('#settings-modal');
     const fieldsContainer = document.querySelector('#modal-fields');
     fieldsContainer.innerHTML = '';
-    console.log(blockWrapper.settingsMeta);
+
     Object.keys(blockWrapper.settings).forEach(key => {
         const value = blockWrapper.settings[key];
 
@@ -561,7 +561,7 @@ function openSettingsModal(blockWrapper) {
         if (meta.type === 'color') {
             input.type = 'color';
             input.classList.add('color-input');
-        } else if (meta.type === 'number') {
+        } else if (meta.type === 'number' || meta.type === 'percentage') {
             input.type = 'number';
             if (meta.min !== undefined) input.min = meta.min;
             if (meta.max !== undefined) input.max = meta.max;
@@ -569,18 +569,26 @@ function openSettingsModal(blockWrapper) {
             input.type = 'text';
         }
 
-        input.value = value;
+        if (meta.type === 'percentage') {
+            input.value = value.replace('%', '');
+        } else {
+            input.value = value;
+        }
 
         input.oninput = () => {
             let newValue = input.value;
 
-            if (meta.type === 'number') {
+            if (meta.type === 'number' || meta.type === 'percentage') {
                 let num = parseInt(newValue);
                 if (!isNaN(num)) {
                     if (meta.min !== undefined && num < meta.min) num = meta.min;
                     if (meta.max !== undefined && num > meta.max) num = meta.max;
                     newValue = num;
                 }
+            }
+
+            if (meta.type === 'percentage') {
+                newValue += '%';
             }
 
             blockWrapper.settings[key] = newValue;
