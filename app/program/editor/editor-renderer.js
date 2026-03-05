@@ -245,8 +245,8 @@ function BuildEditorArea() {
                         blockWidthPercent = (blockWrapper.offsetWidth / rect.width) * 100;
                         blockHeightPercent = (blockWrapper.offsetHeight / rect.height) * 100;
                     } else {
-                        blockWidthPercent = parseFloat(blockWrapper.style.width) || 10;
-                        blockHeightPercent = parseFloat(blockWrapper.style.height) || 10;
+                        blockWidthPercent = parseFloat(blockWrapper.style.width) || snapStepX;
+                        blockHeightPercent = parseFloat(blockWrapper.style.height) || snapStepY;
                     }
 
                     let xPercent = (((event.clientX - rect.left) / rect.width) * 100) - (snapStepX);
