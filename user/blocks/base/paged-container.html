@@ -1,23 +1,53 @@
 <settings 
-    pages="page 1, page 2"
+    pages="Page 1, Page 2"
+    position="top"
     background="#222" type-background="color"
     gridx="5" type-gridx="number" min-gridx="1" max-gridx="20"
     gridy="5" type-gridy="number" min-gridy="1" max-gridy="20"
 ></settings>
+
 <style>
     .ui-container {
         width: 100%;
         height: 100%;
         background-color: settings-background;
         display: flex;
-        flex-direction: column;
+        flex-direction: column; 
         border: 2px solid #444;
     }
 
     .tab-header {
         display: flex;
         background: #111;
+        flex-direction: row;
         height: 30px;
+    }
+
+    
+    .ui-container[data-position="top"] {
+        flex-direction: column;
+    }
+
+    .ui-container[data-position="bottom"] {
+        flex-direction: column-reverse;
+    }
+
+    .ui-container[data-position="left"] {
+        flex-direction: row;
+    }
+    .ui-container[data-position="left"] .tab-header {
+        flex-direction: column;
+        width: 80px;
+        height: 100%;
+    }
+
+    .ui-container[data-position="right"] {
+        flex-direction: row-reverse;
+    }
+    .ui-container[data-position="right"] .tab-header {
+        flex-direction: column;
+        width: 80px;
+        height: 100%;
     }
 
     .tab-btn {
@@ -26,29 +56,32 @@
         cursor: pointer;
         border: none;
         background: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .tab-btn.active {
         background: #555;
     }
 
-    .page-wrapper {
-        position: relative;
-        flex: 1;
-        display: none;
-        width: 100%;
-        height: 100%;
-    }
     .pages-container {
         flex: 1;
         display: flex;
         min-height: 50px;
+        position: relative;
+    }
+
+    .page-wrapper {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: none;
+        width: 100%;
+        height: 100%;
     }
 
     .page-wrapper.active {
         display: block;
-        width: 100%;
-        height: 100%;
         pointer-events: all;
     }
 
@@ -58,7 +91,7 @@
     }
 </style>
 
-<div class="ui-container">
+<div class="ui-container" data-position="settings-position">
     <div class="tab-header"></div>
     <div class="pages-container"></div>
 </div>
