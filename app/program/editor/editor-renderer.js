@@ -100,35 +100,38 @@ function BuildEditorArea() {
         }
     });
 
-   mainContainer.addEventListener('dragover', (event) => {
-    event.preventDefault();
+    mainContainer.addEventListener('dragover', (event) => {
+        event.preventDefault();
 
-    document.querySelectorAll('.nested-dropzone').forEach(dz => {
-        dz.style.outline = 'none';
-        dz.style.backgroundColor = '';
-    });
+        document.querySelectorAll('.nested-dropzone').forEach(dz => {
+            dz.style.outline = 'none';
+            dz.style.backgroundColor = '';
+        });
 
-    let targetDropZone = event.target.closest('.nested-dropzone');
-    const draggedBlock = window.draggedElement;
+        let targetDropZone = event.target.closest('.nested-dropzone') || mainContainer;
+        const draggedBlock = window.draggedElement;
 
-    if (targetDropZone && draggedBlock && draggedBlock.contains(targetDropZone)) {
-        targetDropZone = draggedBlock.parentElement.closest('.nested-dropzone') || mainContainer;
-    }
+        if (draggedBlock) {
+            if (draggedBlock.contains(targetDropZone)) {
+                targetDropZone = draggedBlock.parentElement.closest('.nested-dropzone') || mainContainer;
+            }
 
-    if (targetDropZone && draggedBlock) {
-        if (draggedBlock.contains(targetDropZone)) {
-            event.dataTransfer.dropEffect = 'none';
-            return; 
+            if (draggedBlock.contains(targetDropZone)) {
+                event.dataTransfer.dropEffect = 'none';
+                return;
+            }
+            event.dataTransfer.dropEffect = 'move';
         }
-    }
+        else {
+            event.dataTransfer.dropEffect = 'copy';
+        }
 
-    if (targetDropZone && targetDropZone != mainContainer) {
-        event.dataTransfer.dropEffect = 'move';
-        targetDropZone.style.outline = '2px dashed #00ff00';
-        targetDropZone.style.outlineOffset = '-2px';
-        targetDropZone.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
-    }
-});
+        if (targetDropZone && targetDropZone !== mainContainer) {
+            targetDropZone.style.outline = '2px dashed #00ff00';
+            targetDropZone.style.outlineOffset = '-2px';
+            targetDropZone.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
+        }
+    });
 
     mainContainer.addEventListener('dragleave', (event) => {
         const targetDropZone = event.target.closest('.nested-dropzone');
@@ -166,29 +169,38 @@ function BuildEditorArea() {
             let finalTarget = targetDropZone;
 
             if (block.contains(finalTarget)) {
-                finalTarget = block.parentElement.closest('.nested-dropzone') || document.querySelector('#maincontainer');
+                finalTarget = block.parentElement.closest('.nested-dropzone') || mainContainer;
             }
 
             const newParent = finalTarget;
+            const oldParent = block.parentElement;
+            const pRect = newParent.getBoundingClientRect();
 
             const offset = JSON.parse(event.dataTransfer.getData('offset'));
 
-            const pRect = newParent.getBoundingClientRect();
+            const physWidth = block.offsetWidth;
+            const physHeight = block.offsetHeight;
+
+            let wPct = (physWidth / pRect.width) * 100;
+            let hPct = (physHeight / pRect.height) * 100;
+
             const gX = parseInt(newParent.dataset.gridx) || 12;
             const gY = parseInt(newParent.dataset.gridy) || 12;
             const sX = 100 / gX;
             const sY = 100 / gY;
 
+            let snappedW = Math.min(100, Math.round(wPct / sX) * sX);
+            let snappedH = Math.min(100, Math.round(hPct / sY) * sY);
+
+            if (snappedW < sX) snappedW = sX;
+            if (snappedH < sY) snappedH = sY;
+
             const rawXPixels = event.clientX - pRect.left - offset.x;
             const rawYPixels = event.clientY - pRect.top - offset.y;
 
-            let wPct = (block.offsetWidth / pRect.width) * 100;
-            let hPct = (block.offsetHeight / pRect.height) * 100;
             let lPct = (rawXPixels / pRect.width) * 100;
             let tPct = (rawYPixels / pRect.height) * 100;
 
-            const snappedW = Math.round(wPct / sX) * sX;
-            const snappedH = Math.round(hPct / sY) * sY;
             let snappedL = Math.floor(lPct / sX) * sX;
             let snappedT = Math.floor(tPct / sY) * sY;
 
@@ -601,9 +613,9 @@ function openSettingsModal(blockWrapper) {
                     renderBlockFromTemplate(blockWrapper);
                 };
                 fieldRow.append(label, select);
-            } {
-            input.type = 'text';
-        }
+            } else {
+                input.type = 'text';
+            }
 
         if (meta.type === 'percentage') {
             input.value = value.replace('%', '');

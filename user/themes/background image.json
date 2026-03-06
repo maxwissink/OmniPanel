@@ -1,11 +1,11 @@
 [
     {
         "id": "block_1772754313577_kwkib305p",
-        "left": "25%",
+        "left": "8.33333%",
         "top": "8.33333%",
-        "width": "58.3333%",
-        "height": "50%",
-        "zIndex": "103",
+        "width": "83.3333%",
+        "height": "83.3333%",
+        "zIndex": "145",
         "settings": {
             "pages": "Page 1, Page 2",
             "position": "top",
@@ -27,7 +27,7 @@
                         "top": "0%",
                         "width": "40%",
                         "height": "40%",
-                        "zIndex": "102",
+                        "zIndex": "142",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -45,7 +45,7 @@
                         "top": "0%",
                         "width": "40%",
                         "height": "40%",
-                        "zIndex": "104",
+                        "zIndex": "140",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -63,12 +63,12 @@
                         "top": "40%",
                         "width": "100%",
                         "height": "60%",
-                        "zIndex": "107",
+                        "zIndex": "146",
                         "settings": {
                             "pages": "Page 1, Page 2",
                             "position": "top",
                             "menu_width": "15%",
-                            "background_color": "#222",
+                            "background_color": "#22222222",
                             "gridx": "5",
                             "gridy": "5",
                             "background_image": "none"
