@@ -157,8 +157,27 @@ function initJoystick(blockWrapper) {
         thumb.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
 
         blockWrapper.dataset.joyX = Math.round(((dx / maxTravel + 1) / 2) * 255);
-        blockWrapper.dataset.joyY = Math.round((((dy / maxTravel) * -1 + 1) / 2) * 255);
+        blockWrapper.dataset.joyY = Math.round((((dy / maxTravel) + 1) / 2) * 255);
 
+        const payload1 = {
+            type: 'simulate-slider',
+            data: {
+                js: 1,
+                id: 0,
+                value: parseInt(blockWrapper.dataset.joyX)
+            }
+        };
+        socket.send(JSON.stringify(payload1));
+
+        const payload2 = {
+            type: 'simulate-slider',
+            data: {
+                js: 1,
+                id: 1,
+                value: parseInt(blockWrapper.dataset.joyY)
+            }
+        };
+        socket.send(JSON.stringify(payload2));
         console.log(`${blockWrapper.dataset.joyX} - ${blockWrapper.dataset.joyY}`);
     };
 
