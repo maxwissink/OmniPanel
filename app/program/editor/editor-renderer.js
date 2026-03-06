@@ -53,32 +53,35 @@ function buildHtmlTree(blocksArray, parentElement) {
 
     blocksArray.forEach(block => {
         const li = document.createElement('li');
-        li.textContent = block.name;
+        
+        const label = document.createElement('span');
+        label.classList.add('tree-label');
+        label.textContent = block.name;
+        li.appendChild(label);
 
         if (block.type === 'folder') {
             li.classList.add('block-folder');
+            
+            label.addEventListener('click', (e) => {
+                e.stopPropagation();
+                li.classList.toggle('collapsed');
+            });
 
             if (block.children && block.children.length > 0) {
                 buildHtmlTree(block.children, li);
             }
         } else {
             li.classList.add('block-file');
-
             if (block.name.endsWith('.html')) {
                 li.draggable = true;
-                li.style.cursor = 'grab';
-
                 li.addEventListener('dragstart', (event) => {
                     event.dataTransfer.setData('text/plain', block.path);
                     event.dataTransfer.setData('block-name', block.name);
-                    event.dataTransfer.effectAllowed = 'copy';
                 });
             }
         }
-
         ul.appendChild(li);
     });
-
     parentElement.appendChild(ul);
 }
 

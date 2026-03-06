@@ -11,18 +11,20 @@
 
 <body>
     <div class="openmenu">
-        <button id="openmenu" onclick="OpenMenu()">hamburger</button>
+        <button id="openmenu" onclick="OpenMenu()">☰</button>
     </div>
     <div id="menu">
         <div class="menucontainer">
             <h2 class="menu-title">blocks</h2>
             <div id="blocksconstainer"></div>
         </div>
-        <div class="loadworkspace">
-            <button onclick="loadWorkspace()">load</button>
-        </div>
-        <div class="saveworkspace">
-            <button onclick="saveWorkspace()">save</button>
+        <div id="workspace-controls">
+            <div class="loadworkspace">
+                <button onclick="loadWorkspace()">load</button>
+            </div>
+            <div class="saveworkspace">
+                <button onclick="saveWorkspace()">save</button>
+            </div>
         </div>
         <div class="closemenu">
             <button id="closemenu" onclick="CloseMenu()">X</button>

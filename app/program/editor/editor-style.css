@@ -1,3 +1,7 @@
+html {
+    position: relative;
+}
+
 body {
     margin: 0;
     background-color: #e6e6e6;
@@ -7,24 +11,26 @@ body {
 
 .openmenu {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 15px;
+    left: 15px;
     z-index: 10000000;
 }
 
 #openmenu {
     border-radius: 10px;
-    padding: 5px;
+    padding: 7px;
+    font-size: larger;
 }
 
 #menu {
-    background-color: #909090;
+    background-color: #121212;
     position: absolute;
-    height: 100vh;
+    height: 100%;
     width: 20rem;
     top: 0;
     left: 0;
-
+    padding: 0;
+    margin: 0;
     transform: translateX(-100%);
     transition: transform 0.2s ease-in-out;
     z-index: 100000000;
@@ -47,7 +53,7 @@ body {
     bottom: 0;
     width: 90%;
     height: 2px;
-    background: #00000045;
+    background: #00e1ff;
 }
 
 .menucontainer>*:last-child::after {
@@ -67,12 +73,14 @@ body {
 
 #closemenu {
     z-index: 100;
+    border-radius: 10px;
     padding: 5px;
-
+    font-size: medium;
 }
 
 #menu .menu-title {
     text-align: center;
+    color: #e6e6e6;
 }
 
 .blockscontainer ul {
@@ -94,10 +102,10 @@ body {
     cursor: pointer;
     font-size: 14px;
     z-index: 20;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.loaded-block.selected > .delete-button {
+.loaded-block.selected>.delete-button {
     display: flex;
 }
 
@@ -111,7 +119,7 @@ body {
     right: 35px;
 }
 
-.loaded-block.selected > .settings-button {
+.loaded-block.selected>.settings-button {
     display: flex;
 }
 
@@ -132,45 +140,51 @@ body {
 #maincontainer::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     pointer-events: none;
     z-index: 0;
-    
+
     /* Use the variables from the parent */
     background-size: var(--grid-w, 10%) var(--grid-h, 10%);
-    
+
     background-image:
         linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);
-    
+
     background-repeat: repeat;
 }
 
 .loaded-block {
     position: absolute;
-    z-index: 51; /* needs to be higher than than trashcan*/
-    cursor:default;
+    z-index: 51;
+    cursor: default;
     border: 2px solid #007bff55;
     transition: border-color 0.1s;
     box-sizing: border-box;
 }
+
 .loaded-block.selected {
     border-color: #007bff;
     z-index: 15;
 }
+
 .loaded-block.dragging {
     z-index: 1000 !important;
 }
 
-.move-handle, .resize-handle {
+.move-handle,
+.resize-handle {
     position: absolute;
     display: none;
     z-index: 20;
 }
 
-.loaded-block.selected > .move-handle,
-.loaded-block.selected > .resize-handle,
-.loaded-block.selected > .settings-button {
+.loaded-block.selected>.move-handle,
+.loaded-block.selected>.resize-handle,
+.loaded-block.selected>.settings-button {
     display: flex;
 }
 
@@ -220,29 +234,29 @@ body {
     transform: translate(-50%, -50%);
     background: #252526;
     border: 1px solid #444;
-    padding: 24px; 
+    padding: 24px;
     z-index: 10000;
     min-width: 320px;
     color: white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    border-radius: 8px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
 }
 
-.modal-header { 
-    margin-bottom: 20px; 
-    font-weight: bold; 
+.modal-header {
+    margin-bottom: 20px;
+    font-weight: bold;
     font-size: 1.1em;
-    border-bottom: 1px solid #444; 
-    padding-bottom: 10px; 
-    color: #0078d4; 
+    border-bottom: 1px solid #444;
+    padding-bottom: 10px;
+    color: #0078d4;
 }
 
-.setting-row { 
+.setting-row {
     margin-bottom: 18px;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px; 
+    gap: 8px;
 }
 
 .setting-row label {
@@ -251,10 +265,10 @@ body {
     font-weight: 500;
 }
 
-.setting-row input { 
-    background: #3c3c3c; 
-    border: 1px solid #555; 
-    color: white; 
+.setting-row input {
+    background: #3c3c3c;
+    border: 1px solid #555;
+    color: white;
     padding: 8px;
     width: 100%;
     box-sizing: border-box;
@@ -267,9 +281,9 @@ body {
     background: #454545;
 }
 
-.modal-actions { 
-    margin-top: 25px; 
-    text-align: right; 
+.modal-actions {
+    margin-top: 25px;
+    text-align: right;
     border-top: 1px solid #444;
     padding-top: 15px;
 }
@@ -310,9 +324,13 @@ body {
 
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.7);
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     align-items: center;
     justify-content: center;
     z-index: 9999;
@@ -343,5 +361,95 @@ body {
     border-radius: 4px;
 }
 
-#modal-cancel { background: #444; color: white; }
-#modal-confirm.danger { background: #ff4444; color: white; }
+#modal-cancel {
+    background: #444;
+    color: white;
+}
+
+#modal-confirm.danger {
+    background: #ff4444;
+    color: white;
+}
+
+#workspace-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    background: #1a1a1a;
+}
+
+#workspace-controls div {
+    flex: 1;
+}
+
+#workspace-controls button {
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    background: #333;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+#workspace-controls button:hover {
+    background: #444;
+}
+
+
+#blocksconstainer {
+    padding: 10px;
+    user-select: none;
+    color: #ccc;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+.block-list {
+    list-style: none;
+    padding-left: 18px;
+    margin: 4px 0;
+}
+
+.block-folder > .tree-label::before {
+    content: '▼';
+    display: inline-block;
+    margin-right: 6px;
+    font-size: 10px;
+    transition: transform 0.2s;
+}
+
+.block-folder.collapsed > .tree-label::before {
+    transform: rotate(-90deg);
+}
+
+.block-folder.collapsed > .block-list {
+    display: none;
+}
+
+.block-file {
+    padding: 2px 0;
+    opacity: 0.8;
+}
+
+.block-file:hover {
+    opacity: 1;
+    color: #0dc8fc;
+}
+
+.tree-label {
+    cursor: pointer;
+    display: block;
+    padding: 2px 4px;
+    border-radius: 3px;
+}
+
+.tree-label:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
