@@ -164,6 +164,7 @@ body {
     border: 2px solid #007bff55;
     transition: border-color 0.1s;
     box-sizing: border-box;
+    transition: width 0.1s ease, height 0.1s ease, left 0.1s ease, top 0.1s ease;
 }
 
 .loaded-block.selected {
@@ -173,6 +174,7 @@ body {
 
 .loaded-block.dragging {
     z-index: 1000 !important;
+    transition: none;
 }
 
 .move-handle,
