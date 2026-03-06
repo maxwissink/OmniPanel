@@ -168,8 +168,9 @@ body {
     z-index: 20;
 }
 
-.loaded-block.selected .move-handle,
-.loaded-block.selected .resize-handle {
+.loaded-block.selected > .move-handle,
+.loaded-block.selected > .resize-handle,
+.loaded-block.selected > .settings-button {
     display: flex;
 }
 
@@ -209,10 +210,6 @@ body {
     justify-content: center;
     font-size: 14px;
     z-index: 20;
-}
-
-.loaded-block.selected .settings-button {
-    display: flex;
 }
 
 #settings-modal {

@@ -350,12 +350,6 @@ function addSelectionListeners(blockWrapper) {
     blockWrapper.addEventListener('mousedown', (e) => {
         e.stopPropagation();
 
-        document.querySelectorAll('.loaded-block.selected').forEach(el => {
-            el.classList.remove('selected');
-        });
-
-        blockWrapper.classList.add('selected');
-
         highestZ++;
         blockWrapper.style.zIndex = highestZ;
 
