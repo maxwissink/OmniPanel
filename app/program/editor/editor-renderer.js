@@ -108,8 +108,12 @@ function BuildEditorArea() {
         dz.style.backgroundColor = '';
     });
 
-    const targetDropZone = event.target.closest('.nested-dropzone');
+    let targetDropZone = event.target.closest('.nested-dropzone');
     const draggedBlock = window.draggedElement;
+
+    if (targetDropZone && draggedBlock && draggedBlock.contains(targetDropZone)) {
+        targetDropZone = draggedBlock.parentElement.closest('.nested-dropzone') || mainContainer;
+    }
 
     if (targetDropZone && draggedBlock) {
         if (draggedBlock.contains(targetDropZone)) {
@@ -118,7 +122,7 @@ function BuildEditorArea() {
         }
     }
 
-    if (targetDropZone) {
+    if (targetDropZone && targetDropZone != mainContainer) {
         event.dataTransfer.dropEffect = 'move';
         targetDropZone.style.outline = '2px dashed #00ff00';
         targetDropZone.style.outlineOffset = '-2px';
@@ -144,7 +148,6 @@ function BuildEditorArea() {
         let currentGridX, currentGridY;
 
         if (targetDropZone === mainContainer) {
-            // Use the global Master Variables
             currentGridX = WORKSPACE_GRID_X;
             currentGridY = WORKSPACE_GRID_Y;
         } else {
