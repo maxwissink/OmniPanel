@@ -1,11 +1,11 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, ipcRenderer } = require('electron');
 const path = require('path');
 const fs = require('fs').promises;
 const { existsSync, mkdirSync } = require('fs');
 const Block = require('../models/block.js');
 
 
-module.exports = function () {
+module.exports = function (config) {
     ipcMain.on('open-theme-editor', (event) => {
         // Check if the window is already open to avoid duplicates
         const existingWindow = BrowserWindow.getAllWindows().find(w => w.getTitle() === 'Theme Editor');
@@ -101,6 +101,20 @@ module.exports = function () {
 
         if (!cancelled && filePaths.length > 0) {
             const content = await fs.readFile(filePaths[0], 'utf-8');
+            return JSON.parse(content);
+        }
+        return null;
+    });
+
+    ipcMain.handle('initiate-workspace-json', async () => {
+        let userPath = app.isPackaged
+            ? path.join(path.dirname(process.execPath), 'user', 'themes')
+            : path.join(app.getAppPath(), 'user', 'themes');
+
+        const filePath = path.join(userPath, `${config.theme}.json`);
+
+        if (filePath) {
+            const content = await fs.readFile(filePath, 'utf-8');
             return JSON.parse(content);
         }
         return null;

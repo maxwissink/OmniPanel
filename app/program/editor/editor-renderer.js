@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
     BuildEditorArea();
     initWorkspaceGrid();
     initModalListeners();
+
+    loadWorkspace(true)
 });
 
 async function GetBlocks() {
@@ -692,8 +694,13 @@ function getBlockDataRecursive(block) {
     return blockData;
 }
 
-async function loadWorkspace() {
-    const data = await ipcRenderer.invoke('load-workspace-json');
+async function loadWorkspace(firstTime = false) {
+    let data = null;
+    if (firstTime) {
+        data = await ipcRenderer.invoke('initiate-workspace-json');
+    } else {
+        data = await ipcRenderer.invoke('load-workspace-json');
+    }
     if (!data || !Array.isArray(data)) return;
 
     const mainContainer = document.querySelector('#maincontainer');
@@ -876,7 +883,7 @@ async function applyBackground(blockWrapper, contentArea) {
 
     if (bgFile && bgFile !== 'none') {
         const assetsDir = path.join(await ipcRenderer.invoke('get-userPath'), 'assets');
-        
+
         const normalizedPath = `${assetsDir}/${bgFile}`.replace(/\\/g, '/');
         const fullPath = `url('file://${normalizedPath}')`;
 

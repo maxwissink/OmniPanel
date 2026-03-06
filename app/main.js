@@ -124,7 +124,7 @@ app.whenReady().then(() => {
     const wss = initSocketManager(config, server);
 
     setupConfigHandler(config, wss);
-    editorHandler();
+    editorHandler(config);
 
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server Secure: https://localhost:${config.port}`);
