@@ -105,6 +105,74 @@ function renderBlockFromTemplate(blockWrapper) {
             rebuildPages(blockWrapper, header, container, blockWrapper.settings.pages);
         }
     }
+
+    requestAnimationFrame(() => {
+        const hitbox = blockWrapper.querySelector('.joy-hitbox');
+        if (hitbox) {
+            initJoystick(blockWrapper);
+        } else {
+            console.error("Joystick initialization failed: .joy-hitbox not found in block", blockWrapper.id);
+        }
+    });
+}
+
+function initJoystick(blockWrapper) {
+    const hitbox = blockWrapper.querySelector('.joy-hitbox');
+    const base = blockWrapper.querySelector('.joy-base');
+    const thumb = blockWrapper.querySelector('.joy-thumb');
+
+    if (!hitbox || !base || !thumb) {
+        console.warn("Joystick elements missing in block:", blockWrapper.id);
+        return;
+    }
+
+    const maxTravel = parseInt(blockWrapper.settings.travel) || 60;
+    const safeZone = parseInt(blockWrapper.settings.safe_zone) || 30;
+
+    let active = false;
+    let centerX, centerY;
+
+    hitbox.addEventListener('mousedown', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        const rect = hitbox.getBoundingClientRect();
+        active = true;
+
+        centerX = e.clientX - rect.left;
+        centerY = e.clientY - rect.top;
+
+        base.style.display = 'block';
+        base.style.left = `${centerX}px`;
+        base.style.top = `${centerY}px`;
+    });
+
+    const onMouseMove = (e) => {
+        if (!active) return;
+
+        const rect = hitbox.getBoundingClientRect();
+        const dx = Math.max(-maxTravel, Math.min(maxTravel, (e.clientX - rect.left) - centerX));
+        const dy = Math.max(-maxTravel, Math.min(maxTravel, (e.clientY - rect.top) - centerY));
+
+        thumb.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+
+        blockWrapper.dataset.joyX = Math.round(((dx / maxTravel + 1) / 2) * 255);
+        blockWrapper.dataset.joyY = Math.round((((dy / maxTravel) * -1 + 1) / 2) * 255);
+
+        console.log(`${blockWrapper.dataset.joyX} - ${blockWrapper.dataset.joyY}`);
+    };
+
+    const onMouseUp = () => {
+        if (!active) return;
+        active = false;
+        base.style.display = 'none';
+        blockWrapper.dataset.joyX = 127;
+        blockWrapper.dataset.joyY = 127;
+        thumb.style.transform = `translate(-50%, -50%)`;
+    };
+
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
 }
 
 async function applyBackground(blockWrapper, contentArea) {
@@ -113,7 +181,7 @@ async function applyBackground(blockWrapper, contentArea) {
 
     if (bgFile && bgFile !== 'none') {
         const assetsDir = '/assets';
-        
+
         const normalizedPath = `${assetsDir}/${bgFile}`.replace(/\\/g, '/');
         const fullPath = `url('${normalizedPath}')`;
 

@@ -1,0 +1,57 @@
+<settings 
+    type-color="color" color="#0dc8fc"
+    type-travel="number" travel="60" 
+    type-safe_zone="number" safe_zone="30">
+</settings>
+
+<div class="joy-container">
+    <div class="joy-hitbox">
+        <div class="joy-base">
+            <div class="joy-thumb"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --joy-color: #0dc8fc;
+        --joy-travel: 60px;
+        --joy-safe-zone: 30px;
+    }
+
+    .joy-container {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        background: #181818;
+        overflow: hidden;
+    }
+
+    .joy-hitbox {
+        width: calc(100% - (var(--joy-safe-zone) * 2));
+        height: calc(100% - (var(--joy-safe-zone) * 2));
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        position: relative;
+        cursor: crosshair;
+    }
+
+    .joy-base {
+        position: absolute;
+        width: 50px; height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: none;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    .joy-thumb {
+        position: absolute;
+        width: 30px; height: 30px;
+        background: var(--joy-color);
+        border-radius: 50%;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 15px var(--joy-color);
+    }
+</style>

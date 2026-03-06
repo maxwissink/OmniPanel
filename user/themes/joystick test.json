@@ -1,0 +1,16 @@
+[
+    {
+        "id": "block_1772817558150_437tqe4u6",
+        "left": "25%",
+        "top": "16.6667%",
+        "width": "50%",
+        "height": "41.6667%",
+        "zIndex": "104",
+        "settings": {
+            "joystick_color": "#0dc8fc",
+            "deadzone": "5"
+        },
+        "path": "user/blocks/default/joystick.html",
+        "children": []
+    }
+]
