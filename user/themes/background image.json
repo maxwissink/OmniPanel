@@ -1,0 +1,21 @@
+[
+    {
+        "id": "block_1772754313577_kwkib305p",
+        "left": "25%",
+        "top": "8.33333%",
+        "width": "58.3333%",
+        "height": "50%",
+        "zIndex": "102",
+        "settings": {
+            "pages": "Page 1, Page 2",
+            "position": "top",
+            "menu_width": "15%",
+            "background": "#222",
+            "gridx": "5",
+            "gridy": "5",
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
+        },
+        "path": "user/blocks/base/paged-container.html",
+        "children": []
+    }
+]

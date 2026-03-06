@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron');
 const Block = require('../models/block.js');
 const fs = require('fs').promises;
+const path = require('path');
 
 let highestZ = 100;
 
@@ -15,7 +16,7 @@ const generateId = () => `block_${Date.now()}_${Math.random().toString(36).subst
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Renderer loaded")
-
+    getAvailableAssets();
     //GetBlocks();
     BuildEditorArea();
     initWorkspaceGrid();
@@ -509,6 +510,8 @@ function renderBlockFromTemplate(blockWrapper) {
                     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)
                 `;
 
+                applyBackground(blockWrapper, contentArea);
+
                 rescuedBlocks.forEach(rescue => {
                     if (rescue.pageIndex === i) {
                         page.appendChild(rescue.element);
@@ -543,7 +546,7 @@ function openSettingsModal(blockWrapper) {
     const fieldsContainer = document.querySelector('#modal-fields');
     fieldsContainer.innerHTML = '';
 
-    Object.keys(blockWrapper.settings).forEach(key => {
+    Object.keys(blockWrapper.settings).forEach(async key => {
         const value = blockWrapper.settings[key];
 
         const meta = (blockWrapper.settingsMeta && blockWrapper.settingsMeta[key])
@@ -565,7 +568,27 @@ function openSettingsModal(blockWrapper) {
             input.type = 'number';
             if (meta.min !== undefined) input.min = meta.min;
             if (meta.max !== undefined) input.max = meta.max;
-        } else {
+        } else
+            if (meta.type === 'asset') {
+                const select = document.createElement('select');
+                const assets = await getAvailableAssets();
+
+                select.innerHTML = `<option value="none">None</option>`;
+
+                assets.forEach(asset => {
+                    const opt = document.createElement('option');
+                    opt.value = asset;
+                    opt.innerText = asset;
+                    if (blockWrapper.settings[key] === asset) opt.selected = true;
+                    select.appendChild(opt);
+                });
+
+                select.onchange = () => {
+                    blockWrapper.settings[key] = select.value;
+                    renderBlockFromTemplate(blockWrapper);
+                };
+                fieldRow.append(label, select);
+            } {
             input.type = 'text';
         }
 
@@ -840,4 +863,33 @@ function initModalListeners() {
         modal.style.display = 'none';
         blockToDelete = null;
     };
+}
+
+async function getAvailableAssets() {
+    const assetsDir = path.join(await ipcRenderer.invoke('get-userPath'), 'assets');
+    try {
+        const files = await fs.readdir(assetsDir);
+        return files.filter(file => /\.(png|jpg|jpeg|svg|webp|gif)$/i.test(file));
+    } catch (err) {
+        console.error("Could not read assets folder", err);
+        return [];
+    }
+}
+
+async function applyBackground(blockWrapper, contentArea) {
+    const bgFile = blockWrapper.settings['background_image'];
+    const target = contentArea.querySelector('.ui-container') || contentArea;
+
+    if (bgFile && bgFile !== 'none') {
+        const assetsDir = path.join(await ipcRenderer.invoke('get-userPath'), 'assets');
+        
+        const normalizedPath = `${assetsDir}/${bgFile}`.replace(/\\/g, '/');
+        const fullPath = `url('file://${normalizedPath}')`;
+
+        target.style.backgroundImage = fullPath;
+        target.style.backgroundSize = 'cover';
+        target.style.backgroundPosition = 'center';
+    } else {
+        target.style.backgroundImage = 'none';
+    }
 }

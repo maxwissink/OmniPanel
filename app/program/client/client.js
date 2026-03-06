@@ -96,12 +96,32 @@ function renderBlockFromTemplate(blockWrapper) {
     contentArea.innerHTML = finalHtml;
 
     if (blockWrapper.settings.pages) {
+        applyBackground(blockWrapper, contentArea);
+
         const header = contentArea.querySelector('.tab-header');
         const container = contentArea.querySelector('.pages-container');
 
         if (header && container) {
             rebuildPages(blockWrapper, header, container, blockWrapper.settings.pages);
         }
+    }
+}
+
+async function applyBackground(blockWrapper, contentArea) {
+    const bgFile = blockWrapper.settings['background_image'];
+    const target = contentArea.querySelector('.ui-container') || contentArea;
+
+    if (bgFile && bgFile !== 'none') {
+        const assetsDir = '/assets';
+        
+        const normalizedPath = `${assetsDir}/${bgFile}`.replace(/\\/g, '/');
+        const fullPath = `url('${normalizedPath}')`;
+
+        target.style.backgroundImage = fullPath;
+        target.style.backgroundSize = 'cover';
+        target.style.backgroundPosition = 'center';
+    } else {
+        target.style.backgroundImage = 'none';
     }
 }
 

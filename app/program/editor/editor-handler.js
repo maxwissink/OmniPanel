@@ -36,7 +36,7 @@ module.exports = function () {
         if (app.isPackaged) {
             userPath = path.join(path.dirname(process.execPath), 'user');
         } else {
-            userPath = path.join('user');
+            userPath = path.join(__dirname, '..', '..', '..', 'user');
         }
 
         return userPath;

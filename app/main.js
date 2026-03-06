@@ -98,7 +98,7 @@ expressApp.get('/client.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'program', 'client', 'client.js'));
 });
 expressApp.use('/blocks/', express.static(path.join(__dirname, '..', 'user', 'blocks')));
-
+expressApp.use('/assets/', express.static(path.join(__dirname, '..', 'user', 'assets')));
 // dynamic exposing
 // expressApp.use((req, res, next) => {
 //     let themeFolder = null;
