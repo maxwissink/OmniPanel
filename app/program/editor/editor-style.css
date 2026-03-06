@@ -186,6 +186,7 @@ body {
 .loaded-block.selected>.resize-handle,
 .loaded-block.selected>.settings-button {
     display: flex;
+    z-index: 10000 !important;
 }
 
 .move-handle {

@@ -53,7 +53,7 @@ function buildHtmlTree(blocksArray, parentElement) {
 
     blocksArray.forEach(block => {
         const li = document.createElement('li');
-        
+
         const label = document.createElement('span');
         label.classList.add('tree-label');
         label.textContent = block.name;
@@ -61,7 +61,7 @@ function buildHtmlTree(blocksArray, parentElement) {
 
         if (block.type === 'folder') {
             li.classList.add('block-folder');
-            
+
             label.addEventListener('click', (e) => {
                 e.stopPropagation();
                 li.classList.toggle('collapsed');
@@ -77,6 +77,7 @@ function buildHtmlTree(blocksArray, parentElement) {
                 li.addEventListener('dragstart', (event) => {
                     event.dataTransfer.setData('text/plain', block.path);
                     event.dataTransfer.setData('block-name', block.name);
+                    event.dataTransfer.effectAllowed = 'copy';
                 });
             }
         }
@@ -156,37 +157,37 @@ function BuildEditorArea() {
             }
 
             const newParent = finalTarget;
-            const parentRect = newParent.getBoundingClientRect();
-
-            const blockRect = block.getBoundingClientRect();
-            const physWidth = blockRect.width;
-            const physHeight = blockRect.height;
 
             const offset = JSON.parse(event.dataTransfer.getData('offset'));
 
-            const finalXPixels = event.clientX - parentRect.left - offset.x;
-            const finalYPixels = event.clientY - parentRect.top - offset.y;
-
-            let nWPct = (physWidth / parentRect.width) * 100;
-            let nHPct = (physHeight / parentRect.height) * 100;
-            let nLPct = (finalXPixels / parentRect.width) * 100;
-            let nTPct = (finalYPixels / parentRect.height) * 100;
-
-            // Clamp
-            nWPct = Math.min(nWPct, 100);
-            nHPct = Math.min(nHPct, 100);
-            nLPct = Math.max(0, Math.min(nLPct, 100 - nWPct));
-            nTPct = Math.max(0, Math.min(nTPct, 100 - nHPct));
-
+            const pRect = newParent.getBoundingClientRect();
             const gX = parseInt(newParent.dataset.gridx) || 12;
             const gY = parseInt(newParent.dataset.gridy) || 12;
             const sX = 100 / gX;
             const sY = 100 / gY;
 
-            block.style.width = `${Math.round(nWPct / sX) * sX}%`;
-            block.style.height = `${Math.round(nHPct / sY) * sY}%`;
-            block.style.left = `${Math.round(nLPct / sX) * sX}%`;
-            block.style.top = `${Math.round(nTPct / sY) * sY}%`;
+            const rawXPixels = event.clientX - pRect.left - offset.x;
+            const rawYPixels = event.clientY - pRect.top - offset.y;
+
+            let wPct = (block.offsetWidth / pRect.width) * 100;
+            let hPct = (block.offsetHeight / pRect.height) * 100;
+            let lPct = (rawXPixels / pRect.width) * 100;
+            let tPct = (rawYPixels / pRect.height) * 100;
+
+            const snappedW = Math.round(wPct / sX) * sX;
+            const snappedH = Math.round(hPct / sY) * sY;
+            let snappedL = Math.floor(lPct / sX) * sX;
+            let snappedT = Math.floor(tPct / sY) * sY;
+
+            snappedL = Math.max(0, Math.min(snappedL, 100 - snappedW));
+            snappedT = Math.max(0, Math.min(snappedT, 100 - snappedH));
+
+            Object.assign(block.style, {
+                width: `${snappedW}%`,
+                height: `${snappedH}%`,
+                left: `${snappedL}%`,
+                top: `${snappedT}%`
+            });
 
             if (block.parentElement !== newParent) {
                 newParent.appendChild(block);
