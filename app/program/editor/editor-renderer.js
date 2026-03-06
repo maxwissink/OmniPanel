@@ -56,7 +56,7 @@ function buildHtmlTree(blocksArray, parentElement) {
 
         const label = document.createElement('span');
         label.classList.add('tree-label');
-        label.textContent = block.name;
+        label.textContent = block.name.replace('.html', '').replace('_', ' ');
         li.appendChild(label);
 
         if (block.type === 'folder') {
@@ -567,7 +567,7 @@ function openSettingsModal(blockWrapper) {
         fieldRow.className = 'setting-row';
 
         const label = document.createElement('label');
-        label.innerText = key.charAt(0).toUpperCase() + key.slice(1);
+        label.innerText = (key.charAt(0).toUpperCase() + key.slice(1)).replace('_', ' ');
 
         const input = document.createElement('input');
 

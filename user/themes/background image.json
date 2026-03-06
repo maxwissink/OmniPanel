@@ -5,7 +5,7 @@
         "top": "8.33333%",
         "width": "58.3333%",
         "height": "50%",
-        "zIndex": "105",
+        "zIndex": "103",
         "settings": {
             "pages": "Page 1, Page 2",
             "position": "top",
@@ -56,6 +56,49 @@
                         },
                         "path": "user/blocks/default/simple-button.html",
                         "children": []
+                    },
+                    {
+                        "id": "block_1772800857197_w7d4iyxkk",
+                        "left": "0%",
+                        "top": "40%",
+                        "width": "100%",
+                        "height": "60%",
+                        "zIndex": "107",
+                        "settings": {
+                            "pages": "Page 1, Page 2",
+                            "position": "top",
+                            "menu_width": "15%",
+                            "background_color": "#222",
+                            "gridx": "5",
+                            "gridy": "5",
+                            "background_image": "none"
+                        },
+                        "path": "user/blocks/base/paged-container.html",
+                        "children": [
+                            {
+                                "pageIndex": 2,
+                                "blocks": [
+                                    {
+                                        "id": "block_1772800871023_gofzish2k",
+                                        "left": "20%",
+                                        "top": "20%",
+                                        "width": "60%",
+                                        "height": "60%",
+                                        "zIndex": "108",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "label": "Click Me",
+                                            "color": "green",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple-button.html",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
                     }
                 ]
             },
@@ -68,7 +111,7 @@
                         "top": "20%",
                         "width": "60%",
                         "height": "60%",
-                        "zIndex": 1,
+                        "zIndex": "1",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
