@@ -100,21 +100,31 @@ function BuildEditorArea() {
         }
     });
 
-    mainContainer.addEventListener('dragover', (event) => {
-        event.preventDefault();
+   mainContainer.addEventListener('dragover', (event) => {
+    event.preventDefault();
 
-        document.querySelectorAll('.nested-dropzone').forEach(dz => {
-            dz.style.outline = 'none';
-            dz.style.backgroundColor = '';
-        });
-
-        const targetDropZone = event.target.closest('.nested-dropzone');
-        if (targetDropZone) {
-            targetDropZone.style.outline = '2px dashed #00ff00';
-            targetDropZone.style.outlineOffset = '-2px';
-            targetDropZone.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
-        }
+    document.querySelectorAll('.nested-dropzone').forEach(dz => {
+        dz.style.outline = 'none';
+        dz.style.backgroundColor = '';
     });
+
+    const targetDropZone = event.target.closest('.nested-dropzone');
+    const draggedBlock = window.draggedElement;
+
+    if (targetDropZone && draggedBlock) {
+        if (draggedBlock.contains(targetDropZone)) {
+            event.dataTransfer.dropEffect = 'none';
+            return; 
+        }
+    }
+
+    if (targetDropZone) {
+        event.dataTransfer.dropEffect = 'move';
+        targetDropZone.style.outline = '2px dashed #00ff00';
+        targetDropZone.style.outlineOffset = '-2px';
+        targetDropZone.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
+    }
+});
 
     mainContainer.addEventListener('dragleave', (event) => {
         const targetDropZone = event.target.closest('.nested-dropzone');
