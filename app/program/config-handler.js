@@ -50,6 +50,24 @@ module.exports = function (config, wss) {
         });
     });
 
+    ipcMain.handle('get-theme-content', async (event, themeName) => {
+    try {
+        const themesPath = path.join(userPath, 'themes');
+        const filePath = path.join(themesPath, themeName.endsWith('.json') ? themeName : `${themeName}.json`);
+        
+        if (fs.existsSync(filePath)) {
+            const content = fs.readFileSync(filePath, 'utf8');
+            return content;
+        } else {
+            console.error("Theme file not found:", filePath);
+            return null;
+        }
+    } catch (error) {
+        console.error("Failed to read theme content:", error);
+        return null;
+    }
+});
+
     ipcMain.on('save-joystick-count', (event, count) => {
         config.numJoysticks = parseInt(count) || 1;
         saveConfig(config);

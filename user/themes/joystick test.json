@@ -47,7 +47,7 @@
             "width": "80%",
             "height": "80%",
             "label": "Click Me",
-            "joystick": "0",
+            "joystick": "3",
             "slider": "0",
             "thumb_color": "#ff8800",
             "background_color": "#ae0bea",
@@ -62,12 +62,30 @@
         "top": "16.6667%",
         "width": "16.6667%",
         "height": "41.6667%",
-        "zIndex": "110",
+        "zIndex": "101",
         "settings": {
             "width": "80%",
             "height": "80%",
             "label": "Click Me",
-            "color": "green",
+            "color": "#f10909",
+            "joystick": "0",
+            "button": "0"
+        },
+        "path": "user/blocks/default/simple-button.html",
+        "children": []
+    },
+    {
+        "id": "block_1773147240072_rbbjtoio5",
+        "left": "75%",
+        "top": "58.3333%",
+        "width": "16.6667%",
+        "height": "16.6667%",
+        "zIndex": "103",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "label": "Click Me",
+            "color": "#1100ff",
             "joystick": "0",
             "button": "0"
         },

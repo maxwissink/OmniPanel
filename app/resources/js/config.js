@@ -3,6 +3,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const select = document.getElementById('theme-select');
     const joystickInput = document.getElementById('joystick-count');
 
+    function detectMaxJoystick(themeData) {
+        const themeString = typeof themeData === 'string' ? themeData : JSON.stringify(themeData);
+        
+        const regex = /"joystick"\s*:\s*"(\d+)"/g;
+        let match;
+        let maxFound = -1;
+
+        while ((match = regex.exec(themeString)) !== null) {
+            const val = parseInt(match[1]);
+            if (val > maxFound) maxFound = val;
+        }
+
+        return maxFound === -1 ? 1 : maxFound + 1;
+    }
+
     async function initializeSettings() {
         const themes = await ipcRenderer.invoke('get-themes');
         select.innerHTML = '';
@@ -16,20 +31,26 @@ document.addEventListener("DOMContentLoaded", function () {
         ipcRenderer.on('init-config', (event, currentConfig) => {
             select.value = currentConfig.theme;
             joystickInput.value = currentConfig.numJoysticks || 1;
-            console.log("Config loaded:", currentConfig);
         });
 
         ipcRenderer.send('request-current-config'); 
     }
 
-    select.addEventListener('change', () => {
-        ipcRenderer.send('save-theme', select.value);
+    select.addEventListener('change', async () => {
+        const themeName = select.value;     
+        
+        ipcRenderer.send('save-theme', themeName);
+
+        const themeContent = await ipcRenderer.invoke('get-theme-content', themeName);
+        console.log(themeContent);
+        if (themeContent) {
+            const newCount = detectMaxJoystick(themeContent);
+            
+            ipcRenderer.send('save-joystick-count', newCount);
+            console.log(`Auto-detected ${newCount} joysticks for theme: ${themeName}`);
+        }
     });
 
-    joystickInput.addEventListener('change', () => {
-        const count = parseInt(joystickInput.value);
-        ipcRenderer.send('save-joystick-count', count);
-    });
 
     initializeSettings();
 });
