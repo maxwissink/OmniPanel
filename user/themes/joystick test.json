@@ -64,7 +64,7 @@
         "top": "33.3333%",
         "width": "16.6667%",
         "height": "41.6667%",
-        "zIndex": "101",
+        "zIndex": "117",
         "settings": {
             "width": "80%",
             "height": "80%",
@@ -75,7 +75,8 @@
             "border_radius": "5",
             "background_color": "#04ff0068",
             "button_color": "#db1a1a92",
-            "label_color": "#000000ff"
+            "label_color": "#1f1919ff",
+            "button_color_active": "#00ff55ff"
         },
         "path": "user/blocks/default/simple_button.html",
         "children": []
@@ -97,7 +98,8 @@
             "border_radius": "5",
             "background_color": "#000000",
             "button_color": "#033dc4",
-            "label_color": "white"
+            "label_color": "white",
+            "button_color_active": "red"
         },
         "path": "user/blocks/default/simple_button.html",
         "children": []
@@ -181,7 +183,8 @@
                             "button_color": "dark-grey",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "button_color_active": "red"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []

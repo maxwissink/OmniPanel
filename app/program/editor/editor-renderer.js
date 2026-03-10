@@ -604,36 +604,61 @@ function openSettingsModal(blockWrapper) {
             };
             fieldRow.appendChild(select);
 
-            // --- COLOR TYPE (with Alpha) ---
+            // --- COLOR TYPE (with Alpha and Hex Text) ---
         } else if (meta.type === 'color') {
             const colorContainer = document.createElement('div');
             colorContainer.className = 'color-field-container';
 
+            const topRow = document.createElement('div');
             const colorInput = document.createElement('input');
             colorInput.type = 'color';
-
             const alphaInput = document.createElement('input');
             alphaInput.type = 'range';
-            alphaInput.min = 0;
-            alphaInput.max = 255;
+            const hexInput = document.createElement('input');
+            hexInput.type = 'text';
+            hexInput.placeholder = '#RRGGBBAA';
 
             let hex = value.substring(0, 7);
-            let alpha = value.length === 9 ? parseInt(value.substring(7, 9), 16) : 255;
+            let alphaInt = value.length === 9 ? parseInt(value.substring(7, 9), 16) : 255;
 
             colorInput.value = hex;
-            alphaInput.value = alpha;
+            alphaInput.value = alphaInt;
+            hexInput.value = value.toUpperCase();
 
-            const updateColor = () => {
+            const updateFromControls = () => {
                 const aHex = parseInt(alphaInput.value).toString(16).padStart(2, '0');
-                const fullHex = colorInput.value + aHex;
+                const fullHex = (colorInput.value + aHex).toUpperCase();
+
+                hexInput.value = fullHex;
                 blockWrapper.settings[key] = fullHex;
                 renderBlockFromTemplate(blockWrapper);
             };
 
-            colorInput.oninput = updateColor;
-            alphaInput.oninput = updateColor;
+            const updateFromText = () => {
+                let val = hexInput.value.trim();
+                if (!val.startsWith('#')) val = '#' + val;
 
-            colorContainer.append(colorInput, alphaInput);
+                const hexRegex = /^#([A-Fa-f0-9]{3}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})$/;
+                if (hexRegex.test(val)) {
+                    if (val.length === 9) {
+                        colorInput.value = val.substring(0, 7);
+                        alphaInput.value = parseInt(val.substring(7, 9), 16);
+                    } else if (val.length === 7) {
+                        colorInput.value = val;
+                        alphaInput.value = 255;
+                    }
+
+                    blockWrapper.settings[key] = val;
+                    renderBlockFromTemplate(blockWrapper);
+                }
+            };
+
+            colorInput.oninput = updateFromControls;
+            alphaInput.oninput = updateFromControls;
+            hexInput.oninput = updateFromText;
+
+            topRow.append(colorInput, alphaInput);
+            colorContainer.append(topRow, hexInput);
             fieldRow.appendChild(colorContainer);
 
             // --- NUMBER / PERCENTAGE / TEXT TYPES ---

@@ -5,6 +5,7 @@
     label="Click Me" type-label="string"
     background_color="grey" type-background_color="color"
     button_color="dark-grey" type-button_color="color"
+    button_color_active="red" type-button_color_active="color"
     label_color="white" type-label_color="color"
     joystick="0" type-joystick="number" min-joystick="0" max-joystick="9"
     button="0" type-button="number" min-button="0" max-button="15"
@@ -25,8 +26,11 @@
         background-color: var(--button-color);
         color: var(--label-color);
     }
+    .simple-button button:active{
+        background-color: var(--button-color-active);
+    }
 </style>
-<div class="simple-button" style="--width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color;">
+<div class="simple-button" style="--width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active;">
     <button virtual-joystick="settings-joystick" emulate-button="settings-button">
         settings-label
     </button>
