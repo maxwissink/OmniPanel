@@ -5,13 +5,15 @@
         "top": "16.6667%",
         "width": "50%",
         "height": "41.6667%",
-        "zIndex": "104",
+        "zIndex": "101",
         "settings": {
             "joystick_color": "#0dc8fc",
             "deadzone": "5",
             "color": "#0dc8fc",
             "travel": "60",
-            "safe_zone": "30"
+            "safe_zone": "30",
+            "joystick": "0",
+            "slider": "0"
         },
         "path": "user/blocks/default/joystick.html",
         "children": []
@@ -47,7 +49,7 @@
             "width": "80%",
             "height": "80%",
             "label": "Click Me",
-            "joystick": "3",
+            "joystick": "0",
             "slider": "0",
             "thumb_color": "#ff8800",
             "background_color": "#ae0bea",
