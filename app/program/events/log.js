@@ -5,7 +5,7 @@ module.exports = function(type, data) {
 
     if (typeof data === 'object' && data !== null) {
         displayData = Object.entries(data)
-            .map(([key, val]) => `${key}: ${val}`)
+            .map(([key, val]) => `${key}: ${Object.keys(val).length > 0 ? `x: ${val.x} y: ${val.y}` : val }`)
             .join(', ');
     }
     bridge.push('log-event', {
