@@ -1,87 +1,88 @@
 <settings 
-    width="80%" type-width="percentage" min-width="10" max-width="100"
-    height="80%" type-height="percentage" min-height="10" max-height="100"
-    label="Click Me" type-label="string"
+    width="80%" type-width="percentage" min-width="10" max-width="100" 
+    height="80%" type-height="percentage" min-height="10" max-height="100" 
+    label="Click Me" type-label="string" 
     thumb_color="green" type-thumb_color="color"
     background_color="blue" type-background_color="color"
     progress_color="red" type-progress_color="color"
-    joystick="0" type-joystick="number" min-joystick="0" max-joystick="9"
+    joystick="0" type-joystick="number" min-joystick="0" max-joystick="9" 
     slider="0" type-slider="number" min-slider="0" max-slider="7"
 ></settings>
 <style>
-    .slider {
+    .v-slider {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         height: 100%;
         width: 100%;
     }
 
-    .slider input {
+    .v-slider input {
         -webkit-appearance: none;
         appearance: none;
-        width: 100%;
-        height: 60%;
+        width: 60%;
+        height: 100%;
+        writing-mode: vertical-lr;
+        direction: rtl;
         background: var(--background-color, #17ada89b);
         border-radius: 4px;
         outline: none;
         overflow: hidden;
-        /* Critical for shadow trick */
         touch-action: none;
     }
 
     /* Chromium Track */
-    .slider input::-webkit-slider-runnable-track {
-        height: 100%;
+    .v-slider input::-webkit-slider-runnable-track {
+        width: 100%;
         background: transparent;
         cursor: pointer;
     }
 
     /* Chromium Thumb */
-    .slider input::-webkit-slider-thumb {
+    .v-slider input::-webkit-slider-thumb {
         -webkit-appearance: none;
-        width: 6vmin;
-        /* Thumb size scales with screen */
-        height: 100%;
+        height: 6vmin;
+        width: 100%;
         background: var(--thumb-color, #56f6f1);
         border: 2px solid #fff;
-        /* The Box Shadow Trick */
-        box-shadow: -100vw 0 0 100vw var(--progress-color, #009cf6);
+        box-shadow: 0 100vh 0 100vh var(--progress-color, #009cf6);
         cursor: pointer;
     }
 
     /* Firefox Support */
-    .slider input::-moz-range-track {
+    .v-slider input::-moz-range-track {
         width: 100%;
         height: 100%;
         background: transparent;
     }
 
-    .slider input::-moz-range-progress {
+    .v-slider input::-moz-range-progress {
         background: var(--progress-color, #009cf6);
-        height: 100%;
+        width: 100%;
     }
 
-    .slider input::-moz-range-thumb {
-        width: 6vmin;
-        height: 100%;
+    .v-slider input::-moz-range-thumb {
+        height: 6vmin;
+        width: 100%;
         background: var(--thumb-color, #56f6f1);
         border: 2px solid #fff;
     }
 
-    .slider p {
+    .v-slider p {
         text-align: center;
         color: white;
         margin: 0;
+        margin-bottom: 5px;
     }
 </style>
-<div class="slider">
-    <p>label</p>
-    <input virtual-joystick="settings-joystick" emulate-slider="settings-slider" type="range" min="0" max="255" value="0" 
-    style="
+<div class="v-slider">
+    <p>settings-label</p>
+    <input virtual-joystick="settings-joystick" emulate-slider="settings-slider" type="range" min="0" max="255"
+        value="0" orient="vertical" style="
         --thumb-color: settings-thumb_color;
         --background-color: settings-background_color;
         --progress-color: settings-progress_color;
-        "
+        ">
     >
 </div>

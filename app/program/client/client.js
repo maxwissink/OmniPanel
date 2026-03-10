@@ -111,7 +111,8 @@ function renderBlockFromTemplate(blockWrapper) {
         if (hitbox) {
             initJoystick(blockWrapper);
         } else {
-            console.error("Joystick initialization failed: .joy-hitbox not found in block", blockWrapper.id);
+            //simply isnt a joystick then
+            //console.error("Joystick initialization failed: .joy-hitbox not found in block", blockWrapper.id);
         }
     });
 }

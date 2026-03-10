@@ -8,9 +8,70 @@
         "zIndex": "104",
         "settings": {
             "joystick_color": "#0dc8fc",
-            "deadzone": "5"
+            "deadzone": "5",
+            "color": "#0dc8fc",
+            "travel": "60",
+            "safe_zone": "30"
         },
         "path": "user/blocks/default/joystick.html",
+        "children": []
+    },
+    {
+        "id": "block_1773144949081_edtazlnvd",
+        "left": "8.33333%",
+        "top": "16.6667%",
+        "width": "16.6667%",
+        "height": "41.6667%",
+        "zIndex": "101",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "label": "Click Me",
+            "joystick": "0",
+            "slider": "0",
+            "thumb_color": "green",
+            "background_color": "blue",
+            "progress_color": "red"
+        },
+        "path": "user/blocks/default/vertical_slider.html",
+        "children": []
+    },
+    {
+        "id": "block_1773144962832_n7j6cmnqs",
+        "left": "25%",
+        "top": "58.3333%",
+        "width": "50%",
+        "height": "16.6667%",
+        "zIndex": "103",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "label": "Click Me",
+            "joystick": "0",
+            "slider": "0",
+            "thumb_color": "#ff8800",
+            "background_color": "#ae0bea",
+            "progress_color": "#5eff24"
+        },
+        "path": "user/blocks/default/slider.html",
+        "children": []
+    },
+    {
+        "id": "block_1773144986310_abrfitsiv",
+        "left": "75%",
+        "top": "16.6667%",
+        "width": "16.6667%",
+        "height": "41.6667%",
+        "zIndex": "110",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "label": "Click Me",
+            "color": "green",
+            "joystick": "0",
+            "button": "0"
+        },
+        "path": "user/blocks/default/simple-button.html",
         "children": []
     }
 ]
