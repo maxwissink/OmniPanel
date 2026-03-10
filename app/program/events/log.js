@@ -5,9 +5,17 @@ module.exports = function(type, data) {
 
     if (typeof data === 'object' && data !== null) {
         displayData = Object.entries(data)
-            .map(([key, val]) => `${key}: ${Object.keys(val).length > 0 ? `x: ${val.x} y: ${val.y}` : val }`)
+            .map(([key, val]) => {
+                const hasChildren = val !== null && typeof val === 'object' && Object.keys(val).length > 0;
+                const childString = hasChildren 
+                    ? Object.entries(val).map(([k, v]) => `${k} ${v}`).join(' ') 
+                    : val;
+
+                return `${key}: ${childString}`;
+            })
             .join(', ');
     }
+
     bridge.push('log-event', {
         timestamp: new Date().toLocaleTimeString(),
         type: type,
