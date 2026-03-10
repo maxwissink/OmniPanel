@@ -25,12 +25,13 @@
         height: var(--height);
         background-color: var(--button-color);
         color: var(--label-color);
+        border-radius: calc(var(--border-radius) * 1px);
     }
     .simple-button button:active{
         background-color: var(--button-color-active);
     }
 </style>
-<div class="simple-button" style="--width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active;">
+<div class="simple-button" style="--width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active; --border-radius: settings-border_radius">
     <button virtual-joystick="settings-joystick" emulate-button="settings-button">
         settings-label
     </button>

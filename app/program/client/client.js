@@ -163,8 +163,8 @@ function initJoystick(blockWrapper) {
         const payload = {
             type: 'simulate-joystick',
             data: {
-                js: blockWrapper.settings.joystick,
-                id: blockWrapper.settings.slider,
+                js: blockWrapper.settings['joystick'],
+                id: blockWrapper.settings['slider'],
                 value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY) }
             }
         };
@@ -182,8 +182,8 @@ function initJoystick(blockWrapper) {
         const payload = {
             type: 'simulate-joystick',
             data: {
-                js: 1,
-                id: 0,
+                js: blockWrapper.settings['joystick'],
+                id: blockWrapper.settings['slider'],
                 value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY) }
             }
         };

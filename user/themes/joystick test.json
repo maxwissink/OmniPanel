@@ -66,7 +66,7 @@
         "top": "33.3333%",
         "width": "16.6667%",
         "height": "41.6667%",
-        "zIndex": "117",
+        "zIndex": "101",
         "settings": {
             "width": "80%",
             "height": "80%",
@@ -74,7 +74,7 @@
             "color": "#f10909",
             "joystick": "0",
             "button": "0",
-            "border_radius": "5",
+            "border_radius": 15,
             "background_color": "#04ff0068",
             "button_color": "#db1a1a92",
             "label_color": "#1f1919ff",
@@ -133,13 +133,13 @@
                         "top": "0%",
                         "width": "60%",
                         "height": "100%",
-                        "zIndex": "120",
+                        "zIndex": "101",
                         "settings": {
-                            "color": "#0dc8fc",
+                            "color": "#FF0000FF",
                             "travel": "60px",
                             "safe_zone": "30px",
-                            "joystick": "0",
-                            "slider": "0"
+                            "joystick": 1,
+                            "slider": 2
                         },
                         "path": "user/blocks/default/joystick.html",
                         "children": []
