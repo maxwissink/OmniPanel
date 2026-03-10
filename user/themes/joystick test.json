@@ -64,7 +64,7 @@
         "top": "33.3333%",
         "width": "16.6667%",
         "height": "41.6667%",
-        "zIndex": "114",
+        "zIndex": "101",
         "settings": {
             "width": "80%",
             "height": "80%",
@@ -73,11 +73,11 @@
             "joystick": "0",
             "button": "0",
             "border_radius": "5",
-            "background_color": "#04ff00",
-            "button_color": "#db1a1a",
-            "label_color": "#000000"
+            "background_color": "#04ff0068",
+            "button_color": "#db1a1a92",
+            "label_color": "#000000ff"
         },
-        "path": "user/blocks/default/simple-button.html",
+        "path": "user/blocks/default/simple_button.html",
         "children": []
     },
     {
@@ -99,7 +99,7 @@
             "button_color": "#033dc4",
             "label_color": "white"
         },
-        "path": "user/blocks/default/simple-button.html",
+        "path": "user/blocks/default/simple_button.html",
         "children": []
     },
     {
@@ -108,17 +108,17 @@
         "top": "0%",
         "width": "50%",
         "height": "33.3333%",
-        "zIndex": "122",
+        "zIndex": "103",
         "settings": {
             "pages": "Page 1, Page 2",
             "position": "top",
             "menu_width": "15%",
-            "background_color": "#222",
+            "background_color": "#972b2bc8",
             "gridx": "5",
             "gridy": "5",
-            "background_image": "none"
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
         },
-        "path": "user/blocks/base/paged-container.html",
+        "path": "user/blocks/base/paged_container.html",
         "children": [
             {
                 "pageIndex": 1,
@@ -146,7 +146,7 @@
                         "top": "0%",
                         "width": "40%",
                         "height": "100%",
-                        "zIndex": "121",
+                        "zIndex": "102",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -183,7 +183,7 @@
                             "joystick": "0",
                             "button": "0"
                         },
-                        "path": "user/blocks/default/simple-button.html",
+                        "path": "user/blocks/default/simple_button.html",
                         "children": []
                     }
                 ]

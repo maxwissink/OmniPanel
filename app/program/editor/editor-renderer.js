@@ -573,7 +573,6 @@ function openSettingsModal(blockWrapper) {
 
     Object.keys(blockWrapper.settings).forEach(async key => {
         const value = blockWrapper.settings[key];
-
         const meta = (blockWrapper.settingsMeta && blockWrapper.settingsMeta[key])
             ? blockWrapper.settingsMeta[key]
             : { type: 'string' };
@@ -582,70 +581,93 @@ function openSettingsModal(blockWrapper) {
         fieldRow.className = 'setting-row';
 
         const label = document.createElement('label');
-        label.innerText = (key.charAt(0).toUpperCase() + key.slice(1)).replace('_', ' ');
+        label.innerText = (key.charAt(0).toUpperCase() + key.slice(1)).replace(/_/g, ' ');
+        fieldRow.appendChild(label);
 
-        const input = document.createElement('input');
+        // --- ASSET TYPE ---
+        if (meta.type === 'asset') {
+            const select = document.createElement('select');
+            const assets = await getAvailableAssets();
+            select.innerHTML = `<option value="none">None</option>`;
 
-        if (meta.type === 'color') {
-            input.type = 'color';
-            input.classList.add('color-input');
-        } else if (meta.type === 'number' || meta.type === 'percentage') {
-            input.type = 'number';
-            if (meta.min !== undefined) input.min = meta.min;
-            if (meta.max !== undefined) input.max = meta.max;
-        } else
-            if (meta.type === 'asset') {
-                const select = document.createElement('select');
-                const assets = await getAvailableAssets();
+            assets.forEach(asset => {
+                const opt = document.createElement('option');
+                opt.value = asset;
+                opt.innerText = asset;
+                if (blockWrapper.settings[key] === asset) opt.selected = true;
+                select.appendChild(opt);
+            });
 
-                select.innerHTML = `<option value="none">None</option>`;
+            select.onchange = () => {
+                blockWrapper.settings[key] = select.value;
+                renderBlockFromTemplate(blockWrapper);
+            };
+            fieldRow.appendChild(select);
 
-                assets.forEach(asset => {
-                    const opt = document.createElement('option');
-                    opt.value = asset;
-                    opt.innerText = asset;
-                    if (blockWrapper.settings[key] === asset) opt.selected = true;
-                    select.appendChild(opt);
-                });
+            // --- COLOR TYPE (with Alpha) ---
+        } else if (meta.type === 'color') {
+            const colorContainer = document.createElement('div');
+            colorContainer.className = 'color-field-container';
 
-                select.onchange = () => {
-                    blockWrapper.settings[key] = select.value;
-                    renderBlockFromTemplate(blockWrapper);
-                };
-                fieldRow.append(label, select);
-            } else {
-                input.type = 'text';
-            }
+            const colorInput = document.createElement('input');
+            colorInput.type = 'color';
 
-        if (meta.type === 'percentage') {
-            input.value = value.replace('%', '');
+            const alphaInput = document.createElement('input');
+            alphaInput.type = 'range';
+            alphaInput.min = 0;
+            alphaInput.max = 255;
+
+            let hex = value.substring(0, 7);
+            let alpha = value.length === 9 ? parseInt(value.substring(7, 9), 16) : 255;
+
+            colorInput.value = hex;
+            alphaInput.value = alpha;
+
+            const updateColor = () => {
+                const aHex = parseInt(alphaInput.value).toString(16).padStart(2, '0');
+                const fullHex = colorInput.value + aHex;
+                blockWrapper.settings[key] = fullHex;
+                renderBlockFromTemplate(blockWrapper);
+            };
+
+            colorInput.oninput = updateColor;
+            alphaInput.oninput = updateColor;
+
+            colorContainer.append(colorInput, alphaInput);
+            fieldRow.appendChild(colorContainer);
+
+            // --- NUMBER / PERCENTAGE / TEXT TYPES ---
         } else {
-            input.value = value;
-        }
-
-        input.oninput = () => {
-            let newValue = input.value;
+            const input = document.createElement('input');
 
             if (meta.type === 'number' || meta.type === 'percentage') {
-                let num = parseInt(newValue);
-                if (!isNaN(num)) {
-                    if (meta.min !== undefined && num < meta.min) num = meta.min;
-                    if (meta.max !== undefined && num > meta.max) num = meta.max;
-                    newValue = num;
+                input.type = 'number';
+                if (meta.min !== undefined) input.min = meta.min;
+                if (meta.max !== undefined) input.max = meta.max;
+                input.value = meta.type === 'percentage' ? value.replace('%', '') : value;
+            } else {
+                input.type = 'text';
+                input.value = value;
+            }
+
+            input.oninput = () => {
+                let newValue = input.value;
+                if (meta.type === 'number' || meta.type === 'percentage') {
+                    let num = parseInt(newValue);
+                    if (!isNaN(num)) {
+                        if (meta.min !== undefined && num < meta.min) num = meta.min;
+                        if (meta.max !== undefined && num > meta.max) num = meta.max;
+                        newValue = num;
+                    }
                 }
-            }
+                if (meta.type === 'percentage') newValue += '%';
 
-            if (meta.type === 'percentage') {
-                newValue += '%';
-            }
+                blockWrapper.settings[key] = newValue;
+                renderBlockFromTemplate(blockWrapper);
+            };
+            fieldRow.appendChild(input);
+        }
 
-            blockWrapper.settings[key] = newValue;
-
-            renderBlockFromTemplate(blockWrapper);
-        };
-
-        fieldRow.appendChild(label);
-        fieldRow.appendChild(input);
         fieldsContainer.appendChild(fieldRow);
     });
 

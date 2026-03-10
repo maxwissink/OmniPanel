@@ -462,3 +462,20 @@ body {
 .tree-label:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+
+
+.color-field-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+}
+.color-field-container input[type="color"] {
+    width: 50px;
+}
+
+.color-field-container input[type="range"] {
+    flex: 1;
+    width: 100%;
+    padding: 0 !important;
+}
