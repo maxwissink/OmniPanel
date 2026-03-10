@@ -100,5 +100,9 @@ module.exports = function (type, payload) {
     } else if (type === 'simulate-slider') {
         const { id, value } = payload;
         pyProcess.stdin.write(`${jsIndex},ax,${id},${value}\n`);
+    } else if (type === 'simulate-joystick') {
+        const { id, value } = payload;
+        pyProcess.stdin.write(`${jsIndex},ax,${id},${value.x}\n`);
+        pyProcess.stdin.write(`${jsIndex},ax,${(parseInt(id) + 1).toString()},${value.y}\n`);
     }
 };

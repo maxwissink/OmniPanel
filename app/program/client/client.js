@@ -159,25 +159,16 @@ function initJoystick(blockWrapper) {
         blockWrapper.dataset.joyX = Math.round(((dx / maxTravel + 1) / 2) * 255);
         blockWrapper.dataset.joyY = Math.round((((dy / maxTravel) + 1) / 2) * 255);
 
-        const payload1 = {
-            type: 'simulate-slider',
+        const payload = {
+            type: 'simulate-joystick',
             data: {
                 js: 1,
                 id: 0,
-                value: parseInt(blockWrapper.dataset.joyX)
+                value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY)}
             }
         };
-        socket.send(JSON.stringify(payload1));
+        socket.send(JSON.stringify(payload));
 
-        const payload2 = {
-            type: 'simulate-slider',
-            data: {
-                js: 1,
-                id: 1,
-                value: parseInt(blockWrapper.dataset.joyY)
-            }
-        };
-        socket.send(JSON.stringify(payload2));
         console.log(`${blockWrapper.dataset.joyX} - ${blockWrapper.dataset.joyY}`);
     };
 
@@ -189,26 +180,15 @@ function initJoystick(blockWrapper) {
         blockWrapper.dataset.joyY = 127;
         thumb.style.transform = `translate(-50%, -50%)`;
 
-        const payload1 = {
-            type: 'simulate-slider',
+        const payload = {
+            type: 'simulate-joystick',
             data: {
                 js: 1,
                 id: 0,
-                value: parseInt(blockWrapper.dataset.joyX)
+                value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY)}
             }
         };
-        socket.send(JSON.stringify(payload1));
-
-        const payload2 = {
-            type: 'simulate-slider',
-            data: {
-                js: 1,
-                id: 1,
-                value: parseInt(blockWrapper.dataset.joyY)
-            }
-        };
-        socket.send(JSON.stringify(payload2));
-        console.log(`${blockWrapper.dataset.joyX} - ${blockWrapper.dataset.joyY}`);
+        socket.send(JSON.stringify(payload));
     };
 
     window.addEventListener('mousemove', onMouseMove);
