@@ -245,6 +245,12 @@ body {
     border-radius: 8px;
 }
 
+#modal-fields{
+    overflow-y: scroll;
+    max-height: 60vh;
+    padding-right: 40px;
+}
+
 .modal-header {
     margin-bottom: 20px;
     font-weight: bold;

@@ -89,7 +89,7 @@ function renderBlockFromTemplate(blockWrapper) {
     const blockId = blockWrapper.id;
     Object.keys(blockWrapper.settings).forEach(key => {
         const value = blockWrapper.settings[key];
-        const placeholder = new RegExp(`settings-${key}`, 'g');
+        const placeholder = new RegExp(`settings-${key}(?![a-zA-Z0-9_])`, 'g');
         finalHtml = finalHtml.replace(placeholder, value);
     });
 
@@ -165,7 +165,7 @@ function initJoystick(blockWrapper) {
             data: {
                 js: blockWrapper.settings.joystick,
                 id: blockWrapper.settings.slider,
-                value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY)}
+                value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY) }
             }
         };
         socket.send(JSON.stringify(payload));
@@ -186,7 +186,7 @@ function initJoystick(blockWrapper) {
             data: {
                 js: 1,
                 id: 0,
-                value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY)}
+                value: { x: parseInt(blockWrapper.dataset.joyX), y: parseInt(blockWrapper.dataset.joyY) }
             }
         };
         socket.send(JSON.stringify(payload));

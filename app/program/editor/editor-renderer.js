@@ -472,7 +472,7 @@ function renderBlockFromTemplate(blockWrapper) {
 
     Object.keys(blockWrapper.settings).forEach(key => {
         const value = blockWrapper.settings[key];
-        const placeholder = new RegExp(`settings-${key}`, 'g');
+        const placeholder = new RegExp(`settings-${key}(?![a-zA-Z0-9_])`, 'g');
         finalHtml = finalHtml.replace(placeholder, value);
     });
 
