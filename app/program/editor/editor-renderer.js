@@ -612,8 +612,12 @@ function openSettingsModal(blockWrapper) {
             const topRow = document.createElement('div');
             const colorInput = document.createElement('input');
             colorInput.type = 'color';
+
             const alphaInput = document.createElement('input');
             alphaInput.type = 'range';
+            alphaInput.min = 0;
+            alphaInput.max = 255;
+            
             const hexInput = document.createElement('input');
             hexInput.type = 'text';
             hexInput.placeholder = '#RRGGBBAA';
