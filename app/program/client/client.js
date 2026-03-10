@@ -169,8 +169,6 @@ function initJoystick(blockWrapper) {
             }
         };
         socket.send(JSON.stringify(payload));
-
-        console.log(`${blockWrapper.dataset.joyX} - ${blockWrapper.dataset.joyY}`);
     };
 
     const onMouseUp = () => {
