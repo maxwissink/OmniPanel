@@ -24,7 +24,7 @@
         "top": "33.3333%",
         "width": "16.6667%",
         "height": "41.6667%",
-        "zIndex": "108",
+        "zIndex": "101",
         "settings": {
             "width": "80%",
             "height": "80%",
@@ -33,7 +33,8 @@
             "slider": 3,
             "thumb_color": "green",
             "background_color": "blue",
-            "progress_color": "red"
+            "progress_color": "red",
+            "label_color": "#00FF11FF"
         },
         "path": "user/blocks/default/vertical_slider.html",
         "children": []
@@ -44,7 +45,7 @@
         "top": "75%",
         "width": "50%",
         "height": "16.6667%",
-        "zIndex": "102",
+        "zIndex": "101",
         "settings": {
             "width": "80%",
             "height": "80%",
@@ -53,7 +54,8 @@
             "slider": 2,
             "thumb_color": "#ff8800",
             "background_color": "#ae0bea",
-            "progress_color": "#5eff24"
+            "progress_color": "#5eff24",
+            "label_color": "#F80D0DFF"
         },
         "path": "user/blocks/default/slider.html",
         "children": []
@@ -157,7 +159,8 @@
                             "background_color": "#FF73006B",
                             "progress_color": "#FFDD00FF",
                             "joystick": "0",
-                            "slider": "0"
+                            "slider": "0",
+                            "label_color": "black"
                         },
                         "path": "user/blocks/default/vertical_slider.html",
                         "children": []

@@ -5,6 +5,7 @@
     thumb_color="green" type-thumb_color="color"
     background_color="blue" type-background_color="color"
     progress_color="red" type-progress_color="color"
+    label_color="black" type-label_color="color"
     joystick="0" type-joystick="number" min-joystick="0" max-joystick="9" 
     slider="0" type-slider="number" min-slider="0" max-slider="7"
 ></settings>
@@ -72,7 +73,7 @@
 
     .v-slider p {
         text-align: center;
-        color: white;
+        color: var(--label-color);
         margin: 0;
         margin-bottom: 5px;
     }
@@ -81,6 +82,7 @@
         --thumb-color: settings-thumb_color;
         --background-color: settings-background_color;
         --progress-color: settings-progress_color;
+        --label-color: settings-label_color;
         "
     >
     <p>settings-label</p>
