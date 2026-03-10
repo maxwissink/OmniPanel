@@ -10,18 +10,18 @@
     .simple-button {
         width: 100%;
         height: 100%;
-        background-color: settings-color;
+        background-color: var(--background-color, green);
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .simple-button button {
-        width: settings-width;
-        height: settings-height;
+        width: var(--width);
+        height: var(--height);
     }
 </style>
-<div class="simple-button">
+<div class="simple-button" style="--width: settings-width; --height: settings-height; --background-color: settings-color;">
     <button virtual-joystick="settings-joystick" emulate-button="settings-button">
         settings-label
     </button>
