@@ -610,6 +610,8 @@ function openSettingsModal(blockWrapper) {
             colorContainer.className = 'color-field-container';
 
             const topRow = document.createElement('div');
+            topRow.className = 'color-row';
+            
             const colorInput = document.createElement('input');
             colorInput.type = 'color';
 
@@ -617,7 +619,7 @@ function openSettingsModal(blockWrapper) {
             alphaInput.type = 'range';
             alphaInput.min = 0;
             alphaInput.max = 255;
-            
+
             const hexInput = document.createElement('input');
             hexInput.type = 'text';
             hexInput.placeholder = '#RRGGBBAA';

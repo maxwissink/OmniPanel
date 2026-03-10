@@ -153,9 +153,9 @@
                             "width": "80%",
                             "height": "80%",
                             "label": "Click Me",
-                            "thumb_color": "green",
-                            "background_color": "blue",
-                            "progress_color": "red",
+                            "thumb_color": "#D56A07FF",
+                            "background_color": "#FF73006B",
+                            "progress_color": "#FFDD00FF",
                             "joystick": "0",
                             "slider": "0"
                         },
