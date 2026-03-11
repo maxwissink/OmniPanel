@@ -10,7 +10,8 @@ const WORKSPACE_GRID_Y = 12;
 
 const DEFAULT_NESTED_GRID = 10;
 
-let blockToDelete = null; // Store which block is on death row
+let blockToDelete = null;
+let ghostBlock = null;
 
 const generateId = () => `block_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
@@ -109,33 +110,47 @@ function BuildEditorArea() {
     mainContainer.addEventListener('dragover', (event) => {
         event.preventDefault();
 
-        document.querySelectorAll('.nested-dropzone').forEach(dz => {
-            dz.style.outline = 'none';
-            dz.style.backgroundColor = '';
-        });
-
         let targetDropZone = event.target.closest('.nested-dropzone') || mainContainer;
         const draggedBlock = window.draggedElement;
 
         if (draggedBlock) {
-            if (draggedBlock.contains(targetDropZone)) {
-                targetDropZone = draggedBlock.parentElement.closest('.nested-dropzone') || mainContainer;
+            if (!ghostBlock) {
+                ghostBlock = document.createElement('div');
+                ghostBlock.className = 'block-placeholder';
+                targetDropZone.appendChild(ghostBlock);
             }
 
-            if (draggedBlock.contains(targetDropZone)) {
-                event.dataTransfer.dropEffect = 'none';
-                return;
+            if (ghostBlock.parentElement !== targetDropZone) {
+                targetDropZone.appendChild(ghostBlock);
             }
-            event.dataTransfer.dropEffect = 'move';
-        }
-        else {
-            event.dataTransfer.dropEffect = 'copy';
-        }
 
-        if (targetDropZone && targetDropZone !== mainContainer) {
-            targetDropZone.style.outline = '2px dashed #00ff00';
-            targetDropZone.style.outlineOffset = '-2px';
-            targetDropZone.style.backgroundColor = 'rgba(0, 255, 0, 0.05)';
+            const rect = targetDropZone.getBoundingClientRect();
+
+            const gX = parseInt(targetDropZone.dataset.gridx) || WORKSPACE_GRID_X;
+            const gY = parseInt(targetDropZone.dataset.gridy) || WORKSPACE_GRID_Y;
+            const sX = 100 / gX;
+            const sY = 100 / gY;
+
+            let wPct = (draggedBlock.offsetWidth / rect.width) * 100;
+            let hPct = (draggedBlock.offsetHeight / rect.height) * 100;
+
+            let snappedW = Math.max(sX, Math.round(wPct / sX) * sX);
+            let snappedH = Math.max(sY, Math.round(hPct / sY) * sY);
+
+            const offset = JSON.parse(event.dataTransfer.getData('offset') || '{"x":0,"y":0}');
+            let lPct = ((event.clientX - rect.left - offset.x) / rect.width) * 100;
+            let tPct = ((event.clientY - rect.top - offset.y) / rect.height) * 100;
+
+            let snappedL = Math.floor(lPct / sX) * sX;
+            let snappedT = Math.floor(tPct / sY) * sY;
+
+            snappedL = Math.max(0, Math.min(snappedL, 100 - snappedW));
+            snappedT = Math.max(0, Math.min(snappedT, 100 - snappedH));
+
+            ghostBlock.style.width = `${snappedW}%`;
+            ghostBlock.style.height = `${snappedH}%`;
+            ghostBlock.style.left = `${snappedL}%`;
+            ghostBlock.style.top = `${snappedT}%`;
         }
     });
 
@@ -379,6 +394,11 @@ function addWorkspaceDragListeners(blockWrapper, moveHandle) {
         document.querySelector('.openmenu').style.display = 'block';
         blockWrapper.style.pointerEvents = 'all';
         window.draggedElement = null;
+
+        if (ghostBlock) {
+            ghostBlock.remove();
+            ghostBlock = null;
+        }
     });
 }
 
@@ -700,7 +720,12 @@ function openSettingsModal(blockWrapper) {
                 if (meta.type === 'percentage') newValue += '%';
 
                 blockWrapper.settings[key] = newValue;
-                renderBlockFromTemplate(blockWrapper);
+                if (key === 'gridx' || key === 'gridy') {
+                    renderBlockFromTemplate(blockWrapper);
+                    resnapChildrenToGrid(blockWrapper);
+                } else {
+                    renderBlockFromTemplate(blockWrapper);
+                }
             };
             fieldRow.appendChild(input);
         }
@@ -981,4 +1006,43 @@ async function applyBackground(blockWrapper, contentArea) {
     } else {
         target.style.backgroundImage = 'none';
     }
+}
+
+function resnapChildrenToGrid(blockWrapper) {
+    const gX = parseInt(blockWrapper.settings.gridx) || 12;
+    const gY = parseInt(blockWrapper.settings.gridy) || 12;
+
+    const stepX = 100 / gX;
+    const stepY = 100 / gY;
+
+    const pages = blockWrapper.querySelectorAll('.page-wrapper');
+
+    pages.forEach(page => {
+        const children = page.querySelectorAll(':scope > .loaded-block');
+
+        children.forEach(child => {
+            const currL = parseFloat(child.style.left);
+            const currT = parseFloat(child.style.top);
+            const currW = parseFloat(child.style.width);
+            const currH = parseFloat(child.style.height);
+
+            let newL = Math.round(currL / stepX) * stepX;
+            let newT = Math.round(currT / stepY) * stepY;
+            let newW = Math.round(currW / stepX) * stepX;
+            let newH = Math.round(currH / stepY) * stepY;
+
+            if (newW < stepX) newW = stepX;
+            if (newH < stepY) newH = stepY;
+
+            if (newL + newW > 100) newL = 100 - newW;
+            if (newT + newH > 100) newT = 100 - newH;
+
+            Object.assign(child.style, {
+                left: `${newL}%`,
+                top: `${newT}%`,
+                width: `${newW}%`,
+                height: `${newH}%`
+            });
+        });
+    });
 }

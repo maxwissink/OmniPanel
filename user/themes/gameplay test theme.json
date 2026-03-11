@@ -32,12 +32,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Power",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -54,12 +55,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Engines",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -76,12 +78,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Shields",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -98,12 +101,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Weapons",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -120,12 +124,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Reset pips",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -142,12 +147,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Increase engines",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -164,12 +170,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Increase shields",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -186,12 +193,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Increase Weapons",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -213,12 +221,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Open doors",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -235,12 +244,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Close doors",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -257,12 +267,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Unlock ports",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -279,12 +290,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Lock ports",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -301,12 +313,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Unlock doors",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -323,12 +336,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Lock doors",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -345,12 +359,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Lights",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -367,12 +382,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "LAMP",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -387,7 +403,7 @@
         "top": "33.3333%",
         "width": "100%",
         "height": "66.6667%",
-        "zIndex": "336",
+        "zIndex": "104",
         "settings": {
             "pages": "Combat, Mining, Salvage",
             "position": "bottom",
@@ -414,12 +430,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Repair",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -430,12 +447,12 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "100%",
-                        "zIndex": "264",
+                        "zIndex": "101",
                         "settings": {
                             "pages": "Modes, Setup",
                             "position": "right",
                             "menu_width": "15%",
-                            "background_color": "#222",
+                            "background_color": "#000000B0",
                             "gridx": 6,
                             "gridy": 6,
                             "background_image": "none"
@@ -457,12 +474,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "Missiles +",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -479,12 +497,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "Missiles -",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -501,12 +520,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "Release target",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -528,12 +548,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "ESP",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -550,12 +571,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "Flares +",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -572,12 +594,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "Flares -",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -594,12 +617,13 @@
                                             "height": "80%",
                                             "border_radius": "5",
                                             "label": "Gimbal",
-                                            "background_color": "grey",
-                                            "button_color": "dark-grey",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "blue",
                                             "button_color_active": "red",
                                             "label_color": "white",
                                             "joystick": "0",
-                                            "button": "0"
+                                            "button": "0",
+                                            "border_color": "#aaaaaa00"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -620,12 +644,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "MFD Toggle",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -668,12 +693,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Mining mode",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -690,12 +716,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Laser mode",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -712,12 +739,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Collection mode",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -734,12 +762,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Module 1",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -756,12 +785,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Module 2",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -778,12 +808,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Module 3",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -800,12 +831,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Module 4",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -822,12 +854,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "EJECT CARGO",
-                            "background_color": "grey",
+                            "background_color": "#ffffff00",
                             "button_color": "#FF0000FF",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -839,22 +872,23 @@
                 "blocks": [
                     {
                         "id": "block_1773230810254_50w4dq0it",
-                        "left": "41.6667%",
+                        "left": "50%",
                         "top": "0%",
                         "width": "16.6667%",
                         "height": "37.5%",
-                        "zIndex": "316",
+                        "zIndex": "106",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Gimbal scraping",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -871,12 +905,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Salvage mode",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -893,12 +928,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Scraping tool",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -915,12 +951,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Fracture tool",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -937,12 +974,13 @@
                             "height": "80%",
                             "border_radius": "5",
                             "label": "Disintegrate tool",
-                            "background_color": "grey",
-                            "button_color": "dark-grey",
+                            "background_color": "#ffffff00",
+                            "button_color": "blue",
                             "button_color_active": "red",
                             "label_color": "white",
                             "joystick": "0",
-                            "button": "0"
+                            "button": "0",
+                            "border_color": "#aaaaaa00"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -951,9 +989,9 @@
                         "id": "block_1773230906710_rsl9khppj",
                         "left": "16.6667%",
                         "top": "0%",
-                        "width": "25%",
-                        "height": "62.5%",
-                        "zIndex": "330",
+                        "width": "33.3333%",
+                        "height": "75%",
+                        "zIndex": "109",
                         "settings": {
                             "color": "#0dc8fc",
                             "travel": "60px",
@@ -967,10 +1005,10 @@
                     {
                         "id": "block_1773230937740_u4450suef",
                         "left": "16.6667%",
-                        "top": "62.5%",
-                        "width": "41.6667%",
-                        "height": "37.5%",
-                        "zIndex": "335",
+                        "top": "75%",
+                        "width": "50%",
+                        "height": "25%",
+                        "zIndex": "110",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
