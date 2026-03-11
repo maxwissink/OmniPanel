@@ -1041,7 +1041,7 @@ function updateLayersTree() {
     const toolsMenu = document.querySelector('.tools');
     if (!toolsMenu) return;
 
-    toolsMenu.innerHTML = '';
+    toolsMenu.innerHTML = '<h3 class="menu-title">Workspace</h3>';
 
     const rootList = document.createElement('ul');
     rootList.className = 'block-list';

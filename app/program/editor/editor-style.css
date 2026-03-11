@@ -24,7 +24,7 @@ body {
     color: #e6e6e6;
 }
 
-#tools-menu .tools{
+#tools-menu .tools > ul{
     overflow-y: scroll;
     overflow-x: hidden;
     height: 60vh;
