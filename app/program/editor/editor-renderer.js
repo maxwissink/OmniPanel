@@ -1040,9 +1040,9 @@ function resnapChildrenToGrid(blockWrapper) {
 function updateLayersTree() {
     const toolsMenu = document.querySelector('.tools');
     if (!toolsMenu) return;
-    
-    toolsMenu.innerHTML = ''; 
-    
+
+    toolsMenu.innerHTML = '';
+
     const rootList = document.createElement('ul');
     rootList.className = 'block-list';
     const mainContainer = document.getElementById('maincontainer');
@@ -1065,13 +1065,17 @@ function updateLayersTree() {
             const li = document.createElement('li');
             const label = document.createElement('span');
             label.className = 'tree-label';
-            
-            const blockName = block.dataset.type || block.id || `Block ${index + 1}`;
+
+            const settings = block.settings || {};
+            const settingLabel = settings['label'];
+            // fallbacks
+            const blockName = settingLabel || block.dataset.type || block.id || "Unnamed Block";
+
             label.textContent = blockName;
 
             label.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
+
                 document.querySelectorAll('.loaded-block.selected').forEach(b => {
                     b.classList.remove('selected');
                 });
@@ -1092,7 +1096,7 @@ function updateLayersTree() {
             if (subChildren.length > 0) {
                 li.className = 'block-folder collapsed';
                 li.appendChild(label);
-                
+
                 const subUl = document.createElement('ul');
                 subUl.className = 'block-list';
                 buildTree(block, subUl);
