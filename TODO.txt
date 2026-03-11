@@ -14,5 +14,5 @@ TODO:
  - blocks: overview of what joystick+button does what in game, example: js1,btn3="toggle gear"
 
  - editor overhaul = list of blocks on the right, with option to duplicate there, and then selected it brings the block to the front so you can select it
- - changing grid on paged block should resize child blocks
- - dragging should display the drop location while dragging, just like resize.
+ * changing grid on paged block should resize child blocks
+ * dragging should display the drop location while dragging, just like resize.
