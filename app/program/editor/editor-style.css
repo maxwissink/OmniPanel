@@ -12,7 +12,8 @@ body {
     display: flex;
 }
 
-#menu, #tools-menu {
+#menu,
+#tools-menu {
     background-color: #121212;
     position: relative;
     /* display: flex; */
@@ -20,6 +21,8 @@ body {
     width: 15rem;
     padding: 0;
     margin: 0;
+    color: #e6e6e6;
+
 }
 
 .menucontainer>* {
@@ -42,11 +45,18 @@ body {
     display: none !important;
 }
 
-#menu .menu-title, #tools-menu .menu-title {
+#menu .menu-title,
+#tools-menu .menu-title {
     text-align: center;
     color: #e6e6e6;
 }
 
+.tree-label.active-layer {
+    background: rgba(13, 200, 252, 0.2);
+    color: #0dc8fc;
+    border-left: 3px solid #0dc8fc;
+    border-radius: 0 3px 3px 0;
+}
 
 .blockscontainer ul {
     margin-left: 10px;
@@ -102,12 +112,12 @@ body {
     aspect-ratio: 16 / 9;
     max-height: 100vh;
     max-width: 100%;
-    
+
     margin: auto;
     align-self: center;
-    
 
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
 #maincontainer::before {

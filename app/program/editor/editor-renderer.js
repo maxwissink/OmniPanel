@@ -366,6 +366,7 @@ function BuildEditorArea() {
                 }
             }
         }
+        updateLayersTree();
     });
 }
 
@@ -394,6 +395,8 @@ function addWorkspaceDragListeners(blockWrapper, moveHandle) {
             ghostBlock.remove();
             ghostBlock = null;
         }
+
+        updateLayersTree();
     });
 }
 
@@ -808,6 +811,7 @@ async function loadWorkspace(firstTime = false) {
     for (const blockData of data) {
         await createBlockRecursive(blockData, mainContainer);
     }
+    updateLayersTree();
 }
 
 async function createBlockRecursive(blockData, parentElement) {
@@ -955,7 +959,10 @@ function initModalListeners() {
             blockToDelete.style.transform = "scale(0.95)";
 
             const target = blockToDelete;
-            setTimeout(() => target.remove(), 150);
+            setTimeout(() => {
+                target.remove(), 150;
+                updateLayersTree();
+            });
         }
         modal.style.display = 'none';
         blockToDelete = null;
@@ -1028,4 +1035,77 @@ function resnapChildrenToGrid(blockWrapper) {
             });
         });
     });
+}
+
+function updateLayersTree() {
+    const toolsMenu = document.querySelector('.tools');
+    if (!toolsMenu) return;
+    
+    toolsMenu.innerHTML = ''; 
+    
+    const rootList = document.createElement('ul');
+    rootList.className = 'block-list';
+    const mainContainer = document.getElementById('maincontainer');
+
+    function getDirectBlockChildren(parentElement) {
+        const allBlocks = parentElement.querySelectorAll('.loaded-block');
+        return Array.from(allBlocks).filter(block => {
+            let parentBlock = block.parentElement.closest('.loaded-block');
+            if (parentElement.id === 'maincontainer') {
+                return !parentBlock;
+            }
+            return parentBlock === parentElement;
+        });
+    }
+
+    function buildTree(parentDOMNode, parentUL) {
+        const children = getDirectBlockChildren(parentDOMNode);
+
+        children.forEach((block, index) => {
+            const li = document.createElement('li');
+            const label = document.createElement('span');
+            label.className = 'tree-label';
+            
+            const blockName = block.dataset.type || block.id || `Block ${index + 1}`;
+            label.textContent = blockName;
+
+            label.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                document.querySelectorAll('.loaded-block.selected').forEach(b => {
+                    b.classList.remove('selected');
+                });
+                document.querySelectorAll('.tree-label.active-layer').forEach(l => {
+                    l.classList.remove('active-layer');
+                });
+
+                block.classList.add('selected');
+                label.classList.add('active-layer');
+
+                if (li.classList.contains('block-folder')) {
+                    li.classList.toggle('collapsed');
+                }
+            });
+
+            const subChildren = getDirectBlockChildren(block);
+
+            if (subChildren.length > 0) {
+                li.className = 'block-folder collapsed';
+                li.appendChild(label);
+                
+                const subUl = document.createElement('ul');
+                subUl.className = 'block-list';
+                buildTree(block, subUl);
+                li.appendChild(subUl);
+            } else {
+                li.className = 'block-file';
+                li.appendChild(label);
+            }
+
+            parentUL.appendChild(li);
+        });
+    }
+
+    buildTree(mainContainer, rootList);
+    toolsMenu.appendChild(rootList);
 }
