@@ -16,13 +16,19 @@ const generateId = () => `block_${Date.now()}_${Math.random().toString(36).subst
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("Renderer loaded")
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const isNewTheme = urlParams.get('isNew') === 'true';
+
     getAvailableAssets();
     //GetBlocks();
     BuildEditorArea();
     initWorkspaceGrid();
     initModalListeners();
 
-    loadWorkspace(true)
+    if (!isNewTheme) {
+        loadWorkspace(true)
+    }
 });
 
 async function GetBlocks() {
@@ -611,7 +617,7 @@ function openSettingsModal(blockWrapper) {
 
             const topRow = document.createElement('div');
             topRow.className = 'color-row';
-            
+
             const colorInput = document.createElement('input');
             colorInput.type = 'color';
 

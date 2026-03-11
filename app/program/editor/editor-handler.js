@@ -6,7 +6,7 @@ const Block = require('../models/block.js');
 
 
 module.exports = function (config) {
-    ipcMain.on('open-theme-editor', (event) => {
+    ipcMain.on('open-theme-editor', (event, newTheme) => {
         // Check if the window is already open to avoid duplicates
         const existingWindow = BrowserWindow.getAllWindows().find(w => w.getTitle() === 'Theme Editor');
         if (existingWindow) {
@@ -26,7 +26,7 @@ module.exports = function (config) {
             }
         });
 
-        themeWindow.loadFile(path.join(__dirname, 'editor.html'));
+        themeWindow.loadFile(path.join(__dirname, 'editor.html'), { query: { isNew: newTheme } });
 
         themeWindow.setMenuBarVisibility(false);
     });
