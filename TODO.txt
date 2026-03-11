@@ -10,7 +10,9 @@ TODO:
  - options to call other api's? (if it can be done without enabling code injection into themes)
  - make a framework so its easier for people to make a theme
  - syncing states of sliders with other clients (in case someone wants to use multiple clients)
- - blocks: block with pages, nested blocks
+ * blocks: block with pages, nested blocks
  - blocks: overview of what joystick+button does what in game, example: js1,btn3="toggle gear"
 
- - editor overhaul = list of blocks on the left, with option to duplicate there, and then selected it brings the block to the front so you can select it
+ - editor overhaul = list of blocks on the right, with option to duplicate there, and then selected it brings the block to the front so you can select it
+ - changing grid on paged block should resize child blocks
+ - dragging should display the drop location while dragging, just like resize.

@@ -1,5 +1,5 @@
 {
-  "theme": "joystick test",
+  "theme": "gameplay test theme",
   "port": 3000,
-  "numJoysticks": 2
+  "numJoysticks": 1
 }

@@ -1,0 +1,992 @@
+[
+    {
+        "id": "block_1773228537156_rvoryydlm",
+        "left": "50%",
+        "top": "0%",
+        "width": "50%",
+        "height": "33.3333%",
+        "zIndex": "309",
+        "settings": {
+            "pages": "Power, utility",
+            "position": "top",
+            "menu_width": "15%",
+            "background_color": "#222",
+            "gridx": 12,
+            "gridy": 8,
+            "background_image": "none"
+        },
+        "path": "user/blocks/base/paged_container.html",
+        "children": [
+            {
+                "pageIndex": 1,
+                "blocks": [
+                    {
+                        "id": "block_1773228720226_qw4u85u1y",
+                        "left": "0%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "114",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Power",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228741685_46vbeqq7z",
+                        "left": "25%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "115",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Engines",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228763052_83tiol10w",
+                        "left": "50%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "116",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Shields",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228774820_tufmbghd2",
+                        "left": "75%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "117",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Weapons",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228791565_in4khjlsh",
+                        "left": "0%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "120",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Reset pips",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228808078_wnqi5fzu5",
+                        "left": "25%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "122",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Increase engines",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228844981_0jyp9og9z",
+                        "left": "50%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "127",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Increase shields",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228850433_sm5g0yul3",
+                        "left": "75%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "128",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Increase Weapons",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "pageIndex": 2,
+                "blocks": [
+                    {
+                        "id": "block_1773228895077_4uxxwgmij",
+                        "left": "50%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "133",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Open doors",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228926485_jqagj4ltt",
+                        "left": "50%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "136",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Close doors",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228946514_2yz648ybi",
+                        "left": "25%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "141",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Unlock ports",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228966339_7my88nbu7",
+                        "left": "25%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "142",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Lock ports",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773228988560_rcynq2xrq",
+                        "left": "75%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "143",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Unlock doors",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773229014406_r2yqz3z1u",
+                        "left": "75%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "145",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Lock doors",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773229029661_tvrh8oofv",
+                        "left": "0%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "150",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Lights",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773229119889_vv9aklsfg",
+                        "left": "0%",
+                        "top": "50%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "151",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "LAMP",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "block_1773229139902_w0d60g007",
+        "left": "0%",
+        "top": "33.3333%",
+        "width": "100%",
+        "height": "66.6667%",
+        "zIndex": "336",
+        "settings": {
+            "pages": "Combat, Mining, Salvage",
+            "position": "bottom",
+            "menu_width": "12%",
+            "background_color": "#222",
+            "gridx": 12,
+            "gridy": 8,
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
+        },
+        "path": "user/blocks/base/paged_container.html",
+        "children": [
+            {
+                "pageIndex": 1,
+                "blocks": [
+                    {
+                        "id": "block_1773229350252_alyrxd73m",
+                        "left": "0%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "37.5%",
+                        "zIndex": "179",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Repair",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773229364304_zquclflrn",
+                        "left": "66.6667%",
+                        "top": "0%",
+                        "width": "33.3333%",
+                        "height": "100%",
+                        "zIndex": "264",
+                        "settings": {
+                            "pages": "Modes, Setup",
+                            "position": "right",
+                            "menu_width": "15%",
+                            "background_color": "#222",
+                            "gridx": 6,
+                            "gridy": 6,
+                            "background_image": "none"
+                        },
+                        "path": "user/blocks/base/paged_container.html",
+                        "children": [
+                            {
+                                "pageIndex": 1,
+                                "blocks": [
+                                    {
+                                        "id": "block_1773229603760_sqknilrd7",
+                                        "left": "50%",
+                                        "top": "0%",
+                                        "width": "50%",
+                                        "height": "16.6667%",
+                                        "zIndex": "243",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Missiles +",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773229624915_96gdmtlqo",
+                                        "left": "50%",
+                                        "top": "16.6667%",
+                                        "width": "50%",
+                                        "height": "16.6667%",
+                                        "zIndex": "245",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Missiles -",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773229837929_53ms3lkqa",
+                                        "left": "0%",
+                                        "top": "0%",
+                                        "width": "50%",
+                                        "height": "33.3333%",
+                                        "zIndex": "246",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Release target",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    }
+                                ]
+                            },
+                            {
+                                "pageIndex": 2,
+                                "blocks": [
+                                    {
+                                        "id": "block_1773229690004_08xccvluq",
+                                        "left": "0%",
+                                        "top": "66.6667%",
+                                        "width": "33.3333%",
+                                        "height": "33.3333%",
+                                        "zIndex": "256",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "ESP",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773229949489_e1g1vnwg9",
+                                        "left": "0%",
+                                        "top": "0%",
+                                        "width": "33.3333%",
+                                        "height": "33.3333%",
+                                        "zIndex": "259",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Flares +",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773230024146_jggs92u36",
+                                        "left": "33.3333%",
+                                        "top": "0%",
+                                        "width": "33.3333%",
+                                        "height": "33.3333%",
+                                        "zIndex": "261",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Flares -",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773230042513_g36uc945i",
+                                        "left": "33.3333%",
+                                        "top": "66.6667%",
+                                        "width": "33.3333%",
+                                        "height": "33.3333%",
+                                        "zIndex": "263",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Gimbal",
+                                            "background_color": "grey",
+                                            "button_color": "dark-grey",
+                                            "button_color_active": "red",
+                                            "label_color": "white",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "id": "block_1773229583419_g7f85smvi",
+                        "left": "0%",
+                        "top": "75%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "183",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "MFD Toggle",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "pageIndex": 2,
+                "blocks": [
+                    {
+                        "id": "block_1773230126383_bn691uvkf",
+                        "left": "25%",
+                        "top": "0%",
+                        "width": "16.6667%",
+                        "height": "100%",
+                        "zIndex": "305",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "label": "Laser strenght",
+                            "thumb_color": "#FF5900FF",
+                            "background_color": "#F7D292FF",
+                            "progress_color": "#FD8F35FF",
+                            "label_color": "#FFFFFFFF",
+                            "joystick": "0",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/vertical_slider.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230203626_izuoxrax6",
+                        "left": "0%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "25%",
+                        "zIndex": "276",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Mining mode",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230251563_s7milai5o",
+                        "left": "0%",
+                        "top": "25%",
+                        "width": "25%",
+                        "height": "37.5%",
+                        "zIndex": "282",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Laser mode",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230283135_cp2lbygp6",
+                        "left": "0%",
+                        "top": "62.5%",
+                        "width": "25%",
+                        "height": "37.5%",
+                        "zIndex": "281",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Collection mode",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230305519_98br4wllw",
+                        "left": "41.6667%",
+                        "top": "0%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "283",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Module 1",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230320765_nemv1v2ex",
+                        "left": "41.6667%",
+                        "top": "25%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "290",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Module 2",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230326908_ws4c86jfr",
+                        "left": "41.6667%",
+                        "top": "50%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "291",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Module 3",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230331798_si7jcdrd7",
+                        "left": "41.6667%",
+                        "top": "75%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "292",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Module 4",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230363185_8lseunph3",
+                        "left": "66.6667%",
+                        "top": "25%",
+                        "width": "25%",
+                        "height": "50%",
+                        "zIndex": "302",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "EJECT CARGO",
+                            "background_color": "grey",
+                            "button_color": "#FF0000FF",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "pageIndex": 3,
+                "blocks": [
+                    {
+                        "id": "block_1773230810254_50w4dq0it",
+                        "left": "41.6667%",
+                        "top": "0%",
+                        "width": "16.6667%",
+                        "height": "37.5%",
+                        "zIndex": "316",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Gimbal scraping",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230828318_td2kwv2m0",
+                        "left": "0%",
+                        "top": "0%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "318",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Salvage mode",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230850250_168oca2w2",
+                        "left": "0%",
+                        "top": "25%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "321",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Scraping tool",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230864602_km17b4nnq",
+                        "left": "0%",
+                        "top": "50%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "324",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Fracture tool",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230878431_pc9lx8ehk",
+                        "left": "0%",
+                        "top": "75%",
+                        "width": "16.6667%",
+                        "height": "25%",
+                        "zIndex": "326",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Disintegrate tool",
+                            "background_color": "grey",
+                            "button_color": "dark-grey",
+                            "button_color_active": "red",
+                            "label_color": "white",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230906710_rsl9khppj",
+                        "left": "16.6667%",
+                        "top": "0%",
+                        "width": "25%",
+                        "height": "62.5%",
+                        "zIndex": "330",
+                        "settings": {
+                            "color": "#0dc8fc",
+                            "travel": "60px",
+                            "safe_zone": "30px",
+                            "joystick": "0",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/joystick.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773230937740_u4450suef",
+                        "left": "16.6667%",
+                        "top": "62.5%",
+                        "width": "41.6667%",
+                        "height": "37.5%",
+                        "zIndex": "335",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "label": "Scraper spacing",
+                            "thumb_color": "#0062FFFF",
+                            "background_color": "#A8C2FFFF",
+                            "progress_color": "#3D4AFFFF",
+                            "joystick": "0",
+                            "label_color": "#FFFFFFFF",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/slider.html",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    }
+]
