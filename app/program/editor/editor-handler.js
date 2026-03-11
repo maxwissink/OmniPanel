@@ -15,7 +15,7 @@ module.exports = function (config) {
         }
 
         const themeWindow = new BrowserWindow({
-            width: 1200,
+            width: 1400,
             height: 800,
             title: 'Theme Editor',
             parent: BrowserWindow.getFocusedWindow(),
