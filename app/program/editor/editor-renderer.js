@@ -1068,7 +1068,6 @@ function updateLayersTree() {
 
             const settings = block.settings || {};
             const settingLabel = settings['label'];
-            // fallbacks
             const blockName = settingLabel || block.dataset.type || block.id || "Unnamed Block";
 
             label.textContent = blockName;
@@ -1076,15 +1075,38 @@ function updateLayersTree() {
             label.addEventListener('click', (e) => {
                 e.stopPropagation();
 
-                document.querySelectorAll('.loaded-block.selected').forEach(b => {
-                    b.classList.remove('selected');
-                });
-                document.querySelectorAll('.tree-label.active-layer').forEach(l => {
-                    l.classList.remove('active-layer');
-                });
+                document.querySelectorAll('.loaded-block.selected').forEach(b => b.classList.remove('selected'));
+                document.querySelectorAll('.tree-label.active-layer').forEach(l => l.classList.remove('active-layer'));
 
                 block.classList.add('selected');
                 label.classList.add('active-layer');
+
+                let current = block;
+                while (current && current !== mainContainer) {
+                    const pageWrapper = current.closest('.page-wrapper');
+                    if (!pageWrapper) break;
+
+                    const pagedBlock = pageWrapper.closest('.loaded-block');
+                    const header = pagedBlock?.querySelector('.tab-header');
+                    const pagesContainer = pageWrapper.parentElement;
+
+                    if (pagedBlock && header && pagesContainer) {
+                        const pageIndex = pageWrapper.dataset.pageIndex;
+
+                        header.querySelectorAll(':scope > .tab-btn').forEach(btn => btn.classList.remove('active'));
+                        pagesContainer.querySelectorAll(':scope > .page-wrapper').forEach(pw => pw.classList.remove('active'));
+
+                        const buttons = header.querySelectorAll(':scope > .tab-btn');
+                        const targetBtn = buttons[parseInt(pageIndex) - 1];
+
+                        if (targetBtn) targetBtn.classList.add('active');
+                        pageWrapper.classList.add('active');
+
+                        pagedBlock.settings.currentPage = parseInt(pageIndex);
+                    }
+
+                    current = pagedBlock.parentElement;
+                }
 
                 if (li.classList.contains('block-folder')) {
                     li.classList.toggle('collapsed');
@@ -1096,7 +1118,6 @@ function updateLayersTree() {
             if (subChildren.length > 0) {
                 li.className = 'block-folder collapsed';
                 li.appendChild(label);
-
                 const subUl = document.createElement('ul');
                 subUl.className = 'block-list';
                 buildTree(block, subUl);
