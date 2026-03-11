@@ -361,8 +361,6 @@ function BuildEditorArea() {
                     targetDropZone.style.outline = 'none';
                     targetDropZone.style.backgroundColor = '';
 
-                    CloseMenu();
-
                 } catch (error) {
                     console.error("Failed to load/parse the block:", error);
                 }
@@ -374,8 +372,6 @@ function BuildEditorArea() {
 function addWorkspaceDragListeners(blockWrapper, moveHandle) {
     moveHandle.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('action', 'move');
-
-        document.querySelector('.openmenu').style.display = 'none';
 
         const rect = blockWrapper.getBoundingClientRect();
         const offsetX = e.clientX - rect.left;
@@ -391,7 +387,6 @@ function addWorkspaceDragListeners(blockWrapper, moveHandle) {
     });
 
     moveHandle.addEventListener('dragend', (e) => {
-        document.querySelector('.openmenu').style.display = 'block';
         blockWrapper.style.pointerEvents = 'all';
         window.draggedElement = null;
 
@@ -740,16 +735,6 @@ function closeSettingsModal() {
     document.getElementById('settings-modal').style.display = 'none';
 }
 
-function OpenMenu() {
-    const menu = document.getElementById("menu");
-    menu.classList.add("open");
-}
-
-function CloseMenu() {
-    const menu = document.getElementById("menu");
-    menu.classList.remove("open");
-}
-
 async function saveWorkspace() {
     const mainContainer = document.querySelector('#maincontainer');
 
@@ -823,8 +808,6 @@ async function loadWorkspace(firstTime = false) {
     for (const blockData of data) {
         await createBlockRecursive(blockData, mainContainer);
     }
-
-    CloseMenu();
 }
 
 async function createBlockRecursive(blockData, parentElement) {

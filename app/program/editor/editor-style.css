@@ -4,40 +4,22 @@ html {
 
 body {
     margin: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: #e6e6e6;
     overflow: hidden;
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
 }
 
-.openmenu {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    z-index: 10000000;
-}
-
-#openmenu {
-    border-radius: 10px;
-    padding: 7px;
-    font-size: larger;
-}
-
-#menu {
+#menu, #tools-menu {
     background-color: #121212;
-    position: absolute;
-    height: 100%;
-    width: 20rem;
-    top: 0;
-    left: 0;
+    position: relative;
+    /* display: flex; */
+    /* height: 100%; */
+    width: 15rem;
     padding: 0;
     margin: 0;
-    transform: translateX(-100%);
-    transition: transform 0.2s ease-in-out;
-    z-index: 100000000;
-}
-
-#menu.open {
-    transform: translateX(0);
 }
 
 .menucontainer>* {
@@ -60,28 +42,11 @@ body {
     display: none !important;
 }
 
-#menu .closemenu {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    padding: 0 !important;
-}
-
-#menu .closemenu::after {
-    display: none !important;
-}
-
-#closemenu {
-    z-index: 100;
-    border-radius: 10px;
-    padding: 5px;
-    font-size: medium;
-}
-
-#menu .menu-title {
+#menu .menu-title, #tools-menu .menu-title {
     text-align: center;
     color: #e6e6e6;
 }
+
 
 .blockscontainer ul {
     margin-left: 10px;
@@ -128,13 +93,21 @@ body {
 }
 
 #maincontainer {
-    display: inline-block;
-    width: 100vw;
-    height: 100vh;
-    /* background-size: 5% 10%;
-    background-image:
-        linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px); */
+    display: block;
+    flex: 1;
+    position: relative;
+    background-color: #e6e6e6;
+    overflow: hidden;
+
+    aspect-ratio: 16 / 9;
+    max-height: 100vh;
+    max-width: 100%;
+    
+    margin: auto;
+    align-self: center;
+    
+
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
 #maincontainer::before {
@@ -245,7 +218,7 @@ body {
     border-radius: 8px;
 }
 
-#modal-fields{
+#modal-fields {
     overflow-y: scroll;
     max-height: 60vh;
     padding-right: 40px;
@@ -426,7 +399,7 @@ body {
     margin: 4px 0;
 }
 
-.block-folder > .tree-label::before {
+.block-folder>.tree-label::before {
     content: '▼';
     display: inline-block;
     margin-right: 6px;
@@ -434,11 +407,11 @@ body {
     transition: transform 0.2s;
 }
 
-.block-folder.collapsed > .tree-label::before {
+.block-folder.collapsed>.tree-label::before {
     transform: rotate(-90deg);
 }
 
-.block-folder.collapsed > .block-list {
+.block-folder.collapsed>.block-list {
     display: none;
 }
 
@@ -495,14 +468,14 @@ body {
     border-radius: 4px;
     -webkit-appearance: none;
     outline: none;
-    background-image: 
-        linear-gradient(45deg, #333 25%, transparent 25%), 
-        linear-gradient(-45deg, #333 25%, transparent 25%), 
-        linear-gradient(45deg, transparent 75%, #333 75%), 
+    background-image:
+        linear-gradient(45deg, #333 25%, transparent 25%),
+        linear-gradient(-45deg, #333 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #333 75%),
         linear-gradient(-45deg, transparent 75%, #333 75%);
     background-size: 10px 10px;
     background-position: 0 0, 0 5px, 5px -5px, -5px 0px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .color-field-container input[type="text"] {
