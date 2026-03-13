@@ -53,7 +53,7 @@ body {
     bottom: 0;
     width: 90%;
     height: 2px;
-    background: #00e1ff;
+    background: #0cf574;
 }
 
 .menucontainer>*:last-child::after {
@@ -68,8 +68,8 @@ body {
 
 .tree-label.active-layer {
     background: rgba(13, 200, 252, 0.2);
-    color: #0dc8fc;
-    border-left: 3px solid #0dc8fc;
+    color: #15e6cd;
+    border-left: 3px solid #15e6cd;
     border-radius: 0 3px 3px 0;
 }
 
@@ -160,14 +160,14 @@ body {
     position: absolute;
     z-index: 51;
     cursor: default;
-    border: 2px solid #007bff55;
+    border: 2px solid #1ccad855;
     transition: border-color 0.1s;
     box-sizing: border-box;
     transition: width 0.1s ease, height 0.1s ease, left 0.1s ease, top 0.1s ease;
 }
 
 .loaded-block.selected {
-    border-color: #007bff;
+    border-color: #15e6cd;
     z-index: 15;
 }
 
@@ -195,7 +195,7 @@ body {
     left: 0;
     width: 24px;
     height: 24px;
-    background-color: #007bff;
+    background-color: #15e6cd;
     color: white;
     cursor: move;
     align-items: center;
@@ -208,7 +208,7 @@ body {
     right: 0;
     width: 15px;
     height: 15px;
-    background-color: #007bff;
+    background-color: #15e6cd;
     cursor: se-resize;
 }
 
@@ -256,7 +256,7 @@ body {
     font-size: 1.1em;
     border-bottom: 1px solid #444;
     padding-bottom: 10px;
-    color: #0078d4;
+    color: #15e6cd;
 }
 
 .setting-row {
@@ -285,7 +285,7 @@ body {
 }
 
 .setting-row input:focus {
-    border-color: #0078d4;
+    border-color: #15e6cd;
     background: #454545;
 }
 
@@ -297,7 +297,7 @@ body {
 }
 
 .modal-actions button {
-    background: #0078d4;
+    background: #15e6cd;
     color: white;
     border: none;
     padding: 8px 20px;
@@ -307,7 +307,7 @@ body {
 }
 
 .modal-actions button:hover {
-    background: #0086f0;
+    background: #2f97c1;
 }
 
 .setting-row input[type="color"] {
@@ -425,6 +425,10 @@ body {
     margin: 4px 0;
 }
 
+.block-list li{
+    overflow-wrap: anywhere;
+}
+
 .block-folder>.tree-label::before {
     content: '▼';
     display: inline-block;
@@ -448,7 +452,7 @@ body {
 
 .block-file:hover {
     opacity: 1;
-    color: #0dc8fc;
+    color: #15e6cd;
 }
 
 .tree-label {
@@ -509,7 +513,7 @@ body {
     font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
     background: rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: #0dc8fc;
+    color: #15e6cd;
     padding: 6px 10px;
     border-radius: 4px;
     box-sizing: border-box;
@@ -519,14 +523,14 @@ body {
 }
 
 .color-field-container input[type="text"]:focus {
-    border-color: #0dc8fc;
+    border-color: #15e6cd;
     outline: none;
     background: rgba(0, 0, 0, 0.5);
 }
 
 .block-placeholder {
     position: absolute;
-    border: 2px dashed #0dc8fc;
+    border: 2px dashed #15e6cd;
     background: rgba(13, 200, 252, 0.1);
     pointer-events: none;
     z-index: 50;
