@@ -42,7 +42,7 @@ body {
 
 .menucontainer>* {
     position: relative;
-    /* padding: 10px 0; */
+    padding: 10px 0;
 }
 
 .menucontainer>*::after {
@@ -58,6 +58,18 @@ body {
 
 .menucontainer>*:last-child::after {
     display: none !important;
+}
+
+.menucontainer .aspect-setting{
+    text-align: center;
+}
+
+.menucontainer h2,
+.menucontainer h3,
+.menucontainer h4,
+.menucontainer h5 {
+    margin: 5px 0;
+    text-align: center;
 }
 
 #menu .menu-title,
