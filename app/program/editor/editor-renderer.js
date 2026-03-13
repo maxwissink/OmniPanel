@@ -810,14 +810,15 @@ async function loadWorkspace(firstTime = false) {
 
     const mainContainer = document.querySelector('#maincontainer');
     const bgColorInput = document.getElementById('workspace-bg-color');
+    const bgColorInputText = document.getElementById('workspace-bg-color-text');
 
     mainContainer.querySelectorAll(':scope > .loaded-block').forEach(el => el.remove());
 
     // Start recursive load for each top-level block
     for (const blockData of data) {
         if (blockData.backgroundColor) { // set inital settings
-            console.log(blockData.backgroundColor);
             bgColorInput.value = blockData.backgroundColor;
+            bgColorInputText.value = blockData.backgroundColor;
             mainContainer.style.setProperty('--workspace-bg', blockData.backgroundColor);
             initWorkspaceSettings();
             continue;
@@ -1210,13 +1211,20 @@ function initAspectController() {
 
 function initWorkspaceSettings() {
     const bgColorInput = document.getElementById('workspace-bg-color');
+    const bgColorInputText = document.getElementById('workspace-bg-color-text');
     const mainContainer = document.getElementById('maincontainer');
 
-    if (!bgColorInput || !mainContainer) return;
+    if (!bgColorInput || !mainContainer || !bgColorInputText) return;
 
-    // 1. Update the UI when the user picks a color
     bgColorInput.addEventListener('input', (e) => {
         const color = e.target.value;
         mainContainer.style.setProperty('--workspace-bg', color);
+        bgColorInputText.value = color;
+    });
+
+    bgColorInputText.addEventListener('input', (e) => {
+        const color = e.target.value;
+        mainContainer.style.setProperty('--workspace-bg', color);
+        bgColorInput.value = color;
     });
 }
