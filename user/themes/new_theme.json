@@ -5,7 +5,7 @@
         "top": "0%",
         "width": "100%",
         "height": "100%",
-        "zIndex": "188",
+        "zIndex": "105",
         "settings": {
             "pages": "Page 1, Page 2",
             "font_size": 25,
@@ -78,9 +78,9 @@
                         "top": "44.4444%",
                         "width": "55.5556%",
                         "height": "33.3333%",
-                        "zIndex": "184",
+                        "zIndex": "104",
                         "settings": {
-                            "width": "80%",
+                            "width": "100%",
                             "height": "80%",
                             "label": "",
                             "thumb_color": "#2f97c1",
@@ -100,10 +100,10 @@
                         "top": "0%",
                         "width": "22.2222%",
                         "height": "100%",
-                        "zIndex": "170",
+                        "zIndex": "102",
                         "settings": {
                             "width": "80%",
-                            "height": "80%",
+                            "height": "100%",
                             "label": "",
                             "font_size": "12",
                             "thumb_color": "#2f97c1",
@@ -162,14 +162,158 @@
                         "children": []
                     },
                     {
+                        "id": "block_1773417263750_uyw3bmv7e",
+                        "left": "44.4444%",
+                        "top": "22.2222%",
+                        "width": "11.1111%",
+                        "height": "77.7778%",
+                        "zIndex": "106",
+                        "settings": {
+                            "width": "80%",
+                            "height": "100%",
+                            "label": "Label",
+                            "font_size": "12",
+                            "thumb_color": "#2f97c1",
+                            "background_color": "#587291",
+                            "progress_color": "#1ccad8",
+                            "label_color": "#333",
+                            "joystick": "0",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/vertical_slider.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773428972878_q3bikje08",
+                        "left": "66.6667%",
+                        "top": "0%",
+                        "width": "33.3333%",
+                        "height": "100%",
+                        "zIndex": "130",
+                        "settings": {
+                            "pages": "Page 1, Page 2",
+                            "font_size": "12",
+                            "position": "bottom",
+                            "menu_width": "15%",
+                            "background_color": "#222",
+                            "menu_color": "#587291",
+                            "menu_color_active": "#1ccad8",
+                            "menu_color_text": "#333",
+                            "menu_color_text_active": "#333",
+                            "gridx": "5",
+                            "gridy": "5",
+                            "background_image": "none"
+                        },
+                        "path": "user/blocks/base/paged_container.html",
+                        "children": [
+                            {
+                                "pageIndex": 1,
+                                "blocks": [
+                                    {
+                                        "id": "block_1773429081694_pwmegn4n0",
+                                        "left": "0%",
+                                        "top": "0%",
+                                        "width": "40%",
+                                        "height": "40%",
+                                        "zIndex": "124",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Click Me",
+                                            "font_size": "12",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "#cecece",
+                                            "button_color_active": "#1ccad8",
+                                            "label_color": "#333",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773429086957_fziabnt2v",
+                                        "left": "60%",
+                                        "top": "0%",
+                                        "width": "40%",
+                                        "height": "40%",
+                                        "zIndex": "125",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Click Me",
+                                            "font_size": "12",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "#cecece",
+                                            "button_color_active": "#1ccad8",
+                                            "label_color": "#333",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773429089552_v0t7w3ovq",
+                                        "left": "0%",
+                                        "top": "60%",
+                                        "width": "40%",
+                                        "height": "40%",
+                                        "zIndex": "127",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Click Me",
+                                            "font_size": "12",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "#cecece",
+                                            "button_color_active": "#1ccad8",
+                                            "label_color": "#333",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    },
+                                    {
+                                        "id": "block_1773429093083_vnsc49r03",
+                                        "left": "60%",
+                                        "top": "60%",
+                                        "width": "40%",
+                                        "height": "40%",
+                                        "zIndex": "129",
+                                        "settings": {
+                                            "width": "80%",
+                                            "height": "80%",
+                                            "border_radius": "5",
+                                            "label": "Click Me",
+                                            "font_size": "12",
+                                            "background_color": "#ffffff00",
+                                            "button_color": "#cecece",
+                                            "button_color_active": "#1ccad8",
+                                            "label_color": "#333",
+                                            "joystick": "0",
+                                            "button": "0"
+                                        },
+                                        "path": "user/blocks/default/simple_button.html",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
                         "id": "block_1773417255517_tiz07y4qf",
                         "left": "33.3333%",
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "22.2222%",
-                        "zIndex": "195",
+                        "zIndex": "107",
                         "settings": {
-                            "width": "80%",
+                            "width": "100%",
                             "height": "80%",
                             "label": "Label",
                             "thumb_color": "#2f97c1",
@@ -181,28 +325,6 @@
                             "slider": "0"
                         },
                         "path": "user/blocks/default/slider.html",
-                        "children": []
-                    },
-                    {
-                        "id": "block_1773417263750_uyw3bmv7e",
-                        "left": "44.4444%",
-                        "top": "22.2222%",
-                        "width": "11.1111%",
-                        "height": "77.7778%",
-                        "zIndex": "193",
-                        "settings": {
-                            "width": "80%",
-                            "height": "80%",
-                            "label": "Label",
-                            "font_size": "12",
-                            "thumb_color": "#2f97c1",
-                            "background_color": "#587291",
-                            "progress_color": "#1ccad8",
-                            "label_color": "#333",
-                            "joystick": "0",
-                            "slider": "0"
-                        },
-                        "path": "user/blocks/default/vertical_slider.html",
                         "children": []
                     }
                 ]

@@ -1,5 +1,6 @@
-<settings width="80%" type-width="percentage" min-width="10" max-width="100" height="80%" type-height="percentage"
-    min-height="10" max-height="100" 
+<settings 
+    width="100%" type-width="percentage" min-width="10" max-width="100" 
+    height="80%" type-height="percentage" min-height="10" max-height="100" 
     label="Label" type-label="string" 
     thumb_color="#2f97c1" type-thumb_color="color"
     background_color="#587291" type-background_color="color" 
@@ -23,8 +24,8 @@
     .slider input {
         -webkit-appearance: none;
         appearance: none;
-        width: 100%;
-        height: 60%;
+        width: var(--width);
+        height: var(--height);
         background: var(--background-color);
         border-radius: 4px;
         outline: none;
@@ -89,6 +90,8 @@
         --progress-color: settings-progress_color;
         --label-color: settings-label_color;
         --font-size: settings-font_size;
+        --width: settings-width;
+        --height: settings-height;
         ">
     <p>settings-label</p>
     <input virtual-joystick="settings-joystick" emulate-slider="settings-slider" type="range" min="0" max="255"
