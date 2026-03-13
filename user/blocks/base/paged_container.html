@@ -4,6 +4,10 @@
     position="top"
     menu_width="15%" type-menu_width="percentage" min-menu_width="5" max-menu_width="95"
     background_color="#222" type-background_color="color"
+    menu_color="#587291" type-menu_color="color"
+    menu_color_active="#1ccad8" type-menu_color_active="color"
+    menu_color_text="#333" type-menu_color_text="color"
+    menu_color_text_active="#333" type-menu_color_text_active="color"
     gridx="5" type-gridx="number" min-gridx="1" max-gridx="20"
     gridy="5" type-gridy="number" min-gridy="1" max-gridy="20"
     background_image="none" type-background_image="asset"
@@ -14,7 +18,7 @@
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        background-color: settings-background_color;
+        background-color: var(--background-color);
         display: flex;
         flex-direction: column; 
         border: 2px solid #444;
@@ -24,7 +28,7 @@
         display: flex;
         background: #111;
         flex-direction: row;
-        height: settings-menu_width;
+        height: var(--menu-width);
     }
     
     .ui-container[data-position="top"] {
@@ -40,7 +44,7 @@
     }
     .ui-container[data-position="left"] .tab-header {
         flex-direction: column;
-        width: menu_width;
+        width: var(--menu-width);
         height: 100%;
     }
 
@@ -55,18 +59,22 @@
 
     .tab-btn {
         flex: 1;
-        color: white;
+        color: var(--menu-color-text);
         cursor: pointer;
         border: none;
-        background: #333;
+        background: var(--menu-color);
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: calc(var(--font-size) * 0.2cqmin);
+        box-shadow: 0cqmin 0cqmin 1cqmax 1cqmin #00000055 inset, 0cqmin 0cqmin 1cqmin 0.5cqmin #00000055 ;
+
     }
 
     .tab-btn.active {
-        background: #555;
+        background: var(--menu-color-active);
+        color: var(--menu-color-text-active, --menu-color-text);
+        box-shadow: 0cqmin 0cqmin 3cqmax 1cqmin #00000055 inset, 0cqmin 0cqmin 1cqmin 0.5cqmin #00000055 
     }
 
     .pages-container {
@@ -95,7 +103,7 @@
     }
 </style>
 
-<div class="ui-container" data-position="settings-position" style="--font-size: settings-font_size;">
+<div class="ui-container" data-position="settings-position" style="--font-size: settings-font_size; --background-color: settings-background_color; --menu-width: settings-menu_width; --menu-color: settings-menu_color; --menu-color-active: settings-menu_color_active; --menu-color-text: settings-menu_color_text; --menu-color-text-active: settings-menu_color_text_active;">
     <div class="tab-header"></div>
     <div class="pages-container"></div>
 </div>

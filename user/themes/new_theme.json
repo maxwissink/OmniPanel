@@ -5,16 +5,20 @@
         "top": "0%",
         "width": "100%",
         "height": "100%",
-        "zIndex": "102",
+        "zIndex": "101",
         "settings": {
             "pages": "Page 1, Page 2",
-            "font_size": "12",
+            "font_size": 25,
             "position": "top",
             "menu_width": "15%",
             "background_color": "#222",
             "gridx": "5",
             "gridy": "5",
-            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png",
+            "menu_color": "#587291",
+            "menu_color_active": "#1ccad8",
+            "menu_color_text": "#333",
+            "menu_color_text_active": "#333"
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
