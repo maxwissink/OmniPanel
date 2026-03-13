@@ -6,6 +6,10 @@ async function loadTheme(data) {
     mainContainer.innerHTML = "<button id='fullscreen-btn' class='fullscreen-toggle'>ENTER FULLSCREEN</button>";
 
     for (const blockData of data) {
+        if (blockData.backgroundColor) { // set inital settings
+            mainContainer.style.setProperty('--workspace-bg', blockData.backgroundColor);
+            continue;
+        }
         await renderBlockRecursive(blockData, mainContainer);
     }
 

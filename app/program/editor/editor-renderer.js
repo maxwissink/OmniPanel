@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const isNewTheme = urlParams.get('isNew') === 'true';
 
+    initWorkspaceSettings();
     initAspectController();
     getAvailableAssets();
     //GetBlocks();
@@ -742,9 +743,11 @@ function closeSettingsModal() {
 async function saveWorkspace() {
     const mainContainer = document.querySelector('#maincontainer');
 
+    const bgColorInput = document.getElementById('workspace-bg-color');
+
     const topLevelElements = mainContainer.querySelectorAll(':scope > .loaded-block');
 
-    const blocksTree = [];
+    const blocksTree = [{ "backgroundColor": bgColorInput.value }];
     topLevelElements.forEach(el => {
         blocksTree.push(getBlockDataRecursive(el));
     });
@@ -806,10 +809,20 @@ async function loadWorkspace(firstTime = false) {
     if (!data || !Array.isArray(data)) return;
 
     const mainContainer = document.querySelector('#maincontainer');
+    const bgColorInput = document.getElementById('workspace-bg-color');
+
     mainContainer.querySelectorAll(':scope > .loaded-block').forEach(el => el.remove());
 
     // Start recursive load for each top-level block
     for (const blockData of data) {
+        if (blockData.backgroundColor) { // set inital settings
+            console.log(blockData.backgroundColor);
+            bgColorInput.value = blockData.backgroundColor;
+            mainContainer.style.setProperty('--workspace-bg', blockData.backgroundColor);
+            initWorkspaceSettings();
+            continue;
+        }
+
         await createBlockRecursive(blockData, mainContainer);
     }
     updateLayersTree();
@@ -1042,7 +1055,7 @@ function updateLayersTree() {
     const toolsMenu = document.querySelector('.tools');
     if (!toolsMenu) return;
 
-    toolsMenu.innerHTML = '<h3 class="menu-title">Workspace</h3>';
+    toolsMenu.innerHTML = '<h3>Blocks</h3>';
 
     const rootList = document.createElement('ul');
     rootList.className = 'block-list';
@@ -1140,7 +1153,7 @@ function updateLayersTree() {
 
 function initAspectController() {
     const dropdown = document.getElementById('aspect-preset');
-    const workspace = document.getElementById('editor-workspace'); 
+    const workspace = document.getElementById('editor-workspace');
     const mainContainer = document.getElementById('maincontainer');
 
     if (!dropdown || !workspace || !mainContainer) return;
@@ -1170,7 +1183,7 @@ function initAspectController() {
 
     dropdown.addEventListener('change', (e) => {
         mainContainer.classList.remove('is-resizing');
-        
+
         const [w, h] = e.target.value.split('/').map(Number);
         currentRatio = w / h;
         calculateAndApplySize();
@@ -1178,19 +1191,32 @@ function initAspectController() {
 
     const observer = new ResizeObserver(() => {
         mainContainer.classList.add('is-resizing');
-        
+
         calculateAndApplySize();
 
         clearTimeout(resizeTimer);
-        
+
         resizeTimer = setTimeout(() => {
             mainContainer.classList.remove('is-resizing');
         }, 150);
     });
-    
+
     observer.observe(workspace);
 
     const [startW, startH] = dropdown.value.split('/').map(Number);
     currentRatio = startW / startH;
     calculateAndApplySize();
+}
+
+function initWorkspaceSettings() {
+    const bgColorInput = document.getElementById('workspace-bg-color');
+    const mainContainer = document.getElementById('maincontainer');
+
+    if (!bgColorInput || !mainContainer) return;
+
+    // 1. Update the UI when the user picks a color
+    bgColorInput.addEventListener('input', (e) => {
+        const color = e.target.value;
+        mainContainer.style.setProperty('--workspace-bg', color);
+    });
 }

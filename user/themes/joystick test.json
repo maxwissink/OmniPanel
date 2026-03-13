@@ -1,5 +1,8 @@
 [
     {
+        "backgroundColor": "#003a70"
+    },
+    {
         "id": "block_1772817558150_437tqe4u6",
         "left": "25%",
         "top": "33.3333%",
@@ -34,7 +37,8 @@
             "thumb_color": "green",
             "background_color": "blue",
             "progress_color": "red",
-            "label_color": "#00FF11FF"
+            "label_color": "#00FF11FF",
+            "font_size": "12"
         },
         "path": "user/blocks/default/vertical_slider.html",
         "children": []
@@ -55,7 +59,8 @@
             "thumb_color": "#ff8800",
             "background_color": "#ae0bea",
             "progress_color": "#5eff24",
-            "label_color": "#F80D0DFF"
+            "label_color": "#F80D0DFF",
+            "font_size": "12"
         },
         "path": "user/blocks/default/slider.html",
         "children": []
@@ -78,7 +83,8 @@
             "background_color": "#04ff0068",
             "button_color": "#db1a1a92",
             "label_color": "#1f1919ff",
-            "button_color_active": "#00ff55ff"
+            "button_color_active": "#00ff55ff",
+            "font_size": "12"
         },
         "path": "user/blocks/default/simple_button.html",
         "children": []
@@ -101,7 +107,8 @@
             "background_color": "#000000",
             "button_color": "#033dc4",
             "label_color": "white",
-            "button_color_active": "red"
+            "button_color_active": "red",
+            "font_size": "12"
         },
         "path": "user/blocks/default/simple_button.html",
         "children": []
@@ -120,7 +127,12 @@
             "background_color": "#972b2bc8",
             "gridx": "5",
             "gridy": "5",
-            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png",
+            "font_size": "12",
+            "menu_color": "#587291",
+            "menu_color_active": "#1ccad8",
+            "menu_color_text": "#333",
+            "menu_color_text_active": "#333"
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -160,7 +172,8 @@
                             "progress_color": "#FFDD00FF",
                             "joystick": "0",
                             "slider": "0",
-                            "label_color": "black"
+                            "label_color": "black",
+                            "font_size": "12"
                         },
                         "path": "user/blocks/default/vertical_slider.html",
                         "children": []
@@ -187,7 +200,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "button_color_active": "red"
+                            "button_color_active": "red",
+                            "font_size": "12"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []

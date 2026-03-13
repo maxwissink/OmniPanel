@@ -1,5 +1,8 @@
 [
     {
+        "backgroundColor": "#8ff2ff"
+    },
+    {
         "id": "block_1773228537156_rvoryydlm",
         "left": "50%",
         "top": "0%",
@@ -14,7 +17,11 @@
             "gridx": 12,
             "gridy": 8,
             "background_image": "none",
-            "font_size": "12"
+            "font_size": "12",
+            "menu_color": "#587291",
+            "menu_color_active": "#1ccad8",
+            "menu_color_text": "#333",
+            "menu_color_text_active": "#333"
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -429,7 +436,11 @@
             "gridx": 12,
             "gridy": 8,
             "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png",
-            "font_size": 17
+            "font_size": 17,
+            "menu_color": "#587291",
+            "menu_color_active": "#1ccad8",
+            "menu_color_text": "#333",
+            "menu_color_text_active": "#333"
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -475,7 +486,11 @@
                             "gridx": 6,
                             "gridy": 6,
                             "background_image": "none",
-                            "font_size": "12"
+                            "font_size": "12",
+                            "menu_color": "#587291",
+                            "menu_color_active": "#1ccad8",
+                            "menu_color_text": "#333",
+                            "menu_color_text_active": "#333"
                         },
                         "path": "user/blocks/base/paged_container.html",
                         "children": [
