@@ -117,23 +117,29 @@ body {
     right: 32px;
 }
 
-#maincontainer {
-    container-type: size;
+#editor-workspace {
+    position: relative;
     display: block;
     flex: 1;
-    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#maincontainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
     background-color: #e6e6e6;
-    overflow: hidden;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.3);
+    container-type: size;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-    aspect-ratio: 16 / 9;
-    max-height: 100vh;
-    max-width: 100%;
-
-    margin: auto;
-    align-self: center;
-
-
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+#maincontainer.is-resizing {
+    transition: none !important;
 }
 
 #maincontainer::before {
@@ -145,10 +151,7 @@ body {
     bottom: 0;
     pointer-events: none;
     z-index: 0;
-
-    /* Use the variables from the parent */
     background-size: var(--grid-w, 10%) var(--grid-h, 10%);
-
     background-image:
         linear-gradient(to right, rgba(2, 50, 0, 0.3) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(2, 50, 0, 0.3) 1px, transparent 1px);
@@ -425,7 +428,7 @@ body {
     margin: 4px 0;
 }
 
-.block-list li{
+.block-list li {
     overflow-wrap: anywhere;
 }
 

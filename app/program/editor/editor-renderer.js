@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const isNewTheme = urlParams.get('isNew') === 'true';
 
+    initAspectController();
     getAvailableAssets();
     //GetBlocks();
     BuildEditorArea();
@@ -1135,4 +1136,67 @@ function updateLayersTree() {
 
     buildTree(mainContainer, rootList);
     toolsMenu.appendChild(rootList);
+}
+
+function initAspectController() {
+    const dropdown = document.getElementById('aspect-preset');
+    // Updated to target your specific workspace wrapper
+    const workspace = document.getElementById('editor-workspace'); 
+    const mainContainer = document.getElementById('maincontainer');
+
+    if (!dropdown || !workspace || !mainContainer) return;
+
+    let currentRatio = 16 / 9;
+    let resizeTimer; // We will use this to track when resizing stops
+
+    const calculateAndApplySize = () => {
+        // Calculate available space (95% leaves a nice 2.5% padding on all sides)
+        const availableW = workspace.clientWidth * 0.95;
+        const availableH = workspace.clientHeight * 0.95;
+
+        // Start by assuming we max out the width
+        let targetW = availableW;
+        let targetH = targetW / currentRatio;
+
+        // If the resulting height is too tall, switch to maxing out the height
+        if (targetH > availableH) {
+            targetH = availableH;
+            targetW = targetH * currentRatio;
+        }
+
+        // Apply exact un-warpable pixels
+        mainContainer.style.width = `${targetW}px`;
+        mainContainer.style.height = `${targetH}px`;
+
+        if (typeof updateGridVariables === 'function') {
+            updateGridVariables();
+        }
+    };
+
+    // --- EVENT 1: User changes the dropdown ---
+    dropdown.addEventListener('change', (e) => {
+        mainContainer.classList.remove('is-resizing');
+        
+        const [w, h] = e.target.value.split('/').map(Number);
+        currentRatio = w / h;
+        calculateAndApplySize();
+    });
+
+    const observer = new ResizeObserver(() => {
+        mainContainer.classList.add('is-resizing');
+        
+        calculateAndApplySize();
+
+        clearTimeout(resizeTimer);
+        
+        resizeTimer = setTimeout(() => {
+            mainContainer.classList.remove('is-resizing');
+        }, 150);
+    });
+    
+    observer.observe(workspace);
+
+    const [startW, startH] = dropdown.value.split('/').map(Number);
+    currentRatio = startW / startH;
+    calculateAndApplySize();
 }
