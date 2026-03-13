@@ -5,10 +5,9 @@
     label="Click Me" type-label="string"
     font_size="12" type-font_size="number" min-font_size="1"
     background_color="#ffffff00" type-background_color="color"
-    button_color="grey" type-button_color="color"
-    button_color_active="red" type-button_color_active="color"
-    border_color="#aaaaaa00" type-border_color="color"
-    label_color="white" type-label_color="color"
+    button_color="#cecece" type-button_color="color"
+    button_color_active="#1ccad8" type-button_color_active="color"
+    label_color="#333" type-label_color="color"
     joystick="0" type-joystick="number" min-joystick="0" max-joystick="9"
     button="0" type-button="number" min-button="0" max-button="15"
 ></settings>
@@ -27,16 +26,20 @@
         height: var(--height);
         background-color: var(--button-color);
         padding: 0;
+        color: oklab(85.142% 0 -0.0001);
         color: var(--label-color);
+        box-shadow: 0cqmin 0cqmin 1cqmax 1cqmin #00000055 inset, 0cqmin 0cqmin 1cqmin 0.5cqmin #00000055 ;
         border-radius: calc(var(--border-radius) * 1px);
-        border-color: var(--border-color, #aaaaaa00);
+        border-style: none;
         font-size: calc(var(--font-size) * 0.2cqmin);
+        font-weight: 700;
     }
     .simple-button button:active{
         background-color: var(--button-color-active);
+        box-shadow: 0cqmin 0cqmin 3cqmax 1cqmin #00000055 inset, 0cqmin 0cqmin 1cqmin 0.5cqmin #00000055 
     }
 </style>
-<div class="simple-button" style="--font-size: settings-font_size; --width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active; --border-radius: settings-border_radius; --border-color: settings-border_color;">
+<div class="simple-button" style="--font-size: settings-font_size; --width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active; --border-radius: settings-border_radius;">
     <button virtual-joystick="settings-joystick" emulate-button="settings-button">
         settings-label
     </button>

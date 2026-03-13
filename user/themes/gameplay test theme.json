@@ -420,7 +420,7 @@
         "top": "33.3333%",
         "width": "100%",
         "height": "66.6667%",
-        "zIndex": "105",
+        "zIndex": "153",
         "settings": {
             "pages": "Combat, Mining, Salvage",
             "position": "bottom",
@@ -694,7 +694,7 @@
                         "top": "0%",
                         "width": "16.6667%",
                         "height": "100%",
-                        "zIndex": "103",
+                        "zIndex": "152",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -1069,5 +1069,29 @@
                 ]
             }
         ]
+    },
+    {
+        "id": "block_1773409681720_r8lx2n6kl",
+        "left": "0%",
+        "top": "0%",
+        "width": "25%",
+        "height": "33.3333%",
+        "zIndex": "155",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "border_radius": "5",
+            "label": "Default styled button",
+            "font_size": "12",
+            "background_color": "#ffffff00",
+            "button_color": "#cecece",
+            "button_color_active": "#1ccad8",
+            "border_color": "#A7A0A0FF",
+            "label_color": "#333",
+            "joystick": "0",
+            "button": "0"
+        },
+        "path": "user/blocks/default/simple_button.html",
+        "children": []
     }
 ]

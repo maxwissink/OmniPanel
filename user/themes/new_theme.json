@@ -1,0 +1,135 @@
+[
+    {
+        "id": "block_1773411023662_iocj640tt",
+        "left": "0%",
+        "top": "0%",
+        "width": "100%",
+        "height": "100%",
+        "zIndex": "320",
+        "settings": {
+            "pages": "Page 1, Page 2",
+            "font_size": "12",
+            "position": "top",
+            "menu_width": "15%",
+            "background_color": "#222",
+            "gridx": "5",
+            "gridy": "5",
+            "background_image": "none"
+        },
+        "path": "user/blocks/base/paged_container.html",
+        "children": [
+            {
+                "pageIndex": 1,
+                "blocks": [
+                    {
+                        "id": "block_1773410605566_le8r25ud1",
+                        "left": "0%",
+                        "top": "0%",
+                        "width": "40%",
+                        "height": "40%",
+                        "zIndex": "315",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Click Me",
+                            "font_size": "12",
+                            "background_color": "#ffffff00",
+                            "button_color": "#F35F20FF",
+                            "button_color_active": "#FE1C0BFF",
+                            "label_color": "#333",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773410330108_o9whh2ix4",
+                        "left": "40%",
+                        "top": "0%",
+                        "width": "40%",
+                        "height": "40%",
+                        "zIndex": "316",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "border_radius": "5",
+                            "label": "Click Me",
+                            "font_size": "12",
+                            "background_color": "#ffffff00",
+                            "button_color": "#cecece",
+                            "button_color_active": "#1ccad8",
+                            "label_color": "#333",
+                            "joystick": "0",
+                            "button": "0"
+                        },
+                        "path": "user/blocks/default/simple_button.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773410335457_3q4hrbfot",
+                        "left": "20%",
+                        "top": "40%",
+                        "width": "60%",
+                        "height": "40%",
+                        "zIndex": "321",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "label": "",
+                            "thumb_color": "#2f97c1",
+                            "background_color": "#587291",
+                            "progress_color": "#1ccad8",
+                            "label_color": "#333",
+                            "font_size": "12",
+                            "joystick": "0",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/slider.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773410350910_aolqdthw9",
+                        "left": "80%",
+                        "top": "0%",
+                        "width": "20%",
+                        "height": "100%",
+                        "zIndex": "322",
+                        "settings": {
+                            "width": "80%",
+                            "height": "80%",
+                            "label": "",
+                            "font_size": "12",
+                            "thumb_color": "#2f97c1",
+                            "background_color": "#587291",
+                            "progress_color": "#1ccad8",
+                            "label_color": "#333",
+                            "joystick": "0",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/vertical_slider.html",
+                        "children": []
+                    },
+                    {
+                        "id": "block_1773410703991_z1u6ubc3m",
+                        "left": "0%",
+                        "top": "40%",
+                        "width": "20%",
+                        "height": "60%",
+                        "zIndex": "314",
+                        "settings": {
+                            "color": "#0dc8fc",
+                            "travel": "60px",
+                            "safe_zone": "30px",
+                            "joystick": "0",
+                            "slider": "0"
+                        },
+                        "path": "user/blocks/default/joystick.html",
+                        "children": []
+                    }
+                ]
+            }
+        ]
+    }
+]

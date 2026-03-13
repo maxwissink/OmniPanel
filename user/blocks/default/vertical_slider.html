@@ -1,12 +1,12 @@
 <settings 
     width="80%" type-width="percentage" min-width="10" max-width="100" 
     height="80%" type-height="percentage" min-height="10" max-height="100" 
-    label="Click Me" type-label="string" 
+    label="Label" type-label="string" 
     font_size="12" type-font_size="number" min-font_size="1"
-    thumb_color="green" type-thumb_color="color"
-    background_color="blue" type-background_color="color"
-    progress_color="red" type-progress_color="color"
-    label_color="black" type-label_color="color"
+    thumb_color="#2f97c1" type-thumb_color="color"
+    background_color="#587291" type-background_color="color" 
+    progress_color="#1ccad8" type-progress_color="color" 
+    label_color="#333" type-label_color="color"
     joystick="0" type-joystick="number" min-joystick="0" max-joystick="9" 
     slider="0" type-slider="number" min-slider="0" max-slider="7"
 ></settings>
@@ -18,6 +18,8 @@
         align-items: center;
         height: 100%;
         width: 100%;
+        padding: 2cqmin;
+        box-sizing: border-box;
     }
 
     .v-slider input {
@@ -29,6 +31,7 @@
         direction: rtl;
         background: var(--background-color, #17ada89b);
         border-radius: 4px;
+        box-shadow: 0cqmin 0cqmin 1cqmax 1cqmin #00000055 inset, 0cqmin 0cqmin 1cqmin 0.5cqmin #00000055 ;
         outline: none;
         overflow: hidden;
         touch-action: none;
