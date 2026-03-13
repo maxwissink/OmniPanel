@@ -1079,6 +1079,8 @@ function updateLayersTree() {
                 document.querySelectorAll('.tree-label.active-layer').forEach(l => l.classList.remove('active-layer'));
 
                 block.classList.add('selected');
+                block.style.zIndex = highestZ + 1;
+                highestZ++;
                 label.classList.add('active-layer');
 
                 let current = block;

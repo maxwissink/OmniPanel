@@ -1,10 +1,14 @@
-:root{
+:root {
     font-size: 100%;
 }
 
 html {
     position: relative;
     font-size: 100%;
+}
+
+html * {
+    font-weight: 700;
 }
 
 body {
@@ -29,7 +33,7 @@ body {
     color: #e6e6e6;
 }
 
-#tools-menu .tools > ul{
+#tools-menu .tools>ul {
     overflow-y: scroll;
     overflow-x: hidden;
     height: 60vh;

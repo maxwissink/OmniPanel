@@ -5,7 +5,7 @@
         "top": "0%",
         "width": "100%",
         "height": "100%",
-        "zIndex": "320",
+        "zIndex": "102",
         "settings": {
             "pages": "Page 1, Page 2",
             "font_size": "12",
@@ -14,7 +14,7 @@
             "background_color": "#222",
             "gridx": "5",
             "gridy": "5",
-            "background_image": "none"
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -95,7 +95,7 @@
                         "top": "0%",
                         "width": "20%",
                         "height": "100%",
-                        "zIndex": "322",
+                        "zIndex": "101",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -117,9 +117,9 @@
                         "top": "40%",
                         "width": "20%",
                         "height": "60%",
-                        "zIndex": "314",
+                        "zIndex": "101",
                         "settings": {
-                            "color": "#0dc8fc",
+                            "color": "#0cf574",
                             "travel": "60px",
                             "safe_zone": "30px",
                             "joystick": "0",
