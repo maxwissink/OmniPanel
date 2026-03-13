@@ -3,6 +3,7 @@
     height="80%" type-height="percentage" min-height="10" max-height="100"
     border_radius="5" type-border_radius="number" min-border_radius="0" max-border_radius="100"
     label="Click Me" type-label="string"
+    font_size="12" type-font_size="number" min-font_size="1"
     background_color="#ffffff00" type-background_color="color"
     button_color="dark-grey" type-button_color="color"
     button_color_active="red" type-button_color_active="color"
@@ -28,12 +29,13 @@
         color: var(--label-color);
         border-radius: calc(var(--border-radius) * 1px);
         border-color: var(--border-color, #aaaaaa00);
+        font-size: calc(var(--font-size) * 0.2cqmin);
     }
     .mapped-button button:active{
         background-color: var(--button-color-active);
     }
 </style>
-<div class="mapped-button" style="--width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active; --border-radius: settings-border_radius; --border-color: settings-border_color;">
+<div class="mapped-button" style="--font-size: settings-font_size; --width: settings-width; --height: settings-height; --background-color: settings-background_color; --button-color: settings-button_color; --label-color: settings-label_color; --button-color-active: settings-button_color_active; --border-radius: settings-border_radius; --border-color: settings-border_color;">
     <button virtual-joystick="settings-joystick" emulate-button="settings-button">
         settings-label
     </button>

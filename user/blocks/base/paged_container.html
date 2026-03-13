@@ -1,5 +1,6 @@
 <settings 
     pages="Page 1, Page 2"
+    font_size="12" type-font_size="number" min-font_size="1"
     position="top"
     menu_width="15%" type-menu_width="percentage" min-menu_width="5" max-menu_width="95"
     background_color="#222" type-background_color="color"
@@ -61,6 +62,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: calc(var(--font-size) * 0.2cqmin);
     }
 
     .tab-btn.active {
@@ -93,7 +95,7 @@
     }
 </style>
 
-<div class="ui-container" data-position="settings-position">
+<div class="ui-container" data-position="settings-position" style="--font-size: settings-font_size;">
     <div class="tab-header"></div>
     <div class="pages-container"></div>
 </div>

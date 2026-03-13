@@ -13,7 +13,8 @@
             "background_color": "#222",
             "gridx": 12,
             "gridy": 8,
-            "background_image": "none"
+            "background_image": "none",
+            "font_size": "12"
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -38,7 +39,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -61,7 +63,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -84,7 +87,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -107,7 +111,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -130,7 +135,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -153,7 +159,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -176,7 +183,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -199,7 +207,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -227,7 +236,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -250,7 +260,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -273,7 +284,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -296,7 +308,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -319,7 +332,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -342,7 +356,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -365,7 +380,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -388,7 +404,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -403,7 +420,7 @@
         "top": "33.3333%",
         "width": "100%",
         "height": "66.6667%",
-        "zIndex": "104",
+        "zIndex": "105",
         "settings": {
             "pages": "Combat, Mining, Salvage",
             "position": "bottom",
@@ -411,7 +428,8 @@
             "background_color": "#222",
             "gridx": 12,
             "gridy": 8,
-            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png"
+            "background_image": "86d5c194-6e78-4dfc-8bc2-7e01faddf33e-1745114050.png",
+            "font_size": 17
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -424,7 +442,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "37.5%",
-                        "zIndex": "179",
+                        "zIndex": "101",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -436,7 +454,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": 19
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -455,7 +474,8 @@
                             "background_color": "#000000B0",
                             "gridx": 6,
                             "gridy": 6,
-                            "background_image": "none"
+                            "background_image": "none",
+                            "font_size": "12"
                         },
                         "path": "user/blocks/base/paged_container.html",
                         "children": [
@@ -480,7 +500,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -503,7 +524,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -526,7 +548,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -554,7 +577,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -577,7 +601,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -600,7 +625,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -623,7 +649,8 @@
                                             "label_color": "white",
                                             "joystick": "0",
                                             "button": "0",
-                                            "border_color": "#aaaaaa00"
+                                            "border_color": "#aaaaaa00",
+                                            "font_size": "10"
                                         },
                                         "path": "user/blocks/default/simple_button.html",
                                         "children": []
@@ -650,7 +677,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -666,7 +694,7 @@
                         "top": "0%",
                         "width": "16.6667%",
                         "height": "100%",
-                        "zIndex": "305",
+                        "zIndex": "103",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -676,7 +704,8 @@
                             "progress_color": "#FD8F35FF",
                             "label_color": "#FFFFFFFF",
                             "joystick": "0",
-                            "slider": "0"
+                            "slider": "0",
+                            "font_size": 14
                         },
                         "path": "user/blocks/default/vertical_slider.html",
                         "children": []
@@ -699,7 +728,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -722,7 +752,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -745,7 +776,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -768,7 +800,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -791,7 +824,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -814,7 +848,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -837,7 +872,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -848,7 +884,7 @@
                         "top": "25%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "302",
+                        "zIndex": "104",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -860,7 +896,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": 17
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -888,7 +925,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -911,7 +949,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -934,7 +973,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -957,7 +997,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -980,7 +1021,8 @@
                             "label_color": "white",
                             "joystick": "0",
                             "button": "0",
-                            "border_color": "#aaaaaa00"
+                            "border_color": "#aaaaaa00",
+                            "font_size": "10"
                         },
                         "path": "user/blocks/default/simple_button.html",
                         "children": []
@@ -1008,7 +1050,7 @@
                         "top": "75%",
                         "width": "50%",
                         "height": "25%",
-                        "zIndex": "110",
+                        "zIndex": "106",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -1018,7 +1060,8 @@
                             "progress_color": "#3D4AFFFF",
                             "joystick": "0",
                             "label_color": "#FFFFFFFF",
-                            "slider": "0"
+                            "slider": "0",
+                            "font_size": 14
                         },
                         "path": "user/blocks/default/slider.html",
                         "children": []

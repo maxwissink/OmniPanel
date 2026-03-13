@@ -2,6 +2,7 @@
     min-height="10" max-height="100" label="Label" type-label="string" thumb_color="green" type-thumb_color="color"
     background_color="blue" type-background_color="color" progress_color="red" type-progress_color="color" joystick="0"
     label_color="black" type-label_color="color"
+    font_size="12" type-font_size="number" min-font_size="1"
     type-joystick="number" min-joystick="0" max-joystick="9" slider="0" type-slider="number" min-slider="0"
     max-slider="7"></settings>
 <style>
@@ -70,6 +71,7 @@
     .slider p {
         text-align: center;
         color: var(--label-color);
+        font-size: calc(var(--font-size) * 0.2cqmin);
         margin: 0;
     }
 </style>
@@ -78,6 +80,7 @@
         --background-color: settings-background_color;
         --progress-color: settings-progress_color;
         --label-color: settings-label_color;
+        --font-size: settings-font_size;
         ">
     <p>settings-label</p>
     <input virtual-joystick="settings-joystick" emulate-slider="settings-slider" type="range" min="0" max="255"

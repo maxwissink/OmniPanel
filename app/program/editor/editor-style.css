@@ -1,5 +1,10 @@
+:root{
+    font-size: 100%;
+}
+
 html {
     position: relative;
+    font-size: 100%;
 }
 
 body {
@@ -109,6 +114,7 @@ body {
 }
 
 #maincontainer {
+    container-type: size;
     display: block;
     flex: 1;
     position: relative;
