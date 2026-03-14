@@ -74,12 +74,12 @@ function getCertificates() {
 
 expressApp.get('/', (req, res) => {
     const client = path.join(__dirname, 'program', 'client', 'index.html');
-    let themePath = null;
-    if (app.isPackaged) {
-        themePath = path.join(path.dirname(process.execPath), 'user', config.theme, 'html', 'index.html');
-    } else {
-        themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
-    }
+    // let themePath = null;
+    // if (app.isPackaged) {
+    //     themePath = path.join(path.dirname(process.execPath), 'user', config.theme, 'html', 'index.html');
+    // } else {
+    //     themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
+    // }
 
     //if (!securityFilter(themePath)) {
         if (fs.existsSync(client)) {
@@ -97,8 +97,11 @@ expressApp.get('/', (req, res) => {
 expressApp.get('/client.js', (req, res) => {
     res.sendFile(path.join(__dirname, 'program', 'client', 'client.js'));
 });
-expressApp.use('/blocks/', express.static(path.join(__dirname, '..', 'user', 'blocks')));
-expressApp.use('/assets/', express.static(path.join(__dirname, '..', 'user', 'assets')));
+const baseDir = app.isPackaged 
+    ? path.join(path.dirname(process.execPath), 'user') 
+    : path.join(__dirname, '..', 'user');
+expressApp.use('/blocks/', express.static(path.join(baseDir, 'blocks')));
+expressApp.use('/assets/', express.static(path.join(baseDir, 'assets')));
 // dynamic exposing
 // expressApp.use((req, res, next) => {
 //     let themeFolder = null;
