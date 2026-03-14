@@ -1,14 +1,50 @@
+:root {
+    font-size: 100%;
+}
+
+html {
+    font-size: 100%;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
 body {
-    background-color: #e6e6e6;
+    background-color: #121212;
 }
 
-body > * {
+body>* {
     border-radius: 10px;
-    margin: 5px 0;
+    margin: 10px 0;
+    color: white;
 }
 
-input, select{
+input,
+select,
+button {
     border-radius: 5px;
+    cursor: pointer;
+}
+
+select{
+    padding: 3px;
+}
+
+button{
+    border:1px solid #666;
+    padding:10px;
+    background-color: #444;
+    color: white;
+}
+
+#refresh{
+    padding: 5px 5px 1px 5px;
+}
+
+.setting-item{
+    margin: 10px 0;
+}
+
+#url-display{
+    font-weight: 800;
 }
 
 #log-container {

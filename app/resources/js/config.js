@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const { ipcRenderer } = require('electron');
     const select = document.getElementById('theme-select');
-    const joystickInput = document.getElementById('joystick-count');
+    const refreshThemes = document.getElementById('refresh');
 
     function detectMaxJoystick(themeData) {
         const themeString = typeof themeData === 'string' ? themeData : JSON.stringify(themeData);
@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         ipcRenderer.on('init-config', (event, currentConfig) => {
             select.value = currentConfig.theme;
-            joystickInput.value = currentConfig.numJoysticks || 1;
         });
 
         ipcRenderer.send('request-current-config'); 
@@ -51,6 +50,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    refreshThemes.addEventListener('click', async () => {
+        const selected = select.value;
+        await initializeSettings();
+        select.value = selected;
+    });
 
     initializeSettings();
 });
