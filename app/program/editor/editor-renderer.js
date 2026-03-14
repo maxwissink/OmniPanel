@@ -1140,7 +1140,7 @@ function updateLayersTree() {
 
             dupBtn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                duplicateBlock(block, parentDOMNode);
+                duplicateBlock(block);
             });
 
             const subChildren = getDirectBlockChildren(block);
@@ -1198,13 +1198,13 @@ function initEditorSelection() {
     });
 }
 
-async function duplicateBlock(sourceBlock, parentElement) {
+async function duplicateBlock(sourceBlock) {
     try {
         const blockData = {
             id: 'block-' + Date.now() + Math.random().toString(36).substr(2, 5),
             path: sourceBlock.dataset.sourcePath,
-            left: (parseInt(sourceBlock.style.left) + 20) + 'px',
-            top: (parseInt(sourceBlock.style.top) + 20) + 'px',
+            left: (parseInt(sourceBlock.style.left) + 1) + '%',
+            top: (parseInt(sourceBlock.style.top) + 1) + '%',
             width: sourceBlock.style.width,
             height: sourceBlock.style.height,
             zIndex: sourceBlock.style.zIndex,
@@ -1269,26 +1269,41 @@ async function duplicateBlock(sourceBlock, parentElement) {
             openSettingsModal(blockWrapper);
         });
 
-        const sourcePagesContainer = sourceBlock.querySelector('.pages-container');
-        const targetPagesContainer = blockWrapper.querySelector('.pages-container');
+        sourceBlock.after(blockWrapper);
+        updateLayersTree();
+        setTimeout(() => {
+            const rect = blockWrapper.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
 
-        if (sourcePagesContainer && targetPagesContainer) {
-            const sourcePages = sourcePagesContainer.querySelectorAll(':scope > .page-wrapper');
+            const simulatedEvent = new MouseEvent('mousedown', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                clientX: centerX,
+                clientY: centerY,
+                buttons: 1
+            });
 
-            for (const sourcePage of sourcePages) {
-                const pageIndex = sourcePage.getAttribute('data-page-index');
-                const targetPage = targetPagesContainer.querySelector(`:scope > .page-wrapper[data-page-index="${pageIndex}"]`);
+            document.querySelectorAll('.loaded-block.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
 
-                if (targetPage) {
-                    const childBlocks = sourcePage.querySelectorAll(':scope > .loaded-block');
-                    for (const childBlock of childBlocks) {
-                        await duplicateBlock(childBlock, targetPage);
-                    }
-                }
-            }
-        }
+            const target = blockWrapper.querySelector('.move-handle') || blockWrapper;
+            target.dispatchEvent(simulatedEvent);
 
-        parentElement.appendChild(blockWrapper);
+            const clickEvent = new MouseEvent('click', {
+                bubbles: true,
+                cancelable: true,
+                view: window,
+                clientX: centerX,
+                clientY: centerY
+            });
+            target.dispatchEvent(clickEvent);
+
+            blockWrapper.classList.add('selected');
+
+        }, 20);
         return blockWrapper;
 
     } catch (error) {
