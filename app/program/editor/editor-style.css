@@ -5,6 +5,7 @@
 html {
     position: relative;
     font-size: 100%;
+    overflow-y: hidden;
 }
 
 html * {
