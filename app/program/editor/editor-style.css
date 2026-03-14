@@ -473,11 +473,52 @@ body {
     color: #15e6cd;
 }
 
+/* Ensure the list item contents align nicely */
+.block-list li {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
 .tree-label {
+    flex-grow: 1;
     cursor: pointer;
-    display: block;
-    padding: 2px 4px;
+    padding: 4px 8px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.layer-dup-btn {
+    display: none;
+    background: #0dc8fc;
+    color: #121212;
+    border: none;
     border-radius: 3px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+}
+
+.layer-dup-btn:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+.tree-label.active-layer + .layer-dup-btn {
+    display: flex;
+}
+
+.block-list ul {
+    width: 100%;
 }
 
 .tree-label:hover {

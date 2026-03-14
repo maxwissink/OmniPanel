@@ -24,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initWorkspaceSettings();
     initAspectController();
     getAvailableAssets();
-    //GetBlocks();
     BuildEditorArea();
     initWorkspaceGrid();
     initModalListeners();
@@ -1082,12 +1081,14 @@ function updateLayersTree() {
             const label = document.createElement('span');
             label.className = 'tree-label';
 
+            if (!block.id) block.id = 'block-' + Math.random().toString(36).substr(2, 9);
+            label.dataset.blockTarget = block.id;
+
             const settings = block.settings || {};
             const settingLabel = settings['label'];
             const blockName = settingLabel || block.id || "Unnamed Block";
 
             label.textContent = blockName;
-            label.dataset.blockTarget = block.id;
 
             label.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -1132,6 +1133,16 @@ function updateLayersTree() {
                 }
             });
 
+            const dupBtn = document.createElement('button');
+            dupBtn.className = 'layer-dup-btn';
+            dupBtn.innerHTML = '⧉';
+            dupBtn.title = "Duplicate Layer";
+
+            dupBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                duplicateBlock(block, parentDOMNode);
+            });
+
             const subChildren = getDirectBlockChildren(block);
 
             if (subChildren.length > 0) {
@@ -1141,9 +1152,11 @@ function updateLayersTree() {
                 subUl.className = 'block-list';
                 buildTree(block, subUl);
                 li.appendChild(subUl);
+                li.appendChild(dupBtn);
             } else {
                 li.className = 'block-file';
                 li.appendChild(label);
+                li.appendChild(dupBtn);
             }
 
             parentUL.appendChild(li);
@@ -1183,6 +1196,104 @@ function initEditorSelection() {
             document.querySelectorAll('.tree-label.active-layer').forEach(l => l.classList.remove('active-layer'));
         }
     });
+}
+
+async function duplicateBlock(sourceBlock, parentElement) {
+    try {
+        const blockData = {
+            id: 'block-' + Date.now() + Math.random().toString(36).substr(2, 5),
+            path: sourceBlock.dataset.sourcePath,
+            left: (parseInt(sourceBlock.style.left) + 20) + 'px',
+            top: (parseInt(sourceBlock.style.top) + 20) + 'px',
+            width: sourceBlock.style.width,
+            height: sourceBlock.style.height,
+            zIndex: sourceBlock.style.zIndex,
+            settings: JSON.parse(JSON.stringify(sourceBlock.settings || {}))
+        };
+
+        const settingsMeta = JSON.parse(JSON.stringify(sourceBlock.settingsMeta || {}));
+        const htmlTemplate = sourceBlock.htmlTemplate;
+
+        const blockWrapper = document.createElement('div');
+        blockWrapper.classList.add('loaded-block');
+        blockWrapper.id = blockData.id;
+        blockWrapper.dataset.sourcePath = blockData.path;
+
+        Object.assign(blockWrapper.style, {
+            position: 'absolute',
+            left: blockData.left,
+            top: blockData.top,
+            width: blockData.width,
+            height: blockData.height,
+            zIndex: blockData.zIndex
+        });
+
+        blockWrapper.settings = blockData.settings;
+        blockWrapper.settingsMeta = settingsMeta;
+        blockWrapper.htmlTemplate = htmlTemplate;
+
+        const moveHandle = document.createElement('div');
+        moveHandle.classList.add('move-handle');
+        moveHandle.innerHTML = '☩';
+        moveHandle.draggable = true;
+        blockWrapper.appendChild(moveHandle);
+
+        const settingsBtn = document.createElement('div');
+        settingsBtn.classList.add('settings-button');
+        settingsBtn.innerHTML = '⚙';
+        blockWrapper.appendChild(settingsBtn);
+
+        const resizeHandle = document.createElement('div');
+        resizeHandle.classList.add('resize-handle');
+        blockWrapper.appendChild(resizeHandle);
+
+        const contentArea = document.createElement('div');
+        contentArea.classList.add('block-content-area');
+        contentArea.style.height = '100%';
+        blockWrapper.appendChild(contentArea);
+
+        const deleteBtn = document.createElement('div');
+        deleteBtn.classList.add('delete-button');
+        deleteBtn.innerHTML = '🗑';
+        blockWrapper.appendChild(deleteBtn);
+
+        renderBlockFromTemplate(blockWrapper);
+        addSelectionListeners(blockWrapper);
+        addWorkspaceDragListeners(blockWrapper, moveHandle);
+        addResizeListeners(blockWrapper, resizeHandle);
+        addDeleteFunctionality(blockWrapper, deleteBtn);
+
+        settingsBtn.addEventListener('mousedown', (e) => e.stopPropagation());
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSettingsModal(blockWrapper);
+        });
+
+        const sourcePagesContainer = sourceBlock.querySelector('.pages-container');
+        const targetPagesContainer = blockWrapper.querySelector('.pages-container');
+
+        if (sourcePagesContainer && targetPagesContainer) {
+            const sourcePages = sourcePagesContainer.querySelectorAll(':scope > .page-wrapper');
+
+            for (const sourcePage of sourcePages) {
+                const pageIndex = sourcePage.getAttribute('data-page-index');
+                const targetPage = targetPagesContainer.querySelector(`:scope > .page-wrapper[data-page-index="${pageIndex}"]`);
+
+                if (targetPage) {
+                    const childBlocks = sourcePage.querySelectorAll(':scope > .loaded-block');
+                    for (const childBlock of childBlocks) {
+                        await duplicateBlock(childBlock, targetPage);
+                    }
+                }
+            }
+        }
+
+        parentElement.appendChild(blockWrapper);
+        return blockWrapper;
+
+    } catch (error) {
+        console.error(`Failed to duplicate block:`, error);
+    }
 }
 
 function initAspectController() {
