@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     BuildEditorArea();
     initWorkspaceGrid();
     initModalListeners();
+    initEditorSelection()
 
     if (!isNewTheme) {
         loadWorkspace(true)
@@ -1083,9 +1084,10 @@ function updateLayersTree() {
 
             const settings = block.settings || {};
             const settingLabel = settings['label'];
-            const blockName = settingLabel || block.dataset.type || block.id || "Unnamed Block";
+            const blockName = settingLabel || block.id || "Unnamed Block";
 
             label.textContent = blockName;
+            label.dataset.blockTarget = block.id;
 
             label.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -1150,6 +1152,37 @@ function updateLayersTree() {
 
     buildTree(mainContainer, rootList);
     toolsMenu.appendChild(rootList);
+}
+
+
+function initEditorSelection() {
+    const mainContainer = document.getElementById('maincontainer');
+    if (!mainContainer) return;
+
+    mainContainer.addEventListener('click', (e) => {
+        const clickedBlock = e.target.closest('.loaded-block');
+
+        if (clickedBlock) {
+            e.stopPropagation();
+
+            const correspondingLabel = document.querySelector(`.tree-label[data-block-target="${clickedBlock.id}"]`);
+
+            if (correspondingLabel) {
+                correspondingLabel.click();
+
+                let parentFolder = correspondingLabel.closest('.block-folder');
+                while (parentFolder) {
+                    parentFolder.classList.remove('collapsed');
+                    parentFolder = parentFolder.parentElement.closest('.block-folder');
+                }
+
+                correspondingLabel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        } else {
+            document.querySelectorAll('.loaded-block.selected').forEach(b => b.classList.remove('selected'));
+            document.querySelectorAll('.tree-label.active-layer').forEach(l => l.classList.remove('active-layer'));
+        }
+    });
 }
 
 function initAspectController() {
