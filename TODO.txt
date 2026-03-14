@@ -18,5 +18,4 @@ TODO:
  * dragging should display the drop location while dragging, just like resize.
 
  - change readme with images/gifs
- - get rid of warning when running on windows
- - use includes phyton packages when developing
+ - get rid of warning when running on windows (just deal with it because a certificate or license is expensive)
