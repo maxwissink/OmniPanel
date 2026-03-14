@@ -8,7 +8,7 @@
         "top": "0%",
         "width": "50%",
         "height": "33.3333%",
-        "zIndex": "309",
+        "zIndex": "109",
         "settings": {
             "pages": "Power, utility",
             "position": "top",
@@ -21,7 +21,8 @@
             "menu_color": "#587291",
             "menu_color_active": "#1ccad8",
             "menu_color_text": "#333",
-            "menu_color_text_active": "#333"
+            "menu_color_text_active": "#333",
+            "currentPage": 1
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -34,7 +35,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "114",
+                        "zIndex": "110",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -82,7 +83,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "116",
+                        "zIndex": "111",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -130,7 +131,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "120",
+                        "zIndex": "112",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -178,7 +179,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "127",
+                        "zIndex": "113",
                         "settings": {
                             "width": "80%",
                             "height": "80%",
@@ -1091,7 +1092,31 @@
         "top": "0%",
         "width": "25%",
         "height": "33.3333%",
-        "zIndex": "155",
+        "zIndex": "117",
+        "settings": {
+            "width": "80%",
+            "height": "80%",
+            "border_radius": "5",
+            "label": "Default styled button",
+            "font_size": "12",
+            "background_color": "#ffffff00",
+            "button_color": "#cecece",
+            "button_color_active": "#1ccad8",
+            "border_color": "#A7A0A0FF",
+            "label_color": "#333",
+            "joystick": "0",
+            "button": "0"
+        },
+        "path": "user/blocks/default/simple_button.html",
+        "children": []
+    },
+    {
+        "id": "block-1773493238013e7p5p",
+        "left": "25%",
+        "top": "0%",
+        "width": "25%",
+        "height": "33.3333%",
+        "zIndex": "120",
         "settings": {
             "width": "80%",
             "height": "80%",
