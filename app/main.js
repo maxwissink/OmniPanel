@@ -132,7 +132,7 @@ app.whenReady().then(() => {
 
     const win = new BrowserWindow({
         width: config.width || 600,
-        height: config.height || 400,
+        height: config.height || 600,
         icon: path.join(__dirname, 'build', 'icon.ico'),
         webPreferences: {
             nodeIntegration: true,
