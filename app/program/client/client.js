@@ -3,7 +3,7 @@ let reconnectInterval;
 
 async function loadTheme(data) {
     const mainContainer = document.querySelector('body');
-    mainContainer.innerHTML = "<button id='fullscreen-btn' class='fullscreen-toggle'>ENTER FULLSCREEN</button>";
+    mainContainer.innerHTML = "";
 
     for (const blockData of data) {
         if (blockData.backgroundColor) { // set inital settings
@@ -319,7 +319,45 @@ function connect() {
         if (msg.type === 'load-theme') {
             loadTheme(msg.data);
         }
+
+        if (msg.type === 'enter-fullscreen') {
+            showFullscreenPopup();
+        } else if (msg.type === 'exit-fullscreen') {
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+            }
+            const popup = document.getElementById('fullscreen-prompt');
+            if (popup) popup.remove();
+        }
     };
+}
+
+function showFullscreenPopup() {
+    if (document.getElementById('fullscreen-prompt')) return;
+
+    const overlay = document.createElement('div');
+    overlay.id = 'fullscreen-prompt';
+
+    overlay.innerHTML = `
+        <div class="prompt-card">
+            <h3>Fullscreen Requested</h3>
+            <p>The host wants to switch to fullscreen mode.</p>
+            <button id="accept-fullscreen">Go Fullscreen</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    document.getElementById('accept-fullscreen').addEventListener('click', () => {
+        document.documentElement.requestFullscreen()
+            .then(() => {
+                overlay.remove();
+            })
+            .catch(err => {
+                console.error(`Fullscreen denied: ${err.message}`);
+                overlay.remove();
+            });
+    });
 }
 
 function startWatchdog() {
@@ -334,32 +372,7 @@ function startWatchdog() {
 }
 
 function enableInputs() {
-    const fsBtn = document.getElementById('fullscreen-btn');
-    if (fsBtn != null) {
-        fsBtn.addEventListener('click', () => {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.error(`Error attempting to enable full-screen mode: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        });
-    }
-
-    document.addEventListener('fullscreenchange', () => {
-        if (document.fullscreenElement) {
-            fsBtn.innerText = "EXIT FULLSCREEN";
-            fsBtn.style.borderColor = "#ff3333";
-            fsBtn.style.color = "#ff3333";
-        } else {
-            fsBtn.innerText = "ENTER FULLSCREEN";
-            fsBtn.style.borderColor = "#0dc8fc";
-            fsBtn.style.color = "#0dc8fc";
-        }
-    });
-
-
+    
     function getJoystickIndex(element) {
         return parent ? element.getAttribute('virtual-joystick') : "0";
     }

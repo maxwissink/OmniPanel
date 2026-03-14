@@ -51,22 +51,22 @@ module.exports = function (config, wss) {
     });
 
     ipcMain.handle('get-theme-content', async (event, themeName) => {
-    try {
-        const themesPath = path.join(userPath, 'themes');
-        const filePath = path.join(themesPath, themeName.endsWith('.json') ? themeName : `${themeName}.json`);
-        
-        if (fs.existsSync(filePath)) {
-            const content = fs.readFileSync(filePath, 'utf8');
-            return content;
-        } else {
-            console.error("Theme file not found:", filePath);
+        try {
+            const themesPath = path.join(userPath, 'themes');
+            const filePath = path.join(themesPath, themeName.endsWith('.json') ? themeName : `${themeName}.json`);
+
+            if (fs.existsSync(filePath)) {
+                const content = fs.readFileSync(filePath, 'utf8');
+                return content;
+            } else {
+                console.error("Theme file not found:", filePath);
+                return null;
+            }
+        } catch (error) {
+            console.error("Failed to read theme content:", error);
             return null;
         }
-    } catch (error) {
-        console.error("Failed to read theme content:", error);
-        return null;
-    }
-});
+    });
 
     ipcMain.on('save-joystick-count', (event, count) => {
         config.numJoysticks = parseInt(count) || 1;
@@ -80,7 +80,7 @@ module.exports = function (config, wss) {
         debounceTimer = setTimeout(() => {
             console.log("[Node] Restarting virtual joysticks...");
             joystickHandler('reload-backend', {});
-        }, 1000); 
+        }, 1000);
     });
 
     function saveConfig(data) {
@@ -90,4 +90,20 @@ module.exports = function (config, wss) {
             console.error("Failed to save config:", err);
         }
     }
+
+    ipcMain.on('enter-fullscreen', (event) => {
+        wss.clients.forEach((client) => {
+            if (client.readyState === 1) {
+                client.send(JSON.stringify({ type: 'enter-fullscreen' }));
+            }
+        });
+    });
+
+    ipcMain.on('exit-fullscreen', (event) => {
+        wss.clients.forEach((client) => {
+            if (client.readyState === 1) {
+                client.send(JSON.stringify({ type: 'exit-fullscreen' }));
+            }
+        });
+    });
 };
