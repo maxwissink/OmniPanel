@@ -1,5 +1,5 @@
 {
-  "theme": "gameplay test theme",
+  "theme": "Star Citizen",
   "port": 3000,
-  "numJoysticks": 1
+  "numJoysticks": 4
 }

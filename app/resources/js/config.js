@@ -4,19 +4,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const refreshThemes = document.getElementById('refresh');
 
     function detectMaxJoystick(themeData) {
-        const themeString = typeof themeData === 'string' ? themeData : JSON.stringify(themeData);
-        
-        const regex = /"joystick"\s*:\s*"(\d+)"/g;
-        let match;
-        let maxFound = -1;
+    const themeString = typeof themeData === 'string' ? themeData : JSON.stringify(themeData);
+    
+    const regex = /"joystick"\s*:\s*"?(\d+)"?/g;
+    let match;
+    let maxFound = -1;
 
-        while ((match = regex.exec(themeString)) !== null) {
-            const val = parseInt(match[1]);
-            if (val > maxFound) maxFound = val;
-        }
-
-        return maxFound === -1 ? 1 : maxFound + 1;
+    while ((match = regex.exec(themeString)) !== null) {
+        const val = parseInt(match[1]);
+        if (val > maxFound) maxFound = val;
     }
+
+    return maxFound === -1 ? 1 : maxFound + 1;
+}
 
     async function initializeSettings() {
         const themes = await ipcRenderer.invoke('get-themes');

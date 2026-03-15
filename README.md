@@ -87,8 +87,8 @@ Windows requires the vJoy driver to create virtual joysticks that games can reco
 
 1.  **Install vJoy:** Download from the [vJoy GitHub Repository](https://github.com/jshafer81/vJoy).
 2.  **Configure vJoy:** * Open the **Configure vJoy** app.
-    * Enable **4 virtual joysticks** (this is plenty for most complex setups).
-    * Ensure each device has 16 buttons at least.
+    * Enable **6 virtual joysticks** (this is plenty for most complex setups).
+    * Ensure each device has **16 buttons** at least.
     * Click **Apply**.
 3.  **Done.**
 

@@ -3,14 +3,14 @@
     font_size="12" type-font_size="number" min-font_size="1"
     position="top"
     menu_width="15%" type-menu_width="percentage" min-menu_width="5" max-menu_width="95"
-    background_color="#222" type-background_color="color"
+    gridx="6" type-gridx="number" min-gridx="1" max-gridx="20"
+    gridy="6" type-gridy="number" min-gridy="1" max-gridy="20"
+    background_image="none" type-background_image="asset"
+    background_color="#222222ff" type-background_color="color"
     menu_color="#587291" type-menu_color="color"
     menu_color_active="#1ccad8" type-menu_color_active="color"
-    menu_color_text="#333" type-menu_color_text="color"
-    menu_color_text_active="#333" type-menu_color_text_active="color"
-    gridx="5" type-gridx="number" min-gridx="1" max-gridx="20"
-    gridy="5" type-gridy="number" min-gridy="1" max-gridy="20"
-    background_image="none" type-background_image="asset"
+    menu_color_text="#333333ff" type-menu_color_text="color"
+    menu_color_text_active="#333333ff" type-menu_color_text_active="color"
 ></settings>
 
 <style>
@@ -54,7 +54,7 @@
     }
     .ui-container[data-position="right"] .tab-header {
         flex-direction: column;
-        width: 80px;
+        width: var(--menu-width);
         height: 100%;
     }
 
