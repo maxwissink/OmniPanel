@@ -5,7 +5,6 @@
 ### Why OmniPanel?
 Many existing solutions are proprietary, require accounts, or are too bloated. OmniPanel was built to be:
 * **Simple & Lightweight:** No account required. No cloud dependencies.
-* **Performance First:** Optimized for instant input detection to ensure zero lag.
 * **Open & Flexible:** Designed for the community to build, share, and maintain their own designs.
 
 ---
