@@ -17,7 +17,7 @@ Many existing solutions are proprietary, require accounts, or are too bloated. O
 * [Installation Guide](#-installation-guide)
     * [Windows Setup](#-windows-setup)
     * [Linux Setup](#-linux-setup)
-* [Roadmap](#-roadmap)
+* [Roadmap](#️-roadmap)
 * [Contributing](#-contributing)
 
 ---
