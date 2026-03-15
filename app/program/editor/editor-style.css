@@ -212,7 +212,8 @@ body {
 
 .loaded-block.selected>.move-handle,
 .loaded-block.selected>.resize-handle,
-.loaded-block.selected>.settings-button {
+.loaded-block.selected>.settings-button,
+.loaded-block.selected>.delete-button {
     display: flex;
     z-index: 10000 !important;
 }
@@ -493,7 +494,7 @@ body {
 
 .layer-dup-btn {
     display: none;
-    background: #0dc8fc;
+    background: #1ccad8;
     color: #121212;
     border: none;
     border-radius: 3px;
