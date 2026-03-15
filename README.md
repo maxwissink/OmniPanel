@@ -12,10 +12,11 @@ Many existing solutions are proprietary, require accounts, or are too bloated. O
 
 ## 📑 Table of Contents
 * [Key Features](#-key-features)
+* [Using the Editor](#-using-the-editor)
+* [Creating Custom Blocks](#-creating-custom-blocks)
 * [Installation Guide](#-installation-guide)
     * [Windows Setup](#-windows-setup)
     * [Linux Setup](#-linux-setup)
-* [Creating a Theme](#-creating-a-theme)
 * [Roadmap](#-roadmap)
 * [Contributing](#-contributing)
 
@@ -29,6 +30,57 @@ Many existing solutions are proprietary, require accounts, or are too bloated. O
 
 ---
 
+## 🎨 Using the Editor
+The OmniPanel editor is a live, "What You See Is What You Get" workspace. It allows you to build and preview your cockpit layout in real-time.
+
+* **Layout Management:** Drag the move handle (**☩**) to reposition blocks. Use the bottom-right resize handle to scale elements to fit your screen.
+* **Block Configuration:** Click the gear icon (**⚙**) on any block to open its specific settings. Here you can map virtual joystick buttons, adjust colors, or change labels.
+* **Duplication:** Once created a block of your liking use the duplication icon (**⧉**) in the block hierarchy to make a copy of the original, allowing faster theme creation.
+
+---
+
+## 🧱 Creating Custom Blocks
+OmniPanel is designed to be modular. If you can write basic HTML and CSS, you can build a custom block that the app will recognize immediately.
+
+### 1. File Location
+The app automatically scans the following directory on startup and adds any valid `.html` files to your library:
+`user/blocks/`
+
+### 2. Anatomy of a Block
+To create a new block, place an `.html` file (e.g., `toggle_switch.html`) in that folder. A standard block consists of your visual HTML/CSS and a special `<settings>` tag that tells the editor which options to show. 
+
+```html
+<settings 
+  joystick="0" type-joystick="number" min-joystick="0" max-joystick="9"
+  button="0" type-button="number" min-button="0" max-button="15"
+  my_label="default text" type-my_label="text" 
+  some_number="6" type-some_number="number" min-some_number="0" max-some_number="10"
+  nice_color="#00ff00ff" type-nice_color="color"
+></settings>
+
+<div class="my-custom-button" style="--border: settings-some_number ; --color: settings-nice_color ;">
+  <button virtual-joystick="settings-joystick" emulate-button="settings-button">
+    settings-my_label
+  </button>
+</div>
+
+<style>
+    /* Your block-specific CSS here */
+    .my-custom-button {
+        background: var(--color);
+        border: var(--border) solid white;
+    }
+</style>
+```
+
+### 3. Auto-Detection
+You don't need to touch any configuration files. Simply:
+1.  Drop your `.html` file into the `user/blocks/` folder.
+2.  Restart or refresh the OmniPanel host app.
+3.  Your new block will appear in the library, ready to be dragged onto your workspace.
+
+---
+
 ## 🔧 Installation Guide
 
 ### 🪟 Windows Setup
@@ -37,7 +89,7 @@ Windows requires the vJoy driver to create virtual joysticks that games can reco
 1.  **Install vJoy:** Download from the [vJoy GitHub Repository](https://github.com/jshafer81/vJoy).
 2.  **Configure vJoy:** * Open the **Configure vJoy** app.
     * Enable **4 virtual joysticks** (this is plenty for most complex setups).
-    * Ensure each device has enough buttons (e.g., 32 or 64).
+    * Ensure each device has 16 buttons at least.
     * Click **Apply**.
 3.  **Done.**
 
@@ -63,22 +115,7 @@ Linux uses the native `uinput` kernel module for high-performance virtual input.
 
 ---
 
-## 🎨 Creating a Theme
-OmniPanel themes use standard web technologies. To keep the app secure and lightweight, **JavaScript is not allowed and will be blocked** inside theme folders—all logic is handled by the OmniPanel core.
-
-1.  Navigate to `omnipanel/user/[your-theme-name]/html`.
-2.  Add an `index.html` and your CSS files.
-3.  Refer to the **Default Theme** provided in the repository as a template.
-
-The default theme is made for star citizen.
-
-Also please be carefull when downloading someone elses theme, I cannot guarantee that I filtered out all possibly mallicious tags
-
----
-
 ## 🗺️ Roadmap
-* **Drag-and-Drop Editor:** Build MFDs visually without touching code.
-* **Modular Blocks:** Advanced users can still code custom HTML/CSS "blocks" to be used in the visual editor.
 * **Multi-Instance Support:** Host different themes for different devices simultaneously.
 * **Slider Sync:** Real-time state syncing across multiple clients.
 * **Dedicated Client App:** Reducing browser "jank" with a native wrapper.
