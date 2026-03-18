@@ -240,6 +240,31 @@ function BuildEditorArea() {
             if (block.parentElement !== newParent) {
                 newParent.appendChild(block);
             }
+
+            updateLayersTree();
+            setTimeout(() => {
+                const rect = block.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const target = block.querySelector('.move-handle') || block;
+
+                const clickEvent = new MouseEvent('click', {
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                    clientX: centerX,
+                    clientY: centerY
+                });
+                target.dispatchEvent(clickEvent);
+
+                document.querySelectorAll('.loaded-block.selected').forEach(el => {
+                    el.classList.remove('selected');
+                });
+
+                block.classList.add('selected');
+
+            }, 20);
         } else {
             const filePath = event.dataTransfer.getData('text/plain');
 
@@ -363,12 +388,36 @@ function BuildEditorArea() {
                     targetDropZone.style.outline = 'none';
                     targetDropZone.style.backgroundColor = '';
 
+                    updateLayersTree();
+                    setTimeout(() => {
+                        const rect = blockWrapper.getBoundingClientRect();
+                        const centerX = rect.left + rect.width / 2;
+                        const centerY = rect.top + rect.height / 2;
+
+                        const target = blockWrapper.querySelector('.move-handle') || blockWrapper;
+
+                        const clickEvent = new MouseEvent('click', {
+                            bubbles: true,
+                            cancelable: true,
+                            view: window,
+                            clientX: centerX,
+                            clientY: centerY
+                        });
+                        target.dispatchEvent(clickEvent);
+
+                        document.querySelectorAll('.loaded-block.selected').forEach(el => {
+                            el.classList.remove('selected');
+                        });
+
+                        blockWrapper.classList.add('selected');
+
+                    }, 20);
+
                 } catch (error) {
                     console.error("Failed to load/parse the block:", error);
                 }
             }
         }
-        updateLayersTree();
     });
 }
 
@@ -1276,21 +1325,7 @@ async function duplicateBlock(sourceBlock) {
             const centerX = rect.left + rect.width / 2;
             const centerY = rect.top + rect.height / 2;
 
-            const simulatedEvent = new MouseEvent('mousedown', {
-                bubbles: true,
-                cancelable: true,
-                view: window,
-                clientX: centerX,
-                clientY: centerY,
-                buttons: 1
-            });
-
-            document.querySelectorAll('.loaded-block.selected').forEach(el => {
-                el.classList.remove('selected');
-            });
-
             const target = blockWrapper.querySelector('.move-handle') || blockWrapper;
-            target.dispatchEvent(simulatedEvent);
 
             const clickEvent = new MouseEvent('click', {
                 bubbles: true,
@@ -1300,6 +1335,10 @@ async function duplicateBlock(sourceBlock) {
                 clientY: centerY
             });
             target.dispatchEvent(clickEvent);
+
+            document.querySelectorAll('.loaded-block.selected').forEach(el => {
+                el.classList.remove('selected');
+            });
 
             blockWrapper.classList.add('selected');
 
