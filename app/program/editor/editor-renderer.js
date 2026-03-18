@@ -34,6 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function OrderZIndex(targetBlock) {
+    if (!targetBlock) return;
+
+    const allBlocks = Array.from(document.querySelectorAll('.loaded-block'));
+
+    const otherBlocks = allBlocks.filter(b => b !== targetBlock);
+
+    otherBlocks.sort((a, b) => {
+        const zA = parseInt(a.style.zIndex) || 0;
+        const zB = parseInt(b.style.zIndex) || 0;
+        return zA - zB;
+    });
+
+    let currentZIndex = 100;
+
+    for (const block of otherBlocks) {
+        block.style.zIndex = currentZIndex;
+        currentZIndex++;
+    }
+
+    targetBlock.style.zIndex = currentZIndex;
+    if (targetBlock.settings) {
+        targetBlock.settings.zIndex = currentZIndex;
+    }
+}
+
 async function GetBlocks() {
     const blocksconstainer = document.getElementById("blocksconstainer");
 
@@ -456,8 +482,7 @@ function addSelectionListeners(blockWrapper) {
     blockWrapper.addEventListener('mousedown', (e) => {
         e.stopPropagation();
 
-        highestZ++;
-        blockWrapper.style.zIndex = highestZ;
+        OrderZIndex(blockWrapper);
 
         document.querySelectorAll('.loaded-block.selected').forEach(el => {
             if (el !== blockWrapper) el.classList.remove('selected');
@@ -814,7 +839,7 @@ function getBlockDataRecursive(block) {
         top: block.style.top,
         width: block.style.width,
         height: block.style.height,
-        zIndex: block.style.zIndex || 1,
+        zIndex: block.style.zIndex || 100,
         settings: block.settings,
         path: block.dataset.sourcePath,
         children: []
@@ -926,7 +951,7 @@ async function createBlockRecursive(blockData, parentElement) {
             top: blockData.top,
             width: blockData.width,
             height: blockData.height,
-            zIndex: blockData.zIndex || 1
+            zIndex: blockData.zIndex || 100
         });
 
         blockWrapper.settings = blockData.settings;
@@ -1146,8 +1171,7 @@ function updateLayersTree() {
                 document.querySelectorAll('.tree-label.active-layer').forEach(l => l.classList.remove('active-layer'));
 
                 block.classList.add('selected');
-                block.style.zIndex = highestZ + 1;
-                highestZ++;
+                OrderZIndex(block);
                 label.classList.add('active-layer');
 
                 let current = block;
