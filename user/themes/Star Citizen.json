@@ -8,7 +8,7 @@
         "top": "33.3333%",
         "width": "75%",
         "height": "66.6667%",
-        "zIndex": "489",
+        "zIndex": "167",
         "settings": {
             "pages": "Combat, Mining, Salvaging",
             "font_size": 17,
@@ -22,7 +22,8 @@
             "menu_color_active": "#1ccad8",
             "menu_color_text": "#333333ff",
             "menu_color_text_active": "#333333ff",
-            "currentPage": 1
+            "currentPage": 1,
+            "zIndex": 167
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -35,7 +36,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "195",
+                        "zIndex": "165",
                         "settings": {
                             "joystick": 2,
                             "button": "0",
@@ -46,7 +47,8 @@
                             "border_radius": "5",
                             "button_color": "#cecece",
                             "button_color_active": "#1ccad8",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -57,7 +59,7 @@
                         "top": "30%",
                         "width": "25%",
                         "height": "20%",
-                        "zIndex": "328",
+                        "zIndex": "166",
                         "settings": {
                             "joystick": 2,
                             "button": 1,
@@ -68,7 +70,8 @@
                             "border_radius": "5",
                             "button_color": "#8F8F8FFF",
                             "button_color_active": "#D9551CFF",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -79,7 +82,7 @@
                         "top": "80%",
                         "width": "25%",
                         "height": "20%",
-                        "zIndex": "324",
+                        "zIndex": "132",
                         "settings": {
                             "joystick": 2,
                             "button": 3,
@@ -101,7 +104,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "326",
+                        "zIndex": "133",
                         "settings": {
                             "joystick": 2,
                             "button": 2,
@@ -123,7 +126,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "431",
+                        "zIndex": "164",
                         "settings": {
                             "joystick": 2,
                             "button": 4,
@@ -134,7 +137,8 @@
                             "border_radius": "5",
                             "button_color": "#F55656FF",
                             "button_color_active": "#F90B0BFF",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -145,7 +149,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "463",
+                        "zIndex": "140",
                         "settings": {
                             "joystick": 2,
                             "button": 5,
@@ -167,7 +171,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "465",
+                        "zIndex": "141",
                         "settings": {
                             "joystick": 2,
                             "button": 6,
@@ -189,7 +193,7 @@
                         "top": "30%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "445",
+                        "zIndex": "137",
                         "settings": {
                             "joystick": 2,
                             "button": 7,
@@ -211,7 +215,7 @@
                         "top": "30%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "449",
+                        "zIndex": "138",
                         "settings": {
                             "joystick": 2,
                             "button": 8,
@@ -233,7 +237,7 @@
                         "top": "60%",
                         "width": "25%",
                         "height": "40%",
-                        "zIndex": "474",
+                        "zIndex": "143",
                         "settings": {
                             "joystick": 2,
                             "button": 10,
@@ -255,7 +259,7 @@
                         "top": "60%",
                         "width": "25%",
                         "height": "40%",
-                        "zIndex": "472",
+                        "zIndex": "142",
                         "settings": {
                             "joystick": 2,
                             "button": 9,
@@ -277,7 +281,7 @@
                         "top": "60%",
                         "width": "25%",
                         "height": "40%",
-                        "zIndex": "491",
+                        "zIndex": "147",
                         "settings": {
                             "joystick": 2,
                             "button": 11,
@@ -304,7 +308,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "40%",
-                        "zIndex": "1059",
+                        "zIndex": "153",
                         "settings": {
                             "joystick": 3,
                             "button": "0",
@@ -326,7 +330,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "100%",
-                        "zIndex": "188",
+                        "zIndex": "117",
                         "settings": {
                             "joystick": 3,
                             "slider": "0",
@@ -348,7 +352,7 @@
                         "top": "40%",
                         "width": "33.3333%",
                         "height": "30%",
-                        "zIndex": "106",
+                        "zIndex": "100",
                         "settings": {
                             "joystick": 3,
                             "button": 1,
@@ -370,7 +374,7 @@
                         "top": "70%",
                         "width": "33.3333%",
                         "height": "30%",
-                        "zIndex": "190",
+                        "zIndex": "118",
                         "settings": {
                             "joystick": 3,
                             "button": 2,
@@ -392,7 +396,7 @@
                         "top": "0%",
                         "width": "16.6667%",
                         "height": "20%",
-                        "zIndex": "1070",
+                        "zIndex": "154",
                         "settings": {
                             "joystick": 3,
                             "button": 3,
@@ -414,7 +418,7 @@
                         "top": "20%",
                         "width": "16.6667%",
                         "height": "20%",
-                        "zIndex": "1088",
+                        "zIndex": "155",
                         "settings": {
                             "joystick": 3,
                             "button": 4,
@@ -436,7 +440,7 @@
                         "top": "40%",
                         "width": "16.6667%",
                         "height": "20%",
-                        "zIndex": "1090",
+                        "zIndex": "156",
                         "settings": {
                             "joystick": 3,
                             "button": 5,
@@ -458,7 +462,7 @@
                         "top": "70%",
                         "width": "25%",
                         "height": "30%",
-                        "zIndex": "112",
+                        "zIndex": "101",
                         "settings": {
                             "joystick": 3,
                             "button": 9,
@@ -485,7 +489,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "40%",
-                        "zIndex": "1030",
+                        "zIndex": "152",
                         "settings": {
                             "joystick": 3,
                             "button": 0,
@@ -507,7 +511,7 @@
                         "top": "40%",
                         "width": "33.3333%",
                         "height": "20%",
-                        "zIndex": "209",
+                        "zIndex": "119",
                         "settings": {
                             "joystick": 3,
                             "button": 1,
@@ -529,7 +533,7 @@
                         "top": "60%",
                         "width": "33.3333%",
                         "height": "20%",
-                        "zIndex": "211",
+                        "zIndex": "120",
                         "settings": {
                             "joystick": 3,
                             "button": 2,
@@ -551,7 +555,7 @@
                         "top": "80%",
                         "width": "33.3333%",
                         "height": "20%",
-                        "zIndex": "213",
+                        "zIndex": "121",
                         "settings": {
                             "joystick": 3,
                             "button": 3,
@@ -573,7 +577,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "30%",
-                        "zIndex": "294",
+                        "zIndex": "131",
                         "settings": {
                             "joystick": 3,
                             "button": 4,
@@ -595,7 +599,7 @@
                         "top": "60%",
                         "width": "66.6667%",
                         "height": "40%",
-                        "zIndex": "248",
+                        "zIndex": "124",
                         "settings": {
                             "joystick": 3,
                             "slider": 1,
@@ -621,7 +625,7 @@
         "top": "0%",
         "width": "58.3333%",
         "height": "33.3333%",
-        "zIndex": "331",
+        "zIndex": "134",
         "settings": {
             "pages": "Power, Comms",
             "font_size": "12",
@@ -648,7 +652,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "66.6667%",
-                        "zIndex": "340",
+                        "zIndex": "135",
                         "settings": {
                             "joystick": "0",
                             "button": "0",
@@ -670,7 +674,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "771",
+                        "zIndex": "149",
                         "settings": {
                             "joystick": "0",
                             "button": 1,
@@ -692,7 +696,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "443",
+                        "zIndex": "136",
                         "settings": {
                             "joystick": "0",
                             "button": 2,
@@ -714,7 +718,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "216",
+                        "zIndex": "122",
                         "settings": {
                             "joystick": "0",
                             "button": 3,
@@ -736,7 +740,7 @@
                         "top": "66.6667%",
                         "width": "25%",
                         "height": "33.3333%",
-                        "zIndex": "483",
+                        "zIndex": "145",
                         "settings": {
                             "joystick": "0",
                             "button": 15,
@@ -758,7 +762,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "153",
+                        "zIndex": "109",
                         "settings": {
                             "joystick": "0",
                             "button": 4,
@@ -780,7 +784,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "234",
+                        "zIndex": "123",
                         "settings": {
                             "joystick": "0",
                             "button": 5,
@@ -802,7 +806,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "155",
+                        "zIndex": "110",
                         "settings": {
                             "joystick": "0",
                             "button": 6,
@@ -829,7 +833,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "100%",
-                        "zIndex": "888",
+                        "zIndex": "150",
                         "settings": {
                             "joystick": 1,
                             "button": 0,
@@ -851,7 +855,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "119",
+                        "zIndex": "102",
                         "settings": {
                             "joystick": 1,
                             "button": 1,
@@ -873,7 +877,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "150",
+                        "zIndex": "108",
                         "settings": {
                             "joystick": 1,
                             "button": 2,
@@ -895,7 +899,7 @@
                         "top": "0%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "121",
+                        "zIndex": "103",
                         "settings": {
                             "joystick": 1,
                             "button": 3,
@@ -917,7 +921,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "268",
+                        "zIndex": "125",
                         "settings": {
                             "joystick": "0",
                             "button": 4,
@@ -939,7 +943,7 @@
                         "top": "50%",
                         "width": "25%",
                         "height": "50%",
-                        "zIndex": "270",
+                        "zIndex": "126",
                         "settings": {
                             "joystick": 3,
                             "button": 8,
@@ -965,7 +969,7 @@
         "top": "0%",
         "width": "41.6667%",
         "height": "33.3333%",
-        "zIndex": "278",
+        "zIndex": "127",
         "settings": {
             "pages": "Emergency, MFD's, Acces Control",
             "font_size": "12",
@@ -979,7 +983,7 @@
             "menu_color_active": "#1ccad8",
             "menu_color_text": "#333333ff",
             "menu_color_text_active": "#333333ff",
-            "currentPage": 3
+            "currentPage": 1
         },
         "path": "user/blocks/base/paged_container.html",
         "children": [
@@ -992,7 +996,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "100%",
-                        "zIndex": "151",
+                        "zIndex": "161",
                         "settings": {
                             "joystick": 1,
                             "button": 5,
@@ -1003,7 +1007,8 @@
                             "border_radius": "5",
                             "button_color": "#F55656FF",
                             "button_color_active": "#F90B0BFF",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -1014,7 +1019,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "929",
+                        "zIndex": "162",
                         "settings": {
                             "joystick": 1,
                             "button": 6,
@@ -1025,7 +1030,8 @@
                             "border_radius": "5",
                             "button_color": "#B19920FF",
                             "button_color_active": "#FF0000FF",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -1036,7 +1042,7 @@
                         "top": "50%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "931",
+                        "zIndex": "163",
                         "settings": {
                             "joystick": 1,
                             "button": 7,
@@ -1047,7 +1053,8 @@
                             "border_radius": "5",
                             "button_color": "#B19920FF",
                             "button_color_active": "#FF0000FF",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -1058,7 +1065,7 @@
                         "top": "50%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "933",
+                        "zIndex": "160",
                         "settings": {
                             "joystick": 1,
                             "button": 8,
@@ -1069,7 +1076,8 @@
                             "border_radius": "5",
                             "button_color": "#cecece",
                             "button_color_active": "#1ccad8",
-                            "label_color": "#333333ff"
+                            "label_color": "#333333ff",
+                            "zIndex": 167
                         },
                         "path": "user/blocks/default/button.html",
                         "children": []
@@ -1080,7 +1088,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "935",
+                        "zIndex": "151",
                         "settings": {
                             "joystick": 1,
                             "button": 9,
@@ -1107,7 +1115,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "171",
+                        "zIndex": "114",
                         "settings": {
                             "joystick": 1,
                             "button": 10,
@@ -1129,7 +1137,7 @@
                         "top": "50%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "163",
+                        "zIndex": "111",
                         "settings": {
                             "joystick": 1,
                             "button": 12,
@@ -1151,7 +1159,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "167",
+                        "zIndex": "113",
                         "settings": {
                             "joystick": 1,
                             "button": 14,
@@ -1173,7 +1181,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "165",
+                        "zIndex": "112",
                         "settings": {
                             "joystick": 1,
                             "button": 13,
@@ -1200,7 +1208,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "1217",
+                        "zIndex": "157",
                         "settings": {
                             "joystick": 3,
                             "button": 15,
@@ -1222,7 +1230,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "1219",
+                        "zIndex": "158",
                         "settings": {
                             "joystick": 3,
                             "button": 13,
@@ -1244,7 +1252,7 @@
                         "top": "50%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "288",
+                        "zIndex": "128",
                         "settings": {
                             "joystick": 3,
                             "button": 12,
@@ -1266,7 +1274,7 @@
                         "top": "0%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "290",
+                        "zIndex": "129",
                         "settings": {
                             "joystick": 3,
                             "button": 11,
@@ -1288,7 +1296,7 @@
                         "top": "50%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "292",
+                        "zIndex": "130",
                         "settings": {
                             "joystick": 3,
                             "button": 10,
@@ -1310,7 +1318,7 @@
                         "top": "50%",
                         "width": "33.3333%",
                         "height": "50%",
-                        "zIndex": "1223",
+                        "zIndex": "159",
                         "settings": {
                             "joystick": 3,
                             "button": 14,
@@ -1336,7 +1344,7 @@
         "top": "33.3333%",
         "width": "25%",
         "height": "66.6667%",
-        "zIndex": "488",
+        "zIndex": "146",
         "settings": {
             "pages": "Modes, Settings",
             "font_size": "12",
@@ -1363,7 +1371,7 @@
                         "top": "0%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "129",
+                        "zIndex": "104",
                         "settings": {
                             "joystick": "0",
                             "button": 9,
@@ -1385,7 +1393,7 @@
                         "top": "0%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "185",
+                        "zIndex": "116",
                         "settings": {
                             "joystick": "0",
                             "button": 10,
@@ -1407,7 +1415,7 @@
                         "top": "33.3333%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "461",
+                        "zIndex": "139",
                         "settings": {
                             "joystick": "0",
                             "button": 11,
@@ -1429,7 +1437,7 @@
                         "top": "33.3333%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "135",
+                        "zIndex": "105",
                         "settings": {
                             "joystick": "0",
                             "button": 12,
@@ -1451,7 +1459,7 @@
                         "top": "66.6667%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "184",
+                        "zIndex": "115",
                         "settings": {
                             "joystick": "0",
                             "button": 13,
@@ -1473,7 +1481,7 @@
                         "top": "66.6667%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "139",
+                        "zIndex": "106",
                         "settings": {
                             "joystick": "0",
                             "button": 14,
@@ -1500,7 +1508,7 @@
                         "top": "0%",
                         "width": "100%",
                         "height": "33.3333%",
-                        "zIndex": "142",
+                        "zIndex": "107",
                         "settings": {
                             "joystick": "0",
                             "button": 7,
@@ -1522,7 +1530,7 @@
                         "top": "50%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "493",
+                        "zIndex": "148",
                         "settings": {
                             "joystick": 2,
                             "button": 12,
@@ -1544,7 +1552,7 @@
                         "top": "50%",
                         "width": "50%",
                         "height": "33.3333%",
-                        "zIndex": "481",
+                        "zIndex": "144",
                         "settings": {
                             "joystick": "0",
                             "button": 8,
