@@ -518,7 +518,11 @@ function addResizeListeners(block, handle) {
         const snapStepX = 100 / gX;
         const snapStepY = 100 / gY;
 
+        let hasMoved = false;
+
         const onMouseMove = (moveEvent) => {
+            hasMoved = true;
+
             const deltaX = moveEvent.clientX - startX;
             const deltaY = moveEvent.clientY - startY;
 
@@ -544,6 +548,19 @@ function addResizeListeners(block, handle) {
         const onMouseUp = () => {
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
+
+            if (hasMoved) {
+                const capturePhantomClick = (clickEvent) => {
+                    clickEvent.stopPropagation();
+                    clickEvent.preventDefault();
+                };
+
+                document.addEventListener('click', capturePhantomClick, { capture: true, once: true });
+
+                setTimeout(() => {
+                    document.removeEventListener('click', capturePhantomClick, { capture: true });
+                }, 50);
+            }
         };
 
         document.addEventListener('mousemove', onMouseMove);
