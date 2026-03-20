@@ -1,7 +1,7 @@
 let socket;
 let reconnectInterval;
 
-async function loadTheme(data) {
+async function loadPanel(data) {
     const mainContainer = document.querySelector('body');
     mainContainer.innerHTML = "";
 
@@ -312,12 +312,12 @@ function connect() {
         const msg = JSON.parse(event.data);
 
         if (msg.type === 'force-reload') {
-            console.log("Host changed theme. Reloading...");
+            console.log("Host changed panel. Reloading...");
             location.reload();
         }
 
-        if (msg.type === 'load-theme') {
-            loadTheme(msg.data);
+        if (msg.type === 'load-panel') {
+            loadPanel(msg.data);
         }
 
         if (msg.type === 'enter-fullscreen') {

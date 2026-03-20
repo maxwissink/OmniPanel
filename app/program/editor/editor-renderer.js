@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Renderer loaded")
 
     const urlParams = new URLSearchParams(window.location.search);
-    const isNewTheme = urlParams.get('isNew') === 'true';
+    const isNewPanel = urlParams.get('isNew') === 'true';
 
     initWorkspaceSettings();
     initAspectController();
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initModalListeners();
     initEditorSelection()
 
-    if (!isNewTheme) {
+    if (!isNewPanel) {
         loadWorkspace(true)
     }
 });
@@ -1515,7 +1515,7 @@ function showBindingsPopup() {
     const activeJoysticks = Object.keys(joystickMap).map(Number).sort((a, b) => a - b);
 
     if (activeJoysticks.length === 0) {
-        bodyHtml = '<p style="text-align:center; color:#aaa;">No inputs are currently allocated in this theme.</p>';
+        bodyHtml = '<p style="text-align:center; color:#aaa;">No inputs are currently allocated in this panel.</p>';
     } else {
         for (const jsIndex of activeJoysticks) {
             bodyHtml += `

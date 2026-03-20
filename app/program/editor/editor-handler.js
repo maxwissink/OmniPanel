@@ -6,18 +6,18 @@ const Block = require('../models/block.js');
 
 
 module.exports = function (config) {
-    ipcMain.on('open-theme-editor', (event, newTheme) => {
+    ipcMain.on('open-panel-editor', (event, newPanel) => {
         // Check if the window is already open to avoid duplicates
-        const existingWindow = BrowserWindow.getAllWindows().find(w => w.getTitle() === 'Theme Editor');
+        const existingWindow = BrowserWindow.getAllWindows().find(w => w.getTitle() === 'Panel Editor');
         if (existingWindow) {
             existingWindow.focus();
             return;
         }
 
-        const themeWindow = new BrowserWindow({
+        const panelWindow = new BrowserWindow({
             width: 1400,
             height: 800,
-            title: 'Theme Editor',
+            title: 'Panel Editor',
             parent: BrowserWindow.getFocusedWindow(),
             modal: false,
             webPreferences: {
@@ -26,9 +26,9 @@ module.exports = function (config) {
             }
         });
 
-        themeWindow.loadFile(path.join(__dirname, 'editor.html'), { query: { isNew: newTheme } });
+        panelWindow.loadFile(path.join(__dirname, 'editor.html'), { query: { isNew: newPanel } });
 
-        themeWindow.setMenuBarVisibility(false);
+        panelWindow.setMenuBarVisibility(false);
     });
 
     ipcMain.handle('get-userPath', async () => {
@@ -60,9 +60,9 @@ module.exports = function (config) {
 
         let userPath = null;
         if (app.isPackaged) {
-            userPath = path.join(path.dirname(process.execPath), 'user', 'themes');
+            userPath = path.join(path.dirname(process.execPath), 'user', 'panels');
         } else {
-            userPath = path.join(app.getAppPath(), 'user', 'themes');
+            userPath = path.join(app.getAppPath(), 'user', 'panels');
         }
 
         if (!existsSync(userPath)) {
@@ -71,7 +71,7 @@ module.exports = function (config) {
 
         const { filePath } = await dialog.showSaveDialog({
             title: 'Save Workspace',
-            defaultPath: path.join(userPath, "new_theme.json"),
+            defaultPath: path.join(userPath, "new_panel.json"),
             filters: [{ name: 'JSON', extensions: ['json'] }]
         });
 
@@ -89,8 +89,8 @@ module.exports = function (config) {
 
     ipcMain.handle('load-workspace-json', async () => {
         let userPath = app.isPackaged
-            ? path.join(path.dirname(process.execPath), 'user', 'themes')
-            : path.join(app.getAppPath(), 'user', 'themes');
+            ? path.join(path.dirname(process.execPath), 'user', 'panels')
+            : path.join(app.getAppPath(), 'user', 'panels');
 
         const { cancelled, filePaths } = await dialog.showOpenDialog({
             title: 'Load Workspace',
@@ -108,10 +108,10 @@ module.exports = function (config) {
 
     ipcMain.handle('initiate-workspace-json', async () => {
         let userPath = app.isPackaged
-            ? path.join(path.dirname(process.execPath), 'user', 'themes')
-            : path.join(app.getAppPath(), 'user', 'themes');
+            ? path.join(path.dirname(process.execPath), 'user', 'panels')
+            : path.join(app.getAppPath(), 'user', 'panels');
 
-        const filePath = path.join(userPath, `${config.theme}.json`);
+        const filePath = path.join(userPath, `${config.panel}.json`);
 
         if (filePath) {
             const content = await fs.readFile(filePath, 'utf-8');

@@ -74,22 +74,22 @@ function getCertificates() {
 
 expressApp.get('/', (req, res) => {
     const client = path.join(__dirname, 'program', 'client', 'index.html');
-    // let themePath = null;
+    // let panelPath = null;
     // if (app.isPackaged) {
-    //     themePath = path.join(path.dirname(process.execPath), 'user', config.theme, 'html', 'index.html');
+    //     panelPath = path.join(path.dirname(process.execPath), 'user', config.panel, 'html', 'index.html');
     // } else {
-    //     themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
+    //     panelPath = path.join(__dirname, '..', 'user', config.panel, 'html', 'index.html');
     // }
 
-    //if (!securityFilter(themePath)) {
+    //if (!securityFilter(panelPath)) {
         if (fs.existsSync(client)) {
             let html = fs.readFileSync(client, 'utf8');
             res.send(html);
         } else {
-            res.status(404).send("Theme not found");
+            res.status(404).send("Panel not found");
         }
     // } else {
-    //     res.status(500).send("Malicious code detected in theme.");
+    //     res.status(500).send("Malicious code detected in panel.");
     // }
 });
 
@@ -104,13 +104,13 @@ expressApp.use('/blocks/', express.static(path.join(baseDir, 'blocks')));
 expressApp.use('/assets/', express.static(path.join(baseDir, 'assets')));
 // dynamic exposing
 // expressApp.use((req, res, next) => {
-//     let themeFolder = null;
+//     let panelFolder = null;
 //     if (app.isPackaged) {
-//         themeFolder = path.join(path.dirname(process.execPath), 'user', config.theme);
+//         panelFolder = path.join(path.dirname(process.execPath), 'user', config.panel);
 //     } else {
-//         themeFolder = path.join(__dirname, '..', 'user', config.theme);
+//         panelFolder = path.join(__dirname, '..', 'user', config.panel);
 //     }
-//     express.static(themeFolder)(req, res, next);
+//     express.static(panelFolder)(req, res, next);
 // });
 
 // --- Initialization ---

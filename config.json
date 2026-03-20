@@ -1,5 +1,5 @@
 {
-  "theme": "Star Citizen",
+  "panel": "Star Citizen",
   "port": 3000,
   "numJoysticks": 4
 }

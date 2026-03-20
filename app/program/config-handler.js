@@ -27,20 +27,20 @@ module.exports = function (config, wss) {
         return config;
     });
 
-    ipcMain.handle('get-themes', async () => {
-        const themesPath = path.join(userPath, 'themes');
-        const themes = fs.readdirSync(themesPath, { withFileTypes: true })
+    ipcMain.handle('get-panels', async () => {
+        const panelsPath = path.join(userPath, 'panels');
+        const panels = fs.readdirSync(panelsPath, { withFileTypes: true })
             .filter(file => file.isFile() && file.name.toLowerCase().endsWith('.json'))
             .map(file => file.name.replace('.json', ''));
 
         return {
-            allThemes: themes,
-            current: config.theme
+            allPanels: panels,
+            current: config.panel
         };
     });
 
-    ipcMain.on('save-theme', (event, selectedTheme) => {
-        config.theme = selectedTheme;
+    ipcMain.on('save-panel', (event, selectedPanel) => {
+        config.panel = selectedPanel;
         saveConfig(config);
 
         wss.clients.forEach((client) => {
@@ -50,20 +50,20 @@ module.exports = function (config, wss) {
         });
     });
 
-    ipcMain.handle('get-theme-content', async (event, themeName) => {
+    ipcMain.handle('get-panel-content', async (event, panelName) => {
         try {
-            const themesPath = path.join(userPath, 'themes');
-            const filePath = path.join(themesPath, themeName.endsWith('.json') ? themeName : `${themeName}.json`);
+            const panelsPath = path.join(userPath, 'panels');
+            const filePath = path.join(panelsPath, panelName.endsWith('.json') ? panelName : `${panelName}.json`);
 
             if (fs.existsSync(filePath)) {
                 const content = fs.readFileSync(filePath, 'utf8');
                 return content;
             } else {
-                console.error("Theme file not found:", filePath);
+                console.error("Panel file not found:", filePath);
                 return null;
             }
         } catch (error) {
-            console.error("Failed to read theme content:", error);
+            console.error("Failed to read panel content:", error);
             return null;
         }
     });

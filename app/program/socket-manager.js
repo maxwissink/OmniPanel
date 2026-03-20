@@ -28,18 +28,18 @@ module.exports = function (config ,server) {
         ws.deviceIp = ip.replace('::ffff:', '');
         ws.isAlive = true;
 
-        const theme = config.theme;
-        let themePath = app.isPackaged
-                    ? path.join(path.dirname(process.execPath), 'user', 'themes', `${theme}.json`)
-                    : path.join(app.getAppPath(), 'user', 'themes', `${theme}.json`);
+        const panel = config.panel;
+        let panelPath = app.isPackaged
+                    ? path.join(path.dirname(process.execPath), 'user', 'panels', `${panel}.json`)
+                    : path.join(app.getAppPath(), 'user', 'panels', `${panel}.json`);
         
-        let themeJSON = null;
-        if (themePath.length > 0) {
-            const content = await fs.readFileSync(themePath, 'utf8');
-            themeJSON = JSON.parse(content);
+        let panelJSON = null;
+        if (panelPath.length > 0) {
+            const content = await fs.readFileSync(panelPath, 'utf8');
+            panelJSON = JSON.parse(content);
         }
 
-        ws.send(JSON.stringify({ type: 'load-theme', data: themeJSON}));
+        ws.send(JSON.stringify({ type: 'load-panel', data: panelJSON}));
 
         ws.on('pong', () => { ws.isAlive = true; });
 

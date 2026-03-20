@@ -34,7 +34,7 @@ The OmniPanel editor is a live, "What You See Is What You Get" workspace. It all
 
 * **Layout Management:** Drag the move handle (**☩**) to reposition blocks. Use the bottom-right resize handle to scale elements to fit your screen.
 * **Block Configuration:** Click the gear icon (**⚙**) on any block to open its specific settings. Here you can map virtual joystick buttons, adjust colors, or change labels.
-* **Duplication:** Once created a block of your liking use the duplication icon (**⧉**) in the block hierarchy to make a copy of the original, allowing faster theme creation.
+* **Duplication:** Once created a block of your liking use the duplication icon (**⧉**) in the block hierarchy to make a copy of the original, allowing faster panel creation.
 
 ---
 
@@ -115,7 +115,7 @@ Linux uses the native `uinput` kernel module for high-performance virtual input.
 ---
 
 ## 🗺️ Roadmap
-* **Multi-Instance Support:** Host different themes for different devices simultaneously.
+* **Multi-Instance Support:** Host different panels for different devices simultaneously.
 * **Slider Sync:** Real-time state syncing across multiple clients.
 * **Dedicated Client App:** Reducing browser "jank" with a native wrapper.
 * **Plugins:** Plugins for specific games, like api support etc.

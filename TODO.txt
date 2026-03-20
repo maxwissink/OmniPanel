@@ -1,14 +1,14 @@
 TODO:
  - initial popup with settings/config 
     settings include:
-    * theme selection
+    * panel selection
     - updater(or link to github)
- * make an actually good looking and usefull default theme
+ * make an actually good looking and usefull default panel
  - multiple panels at once?
- * multiple layers/pages in one theme without enabling code injection
+ * multiple layers/pages in one panel without enabling code injection
  - star citizen API intergration
- - options to call other api's? (if it can be done without enabling code injection into themes)
- - make a framework so its easier for people to make a theme
+ - options to call other api's? (if it can be done without enabling code injection into panels)
+ - make a framework so its easier for people to make a panel
  - syncing states of sliders with other clients (in case someone wants to use multiple clients)
  * blocks: block with pages, nested blocks
  - blocks: overview of what joystick+button does what in game, example: js1,btn3="toggle gear"
