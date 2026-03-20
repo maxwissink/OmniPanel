@@ -32,13 +32,23 @@ body {
     padding: 0;
     margin: 0;
     color: #e6e6e6;
+    overflow: hidden;
+}
+
+
+.tools {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-height: 0;
+    overflow: hidden;
 }
 
 #tools-menu .tools>ul {
-    overflow-y: scroll;
+    flex-grow: 1;
+    height: auto;
+    overflow-y: auto;
     overflow-x: hidden;
-    height: 60vh;
-    padding-bottom: 2rem;
 }
 
 #tools-menu .workspace {
@@ -49,6 +59,12 @@ body {
 .menucontainer>* {
     position: relative;
     padding: 10px 0;
+}
+
+.menucontainer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .menucontainer>*::after {
@@ -628,7 +644,7 @@ body {
     max-height: 85vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .bindings-modal-header {
