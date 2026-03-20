@@ -1467,3 +1467,112 @@ function initWorkspaceSettings() {
         bgColorInput.value = color;
     });
 }
+
+function showBindingsPopup() {
+    const blocks = document.querySelectorAll('.loaded-block');
+    const joystickMap = {}; 
+
+    blocks.forEach(block => {
+        if (!block.settings) return;
+        
+        let jsIndex = block.settings.joystick;
+
+        if (jsIndex !== undefined && jsIndex !== '') {
+            jsIndex = parseInt(jsIndex);
+
+            if (!joystickMap[jsIndex]) {
+                joystickMap[jsIndex] = { buttons: {}, sliders: {} };
+            }
+
+            const displayName = block.settings.label ? block.settings.label : block.id;
+            
+            let btnIndex = block.settings.button;
+            if (btnIndex !== undefined && btnIndex !== '') {
+                btnIndex = parseInt(btnIndex);
+                if (joystickMap[jsIndex].buttons[btnIndex]) {
+                    joystickMap[jsIndex].buttons[btnIndex] += `, ${displayName}`;
+                } else {
+                    joystickMap[jsIndex].buttons[btnIndex] = displayName;
+                }
+            }
+
+            let sldIndex = block.settings.slider;
+            if (sldIndex !== undefined && sldIndex !== '') {
+                sldIndex = parseInt(sldIndex);
+                if (joystickMap[jsIndex].sliders[sldIndex]) {
+                    joystickMap[jsIndex].sliders[sldIndex] += `, ${displayName}`;
+                } else {
+                    joystickMap[jsIndex].sliders[sldIndex] = displayName;
+                }
+            }
+        }
+    });
+
+    const overlay = document.createElement('div');
+    overlay.id = 'bindings-overlay';
+
+    let bodyHtml = '';
+    const activeJoysticks = Object.keys(joystickMap).map(Number).sort((a, b) => a - b);
+
+    if (activeJoysticks.length === 0) {
+        bodyHtml = '<p style="text-align:center; color:#aaa;">No inputs are currently allocated in this theme.</p>';
+    } else {
+        for (const jsIndex of activeJoysticks) {
+            bodyHtml += `
+                <div class="joystick-section">
+                    <h3>vJoy Device ${jsIndex}</h3>
+            `;
+
+            bodyHtml += `<div class="binding-group-title">Sliders / Axes</div>`;
+            bodyHtml += `<div class="button-grid">`;
+            for (let i = 0; i < 8; i++) {
+                const isUsed = joystickMap[jsIndex].sliders[i] !== undefined;
+                const slotClass = isUsed ? 'used slider-used' : 'unallocated';
+                const displayName = isUsed ? joystickMap[jsIndex].sliders[i] : 'Unallocated';
+
+                bodyHtml += `
+                    <div class="binding-slot ${slotClass}">
+                        <span class="btn-num">Slider ${i}</span>
+                        <span class="btn-name">${displayName}</span>
+                    </div>
+                `;
+            }
+            bodyHtml += `</div>`;
+
+            bodyHtml += `<div class="binding-group-title">Buttons</div>`;
+            bodyHtml += `<div class="button-grid">`;
+            for (let i = 0; i < 16; i++) {
+                const isUsed = joystickMap[jsIndex].buttons[i] !== undefined;
+                const slotClass = isUsed ? 'used' : 'unallocated';
+                const displayName = isUsed ? joystickMap[jsIndex].buttons[i] : 'Unallocated';
+
+                bodyHtml += `
+                    <div class="binding-slot ${slotClass}">
+                        <span class="btn-num">Button ${i}</span>
+                        <span class="btn-name">${displayName}</span>
+                    </div>
+                `;
+            }
+            bodyHtml += `</div>`;
+
+            bodyHtml += `</div>`;
+        }
+    }
+
+    overlay.innerHTML = `
+        <div class="bindings-modal" onclick="event.stopPropagation()">
+            <div class="bindings-modal-header">
+                <h2>Input Allocations</h2>
+                <button class="close-bindings-btn" id="close-bindings-modal">✖</button>
+            </div>
+            <div class="bindings-modal-body">
+                ${bodyHtml}
+            </div>
+        </div>
+    `;
+
+    overlay.querySelector('#close-bindings-modal').addEventListener('click', () => overlay.remove());
+    overlay.addEventListener('click', () => overlay.remove());
+
+    document.body.appendChild(overlay);
+}
