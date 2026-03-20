@@ -106,4 +106,12 @@ module.exports = function (config, wss) {
             }
         });
     });
+
+    app.on('before-quit', (event) => {
+        wss.clients.forEach((client) => {
+            if (client.readyState === 1) {
+                client.send(JSON.stringify({ type: 'exit-fullscreen' }));
+            }
+        });
+    });
 };
