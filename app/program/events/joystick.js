@@ -14,7 +14,7 @@ if (app.isPackaged && process.platform !== 'win32') {
     const fs = require('fs');
     try {
         // Force executable permissions (rwxr-xr-x)
-        fs.chmodSync(getPythonPath(), 0o755); 
+        fs.chmodSync(getPythonPath(), 0o755);
         console.log("Permissions set for Python binary");
     } catch (err) {
         console.error("Failed to set Python permissions:", err);
@@ -22,7 +22,14 @@ if (app.isPackaged && process.platform !== 'win32') {
 }
 
 function getPythonPath() {
-    if (!app.isPackaged) return 'python3';
+    if (!app.isPackaged) {
+        const pathToPython = path.join(__dirname, "..", "..", ".." );
+        if (process.platform === 'win32') {
+            return path.join(pathToPython, 'python-env/windows/python-3.13.12-embed-amd64/python.exe');
+        } else {
+            return path.join(pathToPython, 'python-env/linux/python/bin/python3');
+        }
+    }
 
     const resPath = process.resourcesPath;
     const unpackedPath = path.join(resPath, 'app.asar.unpacked');
@@ -100,5 +107,9 @@ module.exports = function (type, payload) {
     } else if (type === 'simulate-slider') {
         const { id, value } = payload;
         pyProcess.stdin.write(`${jsIndex},ax,${id},${value}\n`);
+    } else if (type === 'simulate-joystick') {
+        const { id, value } = payload;
+        pyProcess.stdin.write(`${jsIndex},ax,${id},${value.x}\n`);
+        pyProcess.stdin.write(`${jsIndex},ax,${(parseInt(id) + 1).toString()},${value.y}\n`);
     }
 };

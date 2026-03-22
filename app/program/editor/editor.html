@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="editor-style.css">
+    <script src="editor-renderer.js"></script>
+    <title>Panel editor</title>
+</head>
+
+<body>
+    <div id="menu">
+        <div class="menucontainer">
+            <h2 class="menu-title">blocks</h2>
+            <div id="blocksconstainer"></div>
+        </div>
+        <div id="workspace-controls">
+            <div class="loadworkspace">
+                <button onclick="loadWorkspace()">load</button>
+            </div>
+            <div class="saveworkspace">
+                <button onclick="saveWorkspace()">save</button>
+            </div>
+        </div>
+    </div>
+    <div id="editor-workspace">
+        <div id="maincontainer">
+        </div>
+    </div>
+    <div id="tools-menu">
+
+        <div class="menucontainer">
+            <h2 class="menu-title">Workspace</h2>
+            <div class="workspace">
+                <h5>Editor aspect ratio</h5>
+                <div class="aspect-setting">
+                    <select id="aspect-preset">
+                        <optgroup label="Handheld (Portrait)">
+                            <option value="9/16">9:16 Slim</option>
+                            <option value="10/16">10:16 Standard</option>
+                            <option value="2/3">2:3 Classic</option>
+                        </optgroup>
+                        <optgroup label="Tablet & Square">
+                            <option value="1/1">1:1 Square</option>
+                            <option value="4/3">4:3 Standard Tablet</option>
+                            <option value="16/10">16:10 Tablet</option>
+                        </optgroup>
+                        <optgroup label="Landscape Display">
+                            <option value="3/2">3:2 Laptop</option>
+                            <option value="16/9" selected>16:9 Widescreen</option>
+                            <option value="16/10">16:10 Professional</option>
+                            <option value="21/9">21:9 Ultra-Wide</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <h5>Button allocations</h5>
+                <button onclick="showBindingsPopup()">Show all bindings</button>
+            </div>
+            <div id="workspace-settings">
+                <h3>Settings</h3>
+                <h5>Background color</h5>
+                <input type="color" id="workspace-bg-color" value="#e6e6e6">
+                <input type="text" id="workspace-bg-color-text">
+            </div>
+            <div class="tools">
+            </div>
+        </div>
+    </div>
+    <div id="settings-modal">
+        <div class="modal-header">Block Settings</div>
+        <div id="modal-fields"></div>
+        <div class="modal-actions">
+            <button onclick="closeSettingsModal()">Close</button>
+        </div>
+    </div>
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Delete Block?</h3>
+            <p>This will permanently remove this block and everything inside it.</p>
+            <div class="modal-actions">
+                <button id="modal-cancel">Cancel</button>
+                <button id="modal-confirm" class="danger">Delete</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

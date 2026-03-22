@@ -1,7 +1,7 @@
 {
   "name": "omnipanel",
   "productName": "OmniPanel",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A virtual joystick controller hosted on your local network.",
   "author": "Max Wissink",
   "main": "app/main.js",
