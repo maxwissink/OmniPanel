@@ -7,6 +7,7 @@ const forge = require('node-forge');
 const setupConfigHandler = require('./program/config-handler');
 const securityFilter = require('./program/filter');
 const initSocketManager = require('./program/socket-manager');
+const editorHandler = require('./program/editor/editor-handler');
 
 let config = null;
 if (app.isPackaged) {
@@ -72,40 +73,45 @@ function getCertificates() {
 }
 
 expressApp.get('/', (req, res) => {
-    let themePath = null;
-    if (app.isPackaged) {
-        themePath = path.join(path.dirname(process.execPath), 'user', config.theme, 'html', 'index.html');
-    } else {
-        themePath = path.join(__dirname, '..', 'user', config.theme, 'html', 'index.html');
-    }
+    const client = path.join(__dirname, 'program', 'client', 'index.html');
+    // let panelPath = null;
+    // if (app.isPackaged) {
+    //     panelPath = path.join(path.dirname(process.execPath), 'user', config.panel, 'html', 'index.html');
+    // } else {
+    //     panelPath = path.join(__dirname, '..', 'user', config.panel, 'html', 'index.html');
+    // }
 
-    if (!securityFilter(themePath)) {
-        if (fs.existsSync(themePath)) {
-            let html = fs.readFileSync(themePath, 'utf8');
-            const scriptTag = `<script src="/internal/websocket-injection.js"></script>`;
-            res.send(html.replace('</body>', `${scriptTag}</body>`));
+    //if (!securityFilter(panelPath)) {
+        if (fs.existsSync(client)) {
+            let html = fs.readFileSync(client, 'utf8');
+            res.send(html);
         } else {
-            res.status(404).send("Theme not found");
+            res.status(404).send("Panel not found");
         }
-    } else {
-        res.status(500).send("Malicious code detected in theme.");
-    }
+    // } else {
+    //     res.status(500).send("Malicious code detected in panel.");
+    // }
 });
 
 //injection script to client
-expressApp.get('/internal/websocket-injection.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'program', 'websocket-injection.js'));
+expressApp.get('/client.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'program', 'client', 'client.js'));
 });
-
-expressApp.use((req, res, next) => {
-    let themeFolder = null;
-    if (app.isPackaged) {
-        themeFolder = path.join(path.dirname(process.execPath), 'user', config.theme);
-    } else {
-        themeFolder = path.join(__dirname, '..', 'user', config.theme);
-    }
-    express.static(themeFolder)(req, res, next);
-});
+const baseDir = app.isPackaged 
+    ? path.join(path.dirname(process.execPath), 'user') 
+    : path.join(__dirname, '..', 'user');
+expressApp.use('/blocks/', express.static(path.join(baseDir, 'blocks')));
+expressApp.use('/assets/', express.static(path.join(baseDir, 'assets')));
+// dynamic exposing
+// expressApp.use((req, res, next) => {
+//     let panelFolder = null;
+//     if (app.isPackaged) {
+//         panelFolder = path.join(path.dirname(process.execPath), 'user', config.panel);
+//     } else {
+//         panelFolder = path.join(__dirname, '..', 'user', config.panel);
+//     }
+//     express.static(panelFolder)(req, res, next);
+// });
 
 // --- Initialization ---
 app.whenReady().then(() => {
@@ -118,9 +124,10 @@ app.whenReady().then(() => {
     }
 
     const server = https.createServer(certs, expressApp);
-    const wss = initSocketManager(server);
+    const wss = initSocketManager(config, server);
 
     setupConfigHandler(config, wss);
+    editorHandler(config);
 
     server.listen(config.port, '0.0.0.0', () => {
         console.log(`Server Secure: https://localhost:${config.port}`);
@@ -128,7 +135,7 @@ app.whenReady().then(() => {
 
     const win = new BrowserWindow({
         width: config.width || 600,
-        height: config.height || 400,
+        height: config.height || 600,
         icon: path.join(__dirname, 'build', 'icon.ico'),
         webPreferences: {
             nodeIntegration: true,
@@ -137,7 +144,8 @@ app.whenReady().then(() => {
     });
 
     win.loadFile(path.join(__dirname, 'resources', 'index.html'));
-
+    win.setMenuBarVisibility(false);
+    
     win.webContents.on('did-finish-load', () => {
         win.webContents.send('init-config', config);
     });

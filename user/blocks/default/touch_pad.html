@@ -1,0 +1,53 @@
+<settings 
+    joystick="0" type-joystick="number" min-joystick="0" max-joystick="9" 
+    slider="0" type-slider="number" min-slider="0" max-slider="7"
+    type-color="color" color="#0cf574"
+    type-travel="text" travel="60px" 
+    type-safe_zone="text" safe_zone="30px"
+></settings>
+
+<div class="joy-container" style="--joy-color: settings-color; --joy-travel: settings-travel; --joy-safe-zone: settings-safe_zone;">
+    <div class="joy-hitbox">
+        <div class="joy-base">
+            <div class="joy-thumb"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .joy-container {
+        width: 100%; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        background: #181818;
+        overflow: hidden;
+    }
+
+    .joy-hitbox {
+        width: calc(100% - (var(--joy-safe-zone) * 2));
+        height: calc(100% - (var(--joy-safe-zone) * 2));
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        position: relative;
+        cursor: crosshair;
+    }
+
+    .joy-base {
+        position: absolute;
+        width: 50px; height: 50px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        display: none;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+    }
+
+    .joy-thumb {
+        position: absolute;
+        width: 30px; height: 30px;
+        background: var(--joy-color);
+        border-radius: 50%;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 15px var(--joy-color);
+    }
+</style>
