@@ -73,6 +73,41 @@ body {
     flex-direction: column;
 }
 
+.workspace button{
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    background: #3c3c3c;
+    border: 1px solid #555;
+    color: white;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: none;
+}
+
+#workspace-settings input{
+    background: #3c3c3c;
+    border: 1px solid #555;
+    color: white;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 5px;
+}
+
+#workspace-settings input[type="color"] {
+    height: 40px;
+    padding: 2px;
+    cursor: pointer;
+    border: 1px solid #555;
+    background: #3c3c3c;
+    border-radius: 4px;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
 .menucontainer>* {
     position: relative;
     padding: 10px 0;

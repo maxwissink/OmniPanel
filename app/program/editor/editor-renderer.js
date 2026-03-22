@@ -1520,7 +1520,7 @@ function showBindingsPopup() {
         for (const jsIndex of activeJoysticks) {
             bodyHtml += `
                 <div class="joystick-section">
-                    <h3>vJoy Device ${jsIndex}</h3>
+                    <h3>Virtual Joystick ${jsIndex}</h3>
             `;
 
             bodyHtml += `<div class="binding-group-title">Sliders / Axes</div>`;
