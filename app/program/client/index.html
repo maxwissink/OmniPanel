@@ -5,7 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Omnipanel</title>
-    <script src="client.js"></script>
+    <link rel="manifest" href="client/manifest.json">
+    <meta name="theme-color" content="#121212">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="OmniPanel">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icon-180.png">
+    <script src="client/client.js"></script>
     <style>
         :root {
             font-size: 100%;
@@ -86,5 +93,20 @@
     <h1>Something went wrong</h1>
     <p>Panel is not loaded...</p>
 </body>
+<script>
+    // Check if the browser actually supports Service Workers
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            // Path must be relative to the root of your domain
+            navigator.serviceWorker.register('./client/serviceworker.js')
+                .then(registration => {
+                    console.log('✅ ServiceWorker registered perfectly. Scope:', registration.scope);
+                })
+                .catch(error => {
+                    console.error('❌ ServiceWorker registration failed:', error);
+                });
+        });
+    }
+</script>
 
 </html>

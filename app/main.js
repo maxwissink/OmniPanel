@@ -93,10 +93,10 @@ expressApp.get('/', (req, res) => {
     // }
 });
 
-//injection script to client
-expressApp.get('/client.js', (req, res) => {
-    res.sendFile(path.join(__dirname, 'program', 'client', 'client.js'));
-});
+//making client folder available on network
+expressApp.use('/client/', express.static(path.join(__dirname, 'program', 'client')));
+
+
 const baseDir = app.isPackaged 
     ? path.join(path.dirname(process.execPath), 'user') 
     : path.join(__dirname, '..', 'user');
