@@ -24,7 +24,7 @@ Many existing solutions are proprietary, require accounts, or are too bloated. O
 ## ✨ Key Features
 * **Local Hosting:** Host your own designs directly on your network.
 * **Fast Input Detection:** Instant communication between touch events and virtual joysticks.
-* **Extreme Customization:** Use HTML/CSS to build your dream cockpit.
+* **Extreme Customization:** Drag and drop blocks your dream cockpit. Advanced users can even create their own blocks using HTML and CSS.
 * **Privacy Focused:** No accounts, no cloud, no data tracking.
 
 ---
